@@ -1,0 +1,158 @@
+<template>
+  <div class="createAccount">
+    <header>
+      <nuxt-link to="/login/">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+          <g id="Grupo_2221" data-name="Grupo 2221" transform="translate(-68 -85.773)">
+            <rect id="Rectangle" width="2.571" height="18" rx="1.286" transform="translate(86 93.488) rotate(90)" opacity="0.3" />
+            <path id="Path-94" d="M2.195.377A1.286,1.286,0,0,0,.377,2.195L8.091,9.909a1.286,1.286,0,0,0,1.778.039l7.714-7.071a1.286,1.286,0,1,0-1.738-1.9L9.039,7.22Z" transform="translate(78.286 85.773) rotate(90)"/>
+          </g>
+        </svg>
+      </nuxt-link>
+
+      <steps :value="getNumberValue" :items="3" />
+    </header>
+
+    <nuxt-child />
+
+    <footer>
+      <Button
+        class="mt-3 btn-send"
+        yellow
+        block
+        @click="handleClickStep"
+      >
+        <!-- @click="handleClickStep" -->
+        {{ $route.name === 'createAccound-index-step3' ? 'Crear Cuenta' : 'Continuar' }}
+      </Button>
+    </footer>
+  </div>
+</template>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import axios from '~/plugins/axios'
+@Component({
+  layout: 'clean'
+})
+export default class createAccount extends Vue {
+  send: boolean = false
+  form: any = {
+    email: '',
+    emailConfirm: '',
+    password: '',
+    passwordConfirm: '',
+    dniType: 1,
+    dni: '',
+    tel: '',
+    // two step
+    firstName1: '',
+    firstName2: '',
+    lastName1: '',
+    lastName2: '',
+    date: '01-01-2020',
+    // step 3
+    image1: '',
+    image2: '',
+    image3: '',
+    profileId: 1
+  }
+
+  handleSendRegister () {
+    axios.post('/register', {
+      email: this.form.email,
+      password: this.form.password,
+      password_confirmation: this.form.passwordConfirm,
+      profile_id: this.form.profileId,
+      firstName1: this.form.firstName1,
+      firstName2: this.form.firstName2,
+      lastName1: this.form.lastName1,
+      lastName2: this.form.lastName2,
+      document_type_id: this.form.dniType,
+      dni: this.form.dni,
+      date_of_birth: this.form.date,
+      tel: this.form.tel,
+      cedulaPost: this.form.image1,
+      cedulaFront: this.form.image2,
+      selfie: this.form.image3
+    }).then(() => {
+      this.$router.push('/login/')
+    })
+  }
+
+  get getNumberValue () {
+    if (this.$route.name === 'createAccound-index') {
+      return 1
+    } else if (this.$route.name === 'createAccound-index-step2') {
+      return 2
+    } else if (this.$route.name === 'createAccound-index-step3') {
+      return 3
+    }
+  }
+
+  handleClickStep () {
+    this.send = true
+
+    if ((!this.form.email || !this.form.emailConfirm || !this.form.password || !this.form.passwordConfirm || !this.form.dni || !this.form.tel) && this.$route.name) {
+      return
+    }
+
+    if ((!this.form.firstName1 || !this.form.firstName2 || !this.form.lastName1 || !this.form.lastName2 || !this.form.date) && this.$route.name === 'createAccound-index-step2') {
+      return
+    }
+
+    if ((!this.form.image1 || !this.form.image2 || !this.form.image3) && this.$route.name === 'createAccound-index-step3') {
+      return
+    }
+
+    this.send = false
+
+    if (this.$route.name === 'createAccound-index') {
+      this.$router.push('./step2')
+    } else if (this.$route.name === 'createAccound-index-step2') {
+      this.$router.push('./step3')
+    } else if (this.$route.name === 'createAccound-index-step3') {
+      this.handleSendRegister()
+    }
+  }
+}
+</script>
+<style lang="sass" scoped>
+// responsive
+.createAccount
+  height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
+  display: flex
+  flex-direction: column
+  padding: 0px 30px
+  .con-create
+    width: 100%
+    overflow: auto
+    flex: 1
+    // display: flex
+    // align-items: center
+    // justify-content: flex-start
+    // flex-direction: column
+    h2
+      font-weight: 600
+  footer
+    padding-bottom: 30px
+  header
+    position: relative
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    // padding-right: 30px
+    z-index: 200
+    background: -color('bg')
+    a
+      width: 50px
+      height: 50px
+      display: flex
+      align-items: center
+      justify-content: center
+      // margin: 10px
+      svg
+        width: 20px
+// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+</style>

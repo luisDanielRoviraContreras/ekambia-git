@@ -1,0 +1,110 @@
+\:root
+  --bg: 255,255,255
+  --color: 255, 218, 26
+  --black: 0, 0, 0
+  --text: 21, 22, 22
+  --gray: 245, 247, 248
+  --gray-2: 238, 240, 241
+
+body.darken
+  --bg: 0,0,0
+  --black: 30,30,30
+  --text: 255, 255, 255
+  .if-darken
+    display: block
+  .not-darken
+    display: none !important
+
+.content-mobile
+  .if-mobile
+    display: block
+  .not-mobile
+    display: none !important
+
+.if-mobile
+    display: none
+.if-darken
+  display: none
+html
+  scroll-behavior: smooth
+body
+  // background: -color('bg-2')
+  background: -color('bg')
+  color: -color('text')
+  font-family: 'Open Sans', sans-serif
+  // overflow-x: hidden
+  overflow-x: hidden
+  scroll-behavior: smooth
+  width: 100%
+  // padding-top: 50px
+  // padding-bottom: 70px
+  overflow: hidden
+  &.not-transition
+   *
+    transition: 0s !important
+   *:after
+    transition: 0s !important
+   *:before
+    transition: 0s !important
+
+*
+  margin: 0px
+  padding: 0px
+  list-style: none
+  outline: none !important
+  list-style: none
+  box-sizing: border-box
+  outline-color: transparent
+  outline-style: none
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  &:focus
+    outline: none !important
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
+button
+  outline: none !important
+
+input,button,select,textarea
+  font-family: 'Open Sans', sans-serif
+  span
+    font-family: 'Open Sans', sans-serif
+
+a
+  text-decoration: none
+
+.page-enter-active, .page-leave-active
+  transition: all .2s ease
+
+.page-enter
+  transform: translate(-15px) !important
+  opacity: 0
+.page-leave-to
+  transform: translate(15px) !important
+  opacity: 0
+
+.page
+  position: relative
+
+// responsive
+@media (max-width: 812px), (pointer:none), (pointer:coarse)
+  *::-webkit-scrollbar
+      height: 0px !important
+      width: 0px !important
+  .not-scroll-mobile
+    &::-webkit-scrollbar
+      height: 0px
+      width: 0px
+
+*::-webkit-scrollbar
+  width: 5px
+  height: 5px
+  display: block
+  background: -color('bg')
+
+*::-webkit-scrollbar-thumb
+  background: -color('black', .2)
+  border-radius: 5px
+  &:hover
+    background: -color('black', .6)
+
+.nuxt-progress
+  border-radius: 0px 5px 5px 0px
