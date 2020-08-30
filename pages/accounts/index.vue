@@ -134,7 +134,7 @@ export default class name extends Vue {
 
   mounted () {
     this.windowInnerWidth = window.innerWidth
-    const accounts = this.$refs.accounts
+    const accounts: any = this.$refs.accounts
     accounts.addEventListener('scroll', (evt) => {
       this.scrollLeft = evt.target.scrollLeft
     })

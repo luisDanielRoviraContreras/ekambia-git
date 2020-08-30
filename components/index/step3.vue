@@ -49,10 +49,11 @@ export default class step3 extends Vue {
     const header = document.querySelector('.navbar-mobile')
     const step1 = document.querySelector('.step1')
     const step2 = document.querySelector('.step2')
-    const h = window.innerHeight - header.scrollHeight - step1.querySelector('header').scrollHeight - step2.querySelector('header').scrollHeight - this.$refs.header.scrollHeight
-    el.style.height = h - 1 + 'px'
-    step1.querySelector('.con').style.height = '0px'
-    step2.querySelector('.con').style.height = '0px'
+    const h: any = window.innerHeight - header.scrollHeight - step1.querySelector('header').scrollHeight - step2.querySelector('header').scrollHeight - (this.$refs.header as any).scrollHeight
+
+    el.style.height = h - 1 + 'px';
+    (step1.querySelector('.con') as any).style.height = '0px';
+    (step2.querySelector('.con') as any).style.height = '0px'
     done()
   }
 
@@ -65,8 +66,8 @@ export default class step3 extends Vue {
     const header = document.querySelector('.navbar-mobile')
     const step2 = document.querySelector('.step2 header')
     const step1 = document.querySelector('.step1 header')
-    const h = window.innerHeight - header.scrollHeight - step2.scrollHeight - step1.scrollHeight - this.$refs.header.scrollHeight
-    this.$refs.con.style.height = h - 1 + 'px'
+    const h: any = window.innerHeight - header.scrollHeight - step2.scrollHeight - step1.scrollHeight - (this.$refs.header as any).scrollHeight;
+    (this.$refs.con as any).style.height = h - 1 + 'px'
   }
 }
 </script>

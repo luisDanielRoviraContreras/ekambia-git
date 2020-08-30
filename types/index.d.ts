@@ -10,6 +10,7 @@ declare global {
 declare module 'vue/types/vue' {
   // 3. Declare augmentation for Vue
   interface Vue {
+    $bounceClose: Function
     $bounce: Function
     $notification: Function
     $dialog: Function
@@ -22,6 +23,7 @@ declare module 'vue/types/vue' {
 declare module 'vue/types/options' {
   type Context = any
   type $notification = any
+  type $bounceClose = any
   type $guide = any
   type $dialog = any
   type $cookies = any
