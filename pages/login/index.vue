@@ -81,8 +81,8 @@ export default class login extends Vue {
   // navigator.credentials
   send: boolean = false
   form: any = {
-    numberEmail: 'luisdanielrovira8@gmail.com',
-    password: '12345678'
+    numberEmail: '',
+    password: ''
   }
 
   @State(state => state.bounce) bounce

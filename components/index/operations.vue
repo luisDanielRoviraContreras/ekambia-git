@@ -43,7 +43,7 @@
               Fecha
             </span>
             <p>
-              {{ li.datex }}
+              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
             </p>
           </div>
           <div class="data">
@@ -74,7 +74,7 @@
               Fecha
             </span>
             <p>
-              {{ li.datex }}
+              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
             </p>
           </div>
           <div class="data">
@@ -105,7 +105,7 @@
               Fecha
             </span>
             <p>
-              {{ li.datex }}
+              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
             </p>
           </div>
           <div class="data">

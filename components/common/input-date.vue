@@ -122,7 +122,7 @@ export default class InputDate extends Vue {
   }
 
   get getValue () {
-    return `${this.date.day}-${this.date.month}-${this.date.year}`
+    return `${this.date.year}-${this.date.month}-${this.date.day}`
   }
 
   handleChange () {

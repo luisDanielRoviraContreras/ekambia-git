@@ -101,17 +101,24 @@ import axios from '~/plugins/axios'
 export default class createAccount extends Vue {
   send: boolean = false
   form: any = {
-    email: 'luisdanielrovira8@gmail.com',
-    password: '12345678',
-    dni: '0987654321',
-    date: '1995-04-08',
+    email: '',
+    password: '',
+    dni: '',
+    date: '',
     dniType: 1,
     profileId: 1,
-    firstName: 'Luis D',
-    lastName: 'R C'
+    firstName: '',
+    lastName: ''
   }
 
   handleSend() {
+    this.send = true
+
+    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.dni || !this.form.firstName || !this.form.lastName) {
+      console.log('paso')
+      return
+    }
+
     this.serverSend()
   }
 
@@ -128,7 +135,6 @@ export default class createAccount extends Vue {
       referred: this.$cookies.get('ref')
     }).then(({data}) => {
       const token = data.token
-      console.log(token)
       this.$cookies.set('token', token)
       this.$router.push('/createAccount/step2')
     }).catch((error) => {
@@ -172,7 +178,12 @@ export default class createAccount extends Vue {
   padding-bottom: 50px
 
 @media (min-width: 812px), (pointer:cursor)
+  .con-create
+    display: flex
+    align-items: center
+    justify-content: center
   .con-form
     flex: none
     margin-bottom: 30px
+    overflow: hidden
 </style>
