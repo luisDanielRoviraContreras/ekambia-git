@@ -3,9 +3,10 @@
     :class="{ block, danger }"
     class="select"
   >
+      <!-- v-bind="$attrs" -->
     <select
-      v-on="listeners"
-      v-bind="$attrs"
+      :value="value"
+      @change="change"
       name=""
     >
       <slot />
@@ -20,16 +21,23 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class Select extends Vue {
   @Prop({ type: Boolean }) block: boolean
   @Prop({ type: Boolean }) danger: boolean
+  @Prop({}) value: any
 
-  get listeners () {
-    return {
-      ...this.$listeners,
-      change: (evt: any) => {
-        this.$emit('input', evt.target.value)
-        this.$emit('change', evt.target.value)
-      }
-    }
+  change(evt: any) {
+    this.$emit('input', evt.target.value)
+    this.$emit('change', evt.target.value)
   }
+
+  // get listeners () {
+  //   return {
+  //     ...this.$listeners,
+  //     change: (evt: any) => {
+  //       alert(evt.target.value)
+  //       this.$emit('input', evt.target.value)
+  //       this.$emit('change', evt.target.value)
+  //     }
+  //   }
+  // }
 }
 </script>
 <style lang="sass" scoped>
