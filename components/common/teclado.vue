@@ -34,12 +34,6 @@
         </span>
       </button>
     </div>
-
-    <!-- <footer>
-      <Button>
-        Iniciar Operación
-      </Button>
-    </footer> -->
   </div>
 </template>
 <script lang="ts">
@@ -78,6 +72,16 @@ export default class teclado extends Vue {
       }, 300)
     }, 300)
   }
+
+  mounted() {
+    setTimeout(() => {
+      document.body.classList.add('open-teclado')
+    }, 10);
+  }
+
+  destroyed() {
+    document.body.classList.remove('open-teclado')
+  }
 }
 </script>
 <style lang="sass">
@@ -86,6 +90,13 @@ export default class teclado extends Vue {
 
 .fade-teclado-enter, .fade-teclado-leave-to
   transform: translate(0,100%)
+
+.open-teclado
+  .con-change
+    justify-content: flex-start !important
+    .con-img
+      img
+        max-width: 0px !important
 
 .onda
   width: 40px

@@ -34,15 +34,16 @@
     <div ref="infos" class="con-infos">
       <div class="parent-info-1 parent-info">
         <div
-          v-for="li in 20"
-          :key="li"
+          v-for="(li, i) in filterOperations(1)"
+          :key="i"
+          @click="handleClickOperation(li)"
           class="info">
           <div class="data">
             <span>
               Fecha
             </span>
             <p>
-              24/05/2020
+              {{ li.datex }}
             </p>
           </div>
           <div class="data">
@@ -50,7 +51,7 @@
               Enviado
             </span>
             <p>
-              $160
+              {{ li.send }}
             </p>
           </div>
           <div class="data">
@@ -58,22 +59,22 @@
               Recibido
             </span>
             <p>
-              Gs 18.090
+              {{ li.received }}
             </p>
           </div>
         </div>
       </div>
       <div class="parent-info-2 parent-info">
         <div
-          v-for="li in 20"
-          :key="li"
+          v-for="(li, i) in filterOperations(2)"
+          :key="i"
           class="info">
           <div class="data">
             <span>
               Fecha
             </span>
             <p>
-              24/05/2020
+              {{ li.date }}
             </p>
           </div>
           <div class="data">
@@ -81,7 +82,7 @@
               Enviado
             </span>
             <p>
-              $160
+              {{ li.send }}
             </p>
           </div>
           <div class="data">
@@ -89,22 +90,22 @@
               Recibido
             </span>
             <p>
-              Gs 18.090
+              {{ li.receive }}
             </p>
           </div>
         </div>
       </div>
       <div class="parent-info-3 parent-info">
         <div
-          v-for="li in 20"
-          :key="li"
+          v-for="(li, i) in filterOperations(3)"
+          :key="i"
           class="info">
           <div class="data">
             <span>
               Fecha
             </span>
             <p>
-              24/05/2020
+              {{ li.date }}
             </p>
           </div>
           <div class="data">
@@ -112,7 +113,7 @@
               Enviado
             </span>
             <p>
-              $160
+              {{ li.send }}
             </p>
           </div>
           <div class="data">
@@ -120,7 +121,7 @@
               Recibido
             </span>
             <p>
-              Gs 18.090
+              {{ li.receive }}
             </p>
           </div>
         </div>
@@ -130,14 +131,44 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-@Component
-export default class Operations extends Vue {
+import axios from '~/plugins/axios'
+import { State, Action, Mutation } from 'vuex-class'
+@Component({
+  fetch() {
+    (this as any).getOperations()
+  },
+  fetchOnServer: false
+})
+export default class OperationsClass extends Vue {
   seg: number = 0
   secFun: any = null
   scrollLeft: number = 0
   windowInnerWidth: number = 0
 
   @Prop({}) scrollTop: number
+
+  @State(state => state.operations.operations) operations
+
+  @Action('operations/getOperations') getOperations
+
+  @Mutation('steps/SET_DATA') setStepData
+
+  handleClickOperation(operation) {
+    this.setStepData(operation)
+    this.$router.push({
+      path: 'steps',
+      query: {
+        step: '3',
+        id: operation.id
+      }
+    })
+  }
+
+  filterOperations(id) {
+    return this.operations.filter((item) => {
+      return item.status_operation_id == id
+    })
+  }
 
   handleSeg () {
     this.seg++
@@ -161,6 +192,8 @@ export default class Operations extends Vue {
   }
 
   mounted () {
+    // this.getOperations()
+
     const infos: any = this.$refs.infos
     infos.addEventListener('scroll', (evt) => {
       this.scrollLeft = evt.target.scrollLeft

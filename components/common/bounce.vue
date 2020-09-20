@@ -26,13 +26,21 @@ export default class BounceBase extends Vue {
     el.style.width = 0
     el.style.left = `${this.x}px`
     el.style.top = `${this.y}px`
+    console.log(this.x)
+    console.log(this.y)
   }
 
   enter (el: any, done: any) {
-    const h = window.innerHeight * 2.5
-    const w = window.innerHeight * 2.5
-    el.style.height = h - 1 + 'px'
-    el.style.width = w - 1 + 'px'
+    let h = window.innerHeight * 2.5
+    const w = window.innerWidth * 2.5
+
+    if (w > h) {
+      h = w
+    }
+    setTimeout(() => {
+      el.style.height = h - 1 + 'px'
+      el.style.width = h - 1 + 'px'
+    }, 10);
     done()
   }
 

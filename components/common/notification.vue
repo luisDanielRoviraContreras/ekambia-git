@@ -1,6 +1,6 @@
 <template>
   <transition name="fade-noti">
-    <div v-if="isVisible" class="notification">
+    <div @click="isVisible = false" v-if="isVisible" class="notification">
       <h5>
         {{ title }}
       </h5>
@@ -24,7 +24,7 @@ export default class notificationBase extends Vue {
   transition: all .25s ease
 
 .fade-noti-enter, .fade-noti-leave-to
-  transform: translate(0,100%)
+  transform: translate(-50%,100%) !important
 
 .notification
   position: fixed
@@ -35,13 +35,13 @@ export default class notificationBase extends Vue {
   background: -color('color')
   padding: 20px
   border-radius: 30px 30px 0px 0px
+  max-width: 500px
+  left: 50%
+  transform: translate(-50%)
   h5
     font-size: 1rem
   p
     font-weight: 600
     font-size: .85rem
     padding-top: 5px
-// responsive
-
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
 </style>

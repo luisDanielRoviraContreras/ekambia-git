@@ -88,6 +88,10 @@ export default class step2 extends Vue {
   margin-bottom: -30px
   border: 0px solid transparent
   border-top: 2px solid transparent
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  flex-direction: column
   &.ready
     background: -color('black')
     border: 0px solid -color('bg')
@@ -102,9 +106,13 @@ export default class step2 extends Vue {
     transition: all .25s ease
     overflow: auto
     padding: 0px 20px
+    max-width: 600px
+    width: 100%
   header
     padding: 20px
     color: -color('bg')
+    width: 100%
+    max-width: 600px
     h3
       font-weight: 600
       font-size: 1rem
@@ -113,5 +121,11 @@ export default class step2 extends Vue {
         font-size: 1.1rem
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .step2
+    padding-bottom: 0px
+    margin-bottom: 0px
+    border-radius: 30px
+    header
+      border-radius: 30px
 </style>

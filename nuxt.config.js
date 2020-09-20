@@ -44,10 +44,10 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '@/plugins/touch.client.ts',
-    '@/plugins/notification.client.ts',
-    '@/plugins/dialog.client.ts',
-    '@/plugins/bounce.client.ts'
+    {src: '@/plugins/touch.client.ts', ssr: false},
+    {src: '@/plugins/notification.client.ts', ssr: false},
+    {src: '@/plugins/dialog.client.ts', ssr: false},
+    {src: '@/plugins/bounce.client.ts', ssr: false},
   ],
   /*
   ** Auto import components
@@ -68,7 +68,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    '@nuxtjs/device'
   ],
   styleResources: {
     sass: ['~/style/mixins.sass']
@@ -98,6 +99,7 @@ export default {
   },
 
   env: {
-    API: 'http://3.16.43.49/api/'
+    // API: 'http://3.16.43.49/api/',
+    API: 'https://ekambia.lusaxweb.pro/api/'
   }
 }

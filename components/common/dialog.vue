@@ -76,13 +76,13 @@ export default class dialogBase extends Vue {
   .con-dialog
     border-radius: 30px 30px 0px 0px
     bottom: 0px
-    left: 0px
     padding: 20px
     background: -color('color')
     width: 100%
     height: auto
     position: absolute
     transition: all .25s ease
+    max-width: 500px
     footer
       display: flex
       align-items: center
@@ -100,5 +100,9 @@ export default class dialogBase extends Vue {
     padding-top: 5px
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .dialog
+    display: flex
+    align-items: center
+    justify-content: center
 </style>

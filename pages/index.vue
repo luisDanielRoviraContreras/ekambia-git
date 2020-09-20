@@ -1,6 +1,6 @@
 <template>
   <div ref="page" class="index page">
-    <nav-bar />
+    <nav-bar v-if="$device.isMobile" />
     <div id="change" class="con-change">
       <div class="con-img">
         <img src="home.png" alt="">
@@ -16,7 +16,7 @@
       <div class="con-inputs mt-6">
         <c-input
           ref="send"
-          v-model="form.send"
+          v-model="operation.send"
           inputmode="none"
           identificador="send"
           @focus="inputFocus"
@@ -25,9 +25,9 @@
         </c-input>
         <c-input
           ref="receive"
-          v-model="form.receive"
+          v-model="operation.receive"
           inputmode="none"
-          class="mt-6"
+          class="mt-6 receive"
           identificador="receive"
           @focus="inputFocus"
         >
@@ -35,14 +35,14 @@
         </c-input>
         <invert @change="handleChange"/>
       </div>
-      <Button @click="$router.push('/steps')" class="mt-6" yellow block>
+      <Button @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
       </Button>
     </div>
 
-    <operations :scroll-top="scrollTop" ref="operations" @touchend="handleTouchend" />
+    <operations v-if="$device.isMobile" :scroll-top="scrollTop" ref="operations" @touchend="handleTouchend" />
     <transition name="fade-teclado">
-      <teclado v-if="focus" @click="handleTeclado" />
+      <teclado v-if="focus && $device.isMobile" @click="handleTeclado" />
     </transition>
 
     <nuxt-child />
@@ -50,11 +50,13 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { State } from 'vuex-class'
+import { State, Mutation } from 'vuex-class'
 import operations from '@/components/index/operations.vue'
 import invert from '@/components/index/invert.vue'
 import teclado from '@/components/common/teclado.vue'
+import axios from '~/plugins/axios'
 @Component({
+  name: 'index',
   middleware: 'authenticated',
   layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
   components: {
@@ -72,7 +74,26 @@ export default class name extends Vue {
     receive: ''
   }
 
-  @State('bounce') bounce
+  @State(state => state.change.operation) operation
+
+  @Mutation('change/CHANGE_SEND') changeSend
+
+  @Mutation('change/CHANGE_RECEIVE') changeReceive
+
+  @Mutation('change/SET_SEND') setSend
+
+  @Mutation('change/SET_RECEIVE') setReceive
+
+  @Mutation('operation/SET_DATA') setDataOperation
+
+  handleInitOperation() {
+    this.$router.push({
+      path: '/steps', query: {
+        s: this.operation.send,
+        r: this.operation.receive
+      }
+    })
+  }
 
   @Watch('$route.hash')
   handleRoute (val) {
@@ -87,6 +108,7 @@ export default class name extends Vue {
   }
 
   mounted () {
+    console.dir(this)
     const page: any = this.$refs.page
     page.addEventListener('scroll', (evt) => {
       this.scrollTop = evt.target.scrollTop
@@ -105,9 +127,11 @@ export default class name extends Vue {
   }
 
   handleChange () {
-    const oldForm = JSON.parse(JSON.stringify(this.form))
-    this.form.send = oldForm.receive
-    this.form.receive = oldForm.send
+    const oldForm = JSON.parse(JSON.stringify(this.operation))
+    this.setSend(`${oldForm.receive}`)
+    this.setReceive(`${oldForm.send}`)
+    // this.form.send = oldForm.receive
+    // this.form.receive = oldForm.send
   }
 
   inputFocus (evt: any) {
@@ -135,9 +159,18 @@ export default class name extends Vue {
 
   handleTeclado (val: any) {
     if (val !== 'back') {
-      this.form[this.focus] += `${val}`
+      if (this.focus == 'send') {
+        this.changeSend(`${val}`)
+      } else {
+        this.changeReceive(`${val}`)
+      }
     } else {
-      this.form[this.focus] = this.form[this.focus].slice(0, -1)
+      if (this.focus == 'send') {
+        this.setSend(`${this.operation[this.focus].slice(0, -1)}`)
+      } else {
+        this.setReceive(`${this.operation[this.focus].slice(0, -1)}`)
+      }
+      // this.operation[this.focus] = this.form[this.focus].slice(0, -1)
     }
     if (this.focus) {
       (this.$refs[this.focus] as any).$el.querySelector(`.${this.focus}`).focus()
@@ -164,6 +197,7 @@ export default class name extends Vue {
   position: relative
   height: calc(var(--vh, 1vh) * 100)
   scroll-behavior: smooth
+  width: 100%
   .con-change
     width: 100%
     padding: 20px 30px
@@ -176,10 +210,12 @@ export default class name extends Vue {
     justify-content: center
     flex-direction: column
     box-sizing: border-box
+    max-width: 450px
     .con-img
       margin-bottom: -20px
       img
         max-width: 260px
+        transition: all .25s ease
 .con-inputs
   position: relative
   width: 100%
@@ -211,5 +247,10 @@ export default class name extends Vue {
   flex-wrap: wrap
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .index
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
 </style>

@@ -16,8 +16,10 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.10",
     "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/device": "^1.2.7",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/style-resources": "^1.0.0",
+    "animejs": "^3.2.0",
     "axios-middleware": "^0.3.1",
     "boxicons": "^2.0.5",
     "cookie-universal-nuxt": "^2.1.4",

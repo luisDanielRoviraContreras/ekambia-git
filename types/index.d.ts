@@ -10,6 +10,7 @@ declare global {
 declare module 'vue/types/vue' {
   // 3. Declare augmentation for Vue
   interface Vue {
+    $device: any
     $bounceClose: Function
     $bounce: Function
     $notification: Function

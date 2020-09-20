@@ -30,12 +30,15 @@ export default class btn extends Vue {
   display: flex
   align-items: center
   justify-content: center
+  cursor: pointer
   &.yellow
     background: -color('color')
     color: #000
     box-shadow: 0px 7px 20px 0px -color('color', .3)
   &.block
     width: 100%
+  &:disabled
+    opacity: .5
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

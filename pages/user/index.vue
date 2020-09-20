@@ -1,6 +1,6 @@
 <template>
   <div class="user page">
-    <nav-bar absolute />
+    <nav-bar v-if="$device.isMobile" absolute />
     <h2>
       Mi Perfil
     </h2>
@@ -148,11 +148,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
+import { State, Action } from 'vuex-class'
 @Component({
-  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default'
+  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+  fetch() {
+    (this as any).getUserData(this.$route.query.id)
+  },
+  fetchOnServer: false
 })
 export default class name extends Vue {
   open: number = 0
+
+  @State(state => state.user.data) data
+
+  @Action('user/getUserData') getUserData
+
+  @Action('user/updateUserData') updateUserData
 
   handleClickLogOut () {
     this.$dialog({
@@ -203,6 +214,7 @@ export default class name extends Vue {
   justify-content: flex-start
   flex-direction: column
   overflow: auto
+  width: 100%
   h2
     font-size: 1.2rem
     padding-left: 5px
@@ -216,6 +228,7 @@ export default class name extends Vue {
     align-items: flex-start
     justify-content: flex-start
     flex-direction: column
+    max-width: 500px
     h3
       font-size: 1rem
   .con-info
@@ -235,6 +248,7 @@ export default class name extends Vue {
       display: flex
       align-items: center
       justify-content: space-between
+      cursor: pointer
       .right
         transition: all .25s ease
         font-size: 1.3rem
@@ -262,5 +276,11 @@ export default class name extends Vue {
       padding-bottom: 20px
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .user
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    flex-direction: column
+
 </style>

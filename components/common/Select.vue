@@ -5,6 +5,7 @@
   >
     <select
       v-on="listeners"
+      v-bind="$attrs"
       name=""
     >
       <slot />
@@ -63,6 +64,7 @@ export default class Select extends Vue {
     text-indent: 1px
     text-overflow: ''
     background: transparent
+    transition: all .25s ease
 
 // responsive
 

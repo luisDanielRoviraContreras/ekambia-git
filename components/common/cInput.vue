@@ -96,6 +96,13 @@ export default class InputComponent extends Vue {
     background: transparent
     color: -color('black', 1)
     z-index: 10
+    &:read-only
+      opacity: .5
+      ~ .placeholder
+        color: rgba(0,0,0,.5)
+      ~ .bg
+        opacity: .5
+        border: 2px solid #e2e7ec
     &:focus
       ~ .bg
         border: 2px solid -color('color', 1)

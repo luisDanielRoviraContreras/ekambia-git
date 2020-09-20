@@ -27,10 +27,14 @@
         v-model="form.email"
         type="email"
         class="mt-6"
-        :danger="!form.email && send"
+        :danger="(!form.email || !emailValid) && send"
       >
         Ingrese su correo electrónico
       </c-input>
+
+      <Alert :open="!emailValid && send">
+        Correo electrónico Invalido
+      </Alert>
 
       <Alert :open="!form.email && send">
         Este campo es requerido
@@ -54,20 +58,29 @@ import axios from '~/plugins/axios'
 export default class recover extends Vue {
   send: boolean = false
   form: any = {
-    email: ''
+    email: 'luisdanielrovira8@gmail.com'
+  }
+
+  get emailValid() {
+    // eslint-disable-next-line no-useless-escape
+    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    return emailRegex.test(this.form.email.trim())
   }
 
   handleSend () {
     this.send = true
 
-    if (!this.form.email) {
+    if (!this.form.email || !this.emailValid) {
       return
     }
 
-    axios.post('/password/email', {
+    // this.$router.push('/login/sendEmail')
+    console.log(this.form.email)
+    axios.post('/email-resetpassword', {
       email: this.form.email
     }).then(() => {
       console.log('mensaje enviado')
+      this.$router.push('/login/sendEmail')
     }).catch(() => {
       this.$notification({
         title: 'Oops! Algo salió mal',
@@ -108,6 +121,7 @@ export default class recover extends Vue {
         max-width: 140px
   .btn-send
     justify-self: flex-end
+    max-width: 400px
   header
     position: fixed
     top: 0px
@@ -127,6 +141,7 @@ export default class recover extends Vue {
     justify-content: center
     flex-direction: column
     flex: 1
+    max-width: 400px
     p
       opacity: .5
       font-size: .85rem
@@ -136,5 +151,11 @@ export default class recover extends Vue {
       font-size: 1.1rem
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px), (pointer:cursor)
+  .recover
+    .con-recover
+      flex: none
+    .btn-send
+      margin-top: 30px
+
 </style>

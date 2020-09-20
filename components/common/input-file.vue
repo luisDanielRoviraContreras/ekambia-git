@@ -7,8 +7,17 @@
       <slot />
     </label>
     <div class="con-file">
-      <i v-if="src" class="bx bx-revision reload" />
-      <i v-else class="bx bx-image-add" />
+      <div v-if="user" class="con-text">
+        <img src="/user.png" alt="">
+      </div>
+      <div v-else class="con-text">
+        <i v-if="src" class="bx bx-revision reload" />
+        <i v-else class="bx bx-image-add" />
+        <p>
+          Tome o suba <br> fotografiá
+          DNI delantero
+        </p>
+      </div>
       <input
         :id="_uid"
         :class="{ hasValue: value }"
@@ -16,7 +25,7 @@
         @change="processFile($event)"
       >
 
-      <img v-if="src" :src="src" alt="file-image">
+      <img v-if="src" :src="src" class="img" alt="file-image">
     </div>
   </div>
 </template>
@@ -29,6 +38,7 @@ export default class InputComponent extends Vue {
   @Prop({}) value!: any
   @Prop({ type: Boolean }) notMargin!: boolean
   @Prop({ type: Boolean }) danger!: boolean
+  @Prop({ type: Boolean }) user!: boolean
 
   src: any = ''
 
@@ -89,9 +99,25 @@ export default class InputComponent extends Vue {
     background: -color('gray-2', 1)
     cursor: pointer
     position: relative
+    .con-text
+      width: 100%
+      height: 100%
+      position: absolute
+      left: 0px
+      top: 0px
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
+      img
+        height: 70%
+      p
+        font-size: .8rem
+        text-align: center
+        margin-top: 8px
     &:hover
       background: -color('gray', 1)
-      img
+      img.img
         opacity: .5
       .reload
         z-index: 20
@@ -99,7 +125,7 @@ export default class InputComponent extends Vue {
       i
         opacity: .6
     i
-      position: absolute
+      position: relative
       font-size: 1.8rem
       transition: all .25s ease
       margin-top: 3px
@@ -123,8 +149,8 @@ export default class InputComponent extends Vue {
   label
     font-size: .9rem
     padding: 5px 0px
-    font-weight: bold
-  img
+    font-weight: 600
+  img.img
     max-width: 100%
     max-height: 100%
     left: 0px
@@ -142,7 +168,7 @@ export default class InputComponent extends Vue {
     box-sizing: border-box
     font-size: .75rem
     background: transparent
-    height: 100px
+    height: 150px
     opacity: 0
     cursor: pointer
     &.hasValue

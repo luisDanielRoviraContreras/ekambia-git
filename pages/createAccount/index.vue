@@ -14,18 +14,6 @@
     </header>
 
     <nuxt-child />
-
-    <footer>
-      <Button
-        class="mt-3 btn-send"
-        yellow
-        block
-        @click="handleClickStep"
-      >
-        <!-- @click="handleClickStep" -->
-        {{ $route.name === 'createAccound-index-step3' ? 'Crear Cuenta' : 'Continuar' }}
-      </Button>
-    </footer>
   </div>
 </template>
 <script lang="ts">
@@ -36,48 +24,22 @@ import axios from '~/plugins/axios'
 })
 export default class createAccount extends Vue {
   send: boolean = false
-  form: any = {
-    email: '',
-    emailConfirm: '',
-    password: '',
-    passwordConfirm: '',
-    dniType: 1,
-    dni: '',
-    tel: '',
-    // two step
-    firstName1: '',
-    firstName2: '',
-    lastName1: '',
-    lastName2: '',
-    date: '01-01-2020',
-    // step 3
-    image1: '',
-    image2: '',
-    image3: '',
-    profileId: 1
-  }
-
-  handleSendRegister () {
-    axios.post('/register', {
-      email: this.form.email,
-      password: this.form.password,
-      password_confirmation: this.form.passwordConfirm,
-      profile_id: this.form.profileId,
-      firstName1: this.form.firstName1,
-      firstName2: this.form.firstName2,
-      lastName1: this.form.lastName1,
-      lastName2: this.form.lastName2,
-      document_type_id: this.form.dniType,
-      dni: this.form.dni,
-      date_of_birth: this.form.date,
-      tel: this.form.tel,
-      cedulaPost: this.form.image1,
-      cedulaFront: this.form.image2,
-      selfie: this.form.image3
-    }).then(() => {
-      this.$router.push('/login/')
-    })
-  }
+  // form: any = {
+  //   email: '',
+  //   password: '',
+  //   dniType: 1,
+  //   dni: '',
+  //   tel: '',
+  //   // two step
+  //   firstName: '',
+  //   lastName: '',
+  //   date: '01-01-2020',
+  //   // step 3
+  //   image1: '',
+  //   image2: '',
+  //   image3: '',
+  //   profileId: 1
+  // }
 
   get getNumberValue () {
     if (this.$route.name === 'createAccound-index') {
@@ -86,32 +48,6 @@ export default class createAccount extends Vue {
       return 2
     } else if (this.$route.name === 'createAccound-index-step3') {
       return 3
-    }
-  }
-
-  handleClickStep () {
-    this.send = true
-
-    if ((!this.form.email || !this.form.emailConfirm || !this.form.password || !this.form.passwordConfirm || !this.form.dni || !this.form.tel) && this.$route.name) {
-      return
-    }
-
-    if ((!this.form.firstName1 || !this.form.firstName2 || !this.form.lastName1 || !this.form.lastName2 || !this.form.date) && this.$route.name === 'createAccound-index-step2') {
-      return
-    }
-
-    if ((!this.form.image1 || !this.form.image2 || !this.form.image3) && this.$route.name === 'createAccound-index-step3') {
-      return
-    }
-
-    this.send = false
-
-    if (this.$route.name === 'createAccound-index') {
-      this.$router.push('./step2')
-    } else if (this.$route.name === 'createAccound-index-step2') {
-      this.$router.push('./step3')
-    } else if (this.$route.name === 'createAccound-index-step3') {
-      this.handleSendRegister()
     }
   }
 }

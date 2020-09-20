@@ -37,15 +37,15 @@
     <div class="con-code">
       <h3>¡Código de recomendación!</h3>
       <p>
-        Camparte tu código a todos tus amigos
+        Comparte tu link a todos tus amigos
       </p>
 
       <div class="share-code">
-        <input type="text">
-        <button>
+        <input v-model="urlRef" type="text">
+        <button @click="clipboard(urlRef)">
           <i class='bx bx-copy' ></i>
         </button>
-        <button>
+        <button v-if="$device.isMobile" @click="share">
           <i class='bx bxs-share-alt' ></i>
         </button>
       </div>
@@ -58,7 +58,7 @@
       <span>
         20 Guaranies
       </span>
-      <Button class="mt-6" block yellow>
+      <Button class="mt-6 mb-6" block yellow>
         Compartir
       </Button>
     </div>
@@ -66,8 +66,44 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { State } from 'vuex-class'
 @Component
-export default class win extends Vue {}
+export default class win extends Vue {
+  @State(state => state.user.data) data
+
+  get urlRef() {
+    return `http://localhost:3000/login/?ref=${this.data && this.data.recommendation_code}`
+  }
+
+  share() {
+    if ((navigator as any).share) {
+      (navigator as any).share({
+        title: 'Ekambia',
+        text: 'Te invito a Ekambia',
+        url: this.urlRef
+      }).then(() => {
+        console.log('Thanks for sharing!');
+      })
+      .catch(console.error);
+    }
+  }
+
+  clipboard(text) {
+    const aux = document.createElement('textarea')
+    aux.value = text
+    aux.className = 'vs-clipboard'
+    document.body.appendChild(aux)
+    aux.focus()
+    aux.select()
+    document.execCommand('copy')
+    document.body.removeChild(aux)
+
+    this.$notification({
+      title: 'Link Copiado',
+      text: 'Comparte este link con tus amigos y gana'
+    })
+  }
+}
 </script>
 <style lang="sass" scoped>
 .win
@@ -128,10 +164,12 @@ export default class win extends Vue {}
       border: 1px dashed -color('text', .15)
       border-radius: 20px
       margin-top: 10px
+      width: 100%
       input
         padding: 10px
         border: 0px
         background: transparent
+        flex: 1
       button
         width: 42px
         height: 42px

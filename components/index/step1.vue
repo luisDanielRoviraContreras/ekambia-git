@@ -28,7 +28,7 @@
                 Tu enviás
               </span>
               <p>
-                $100.00
+                {{ getSend }}
               </p>
             </div>
             <div class="text">
@@ -36,7 +36,7 @@
                 Tu recibes
               </span>
               <p>
-                345.30 Guarani
+                {{ getReceive }} Guarani
               </p>
             </div>
           </div>
@@ -44,32 +44,26 @@
             <span>
               Tipo de cambio utilizando
             </span>
-            <p>
-              3.655
+            <p v-if="data">
+              {{ data.exchange_purchase.price_purchase }}
             </p>
           </div>
         </div>
 
-        <Select class="mt-6" block>
-          <option value="1">
-            Banco
+        <Select v-if="data" class="mt-6" block>
+          <option disabled value="1">
+            Cuenta de origen
           </option>
-          <option value="2">
-            BBVA
-          </option>
-          <option value="3">
-            Santander
+          <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+            {{ option.alias }}
           </option>
         </Select>
-        <Select class="mt-6" block>
+        <Select v-if="data" class="mt-6" block>
           <option value="1">
-            Escoger cuenta
+            Cuenta de destino
           </option>
-          <option value="2">
-            BBVA
-          </option>
-          <option value="3">
-            Santander
+          <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+            {{ option.alias }}
           </option>
         </Select>
         <Select class="mt-6" block>
@@ -77,13 +71,19 @@
             Origen de fondos
           </option>
           <option value="2">
-            BBVA
+            Venta de inmueble
           </option>
           <option value="3">
-            Santander
+            Trabajo
+          </option>
+          <option value="4">
+            Contrataciones
+          </option>
+          <option value="5">
+            Otro
           </option>
         </Select>
-        <Button class="mt-6" block yellow>
+        <Button @click="createOperation" class="mt-6" block yellow>
           Iniciar Operación
         </Button>
       </div>
@@ -92,10 +92,20 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { State, Action } from 'vuex-class'
+import axios from '~/plugins/axios'
 @Component
 export default class step1 extends Vue {
   @Prop() open: boolean
   @Prop() ready: boolean
+  data: any = null
+
+  get getSend() {
+    return this.$route.query.s
+  }
+  get getReceive() {
+    return this.$route.query.r
+  }
 
   beforeEnter (el: any) {
     el.style.height = 0
@@ -118,7 +128,30 @@ export default class step1 extends Vue {
     el.style.height = '0px'
   }
 
+  getData() {
+    axios.get('/operation-create').then(({ data }) => {
+      console.log('data', data)
+      this.data = data
+    })
+  }
+
+  createOperation() {
+    axios.post('/operation-store', {
+      send: this.getSend,
+      received: this.getReceive,
+      coin_send_id: "1",
+      coin_received_id: "2",
+      destination_account_id: "2",
+      source_account_id: "1",
+      source_funds: "Venta de inmueble",
+      exchange_type: '1'
+    }).then(({ data }) => {
+      (this.$parent as any).isOpen = 2
+    })
+  }
+
   mounted () {
+    this.getData()
     const header = document.querySelector('.navbar-mobile')
     const step2 = document.querySelector('.step2 header')
     const step3 = document.querySelector('.step3 header')
@@ -135,6 +168,10 @@ export default class step1 extends Vue {
   border-radius: 30px 30px 0px 0px
   padding-bottom: 30px
   margin-bottom: -30px
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
   &.ready
     background: -color('black')
     .con
@@ -145,6 +182,8 @@ export default class step1 extends Vue {
     transition: all .25s ease
     overflow: auto
     padding: 0px 20px
+    max-width: 600px
+    width: 100%
     .card-texts
       background: -color('gray-2')
       border-radius: 30px
@@ -171,6 +210,8 @@ export default class step1 extends Vue {
         font-weight: bold
   header
     padding: 20px
+    max-width: 600px
+    width: 100%
     h3
       font-weight: 600
       font-size: 1rem
@@ -179,5 +220,11 @@ export default class step1 extends Vue {
         font-size: 1.1rem
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .step1
+    padding-bottom: 0px
+    margin-bottom: 0px
+    border-radius: 30px
+    header
+      border-radius: 30px
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="app">
-    <!-- <navBar /> -->
-    <Nuxt />
+    <OffLine v-if="$nuxt.isOffline" />
+    <Nuxt keep-alive />
     <footerBar />
   </div>
 </template>

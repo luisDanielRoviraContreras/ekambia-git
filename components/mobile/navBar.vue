@@ -27,7 +27,7 @@ export default class NavbarMobile extends Vue {
   position: relative
   left: 0px
   top: 0px
-  // background: -color('bg',.7)
+  background: inherit
   padding: 0px 20px
   display: flex
   align-items: center

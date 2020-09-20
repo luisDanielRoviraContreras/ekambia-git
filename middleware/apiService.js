@@ -19,5 +19,8 @@ service.register({
   },
   onResponse (promise) {
     return promise
+  },
+  onResponseError(error) {
+    window.$nuxt.$cookies.remove('authenticated')
   }
 })

@@ -3,6 +3,7 @@
     <label class="mb-4" for="">
       Alerta cuando la compra este por encima de
     </label>
+    <!-- <button @click="notifyMe">Notify me!</button> -->
     <div class="con-switch">
       <c-input type="number">
         Monto
@@ -25,7 +26,18 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component
-export default class name extends Vue {}
+export default class name extends Vue {
+  notifyMe() {
+    navigator.serviceWorker.register('sw.js');
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Notification with ServiceWorker');
+        });
+      }
+    });
+  }
+}
 </script>
 <style lang="sass" scoped>
 label

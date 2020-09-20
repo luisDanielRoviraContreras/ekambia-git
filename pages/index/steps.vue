@@ -1,16 +1,37 @@
 <template>
   <div class="steps-transfer">
     <nav-bar back @click="$router.push('/')" />
-    <step-1 @click="isOpen = 1" :ready="isOpen === 2 || isOpen === 3" :open="isOpen === 1" />
-    <step-2 @click="isOpen = 2" :ready="isOpen === 3" :open="isOpen === 2" />
-    <step-3 @click="isOpen = 3" :black="isOpen === 2" :open="isOpen === 3" />
+    <div class="con-steps">
+      <step-1 @click="isOpen = 1" :ready="isOpen == 2 || isOpen == 3" :open="isOpen == 1" />
+      <step-2 @click="isOpen = 2" :ready="isOpen == 3" :open="isOpen == 2" />
+      <step-3 @click="isOpen = 3" :black="isOpen == 2" :open="isOpen == 3" />
+      <Success v-if="isOpen == 4" />
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-@Component
+import { State, Action } from 'vuex-class'
+import axios from '~/plugins/axios'
+@Component({
+  name: 'steps',
+  fetch() {
+    (this as any).getOperation(this.$route.query.id)
+  },
+  fetchOnServer: false
+})
 export default class steps extends Vue {
-  isOpen: number = 1
+  isOpen: any = 3
+
+  @State(state => state.steps.data) operation
+
+  @Action('steps/getOperation') getOperation
+
+  mounted() {
+    this.$nextTick(() => {
+      this.isOpen = this.$route.query.step || 1
+    })
+  }
 }
 </script>
 <style lang="sass" scoped>
@@ -36,7 +57,12 @@ export default class steps extends Vue {
   align-items: flex-start
   justify-content: flex-start
   flex-direction: column
+  .con-steps
+    width: 100%
+    max-width: 600px
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .steps-transfer
+    align-items: center
 </style>
