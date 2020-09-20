@@ -14,8 +14,7 @@
         <i v-if="src" class="bx bx-revision reload" />
         <i v-else class="bx bx-image-add" />
         <p>
-          Tome o suba <br> fotografiá
-          DNI delantero
+          <slot name="text"></slot>
         </p>
       </div>
       <input

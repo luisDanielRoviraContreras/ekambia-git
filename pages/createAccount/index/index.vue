@@ -1,5 +1,5 @@
 <template>
-  <div class="step4">
+  <div class="step0">
     <h3>
       Como deseas registrarte para usar Ekambia?
     </h3>
@@ -23,16 +23,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component
-export default class step4 extends Vue {}
+export default class step0 extends Vue {}
 </script>
 <style lang="sass" scoped>
-.step4
+.step0
   display: flex
   align-items: center
-  justify-content: center
+  justify-content: flex-start
   flex-direction: column
   flex: 1
   max-width: 400px
+  overflow: auto
+  max-height: calc(100vh - 60px)
+  padding-bottom: 50px
   .con-img-btn
     width: 100%
     display: flex
@@ -51,6 +54,6 @@ export default class step4 extends Vue {}
 // responsive
 
 @media (min-width: 812px), (pointer:cursor)
-  .step4
+  .step0
     margin: auto
 </style>

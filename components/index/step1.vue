@@ -42,7 +42,7 @@
           </div>
           <div class="textw">
             <span>
-              Tipo de cambio utilizando
+              Tipo de cambio utilizado
             </span>
             <p v-if="data">
               {{ data.exchange_purchase.price_purchase }}
@@ -50,24 +50,24 @@
           </div>
         </div>
 
-        <Select v-if="data" class="mt-6" block>
-          <option disabled value="1">
+        <Select v-if="data" v-model="form.source_account_id" class="mt-6" block>
+          <option hidden value="0">
             Cuenta de origen
           </option>
           <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
             {{ option.alias }}
           </option>
         </Select>
-        <Select v-if="data" class="mt-6" block>
-          <option value="1">
+        <Select v-if="data" class="mt-6" v-model="form.destination_account_id" block>
+          <option hidden value="0">
             Cuenta de destino
           </option>
           <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
             {{ option.alias }}
           </option>
         </Select>
-        <Select class="mt-6" block>
-          <option value="1">
+        <Select class="mt-6" v-model="form.source_funds" block>
+          <option hidden value="0">
             Origen de fondos
           </option>
           <option value="2">
@@ -99,6 +99,12 @@ export default class step1 extends Vue {
   @Prop() open: boolean
   @Prop() ready: boolean
   data: any = null
+
+  form: any = {
+    destination_account_id: 0,
+    source_account_id: 0,
+    source_funds: 0
+  }
 
   get getSend() {
     return this.$route.query.s
@@ -184,6 +190,7 @@ export default class step1 extends Vue {
     padding: 0px 20px
     max-width: 600px
     width: 100%
+    padding-bottom: 30px
     .card-texts
       background: -color('gray-2')
       border-radius: 30px

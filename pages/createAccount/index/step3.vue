@@ -36,7 +36,7 @@
       </Alert>
     </div>
 
-    <Button @click="handleSend" class="mb-6" block yellow>
+    <Button @click="handleSend" class="mb-6 mt-6" block yellow>
       Siguiente
     </Button>
   </div>
@@ -78,7 +78,7 @@ export default class createAccount extends Vue {
   width: 100%
 .con-create
   width: 100%
-  overflow: auto
+  overflow: hidden
   flex: 1
   display: flex
   align-items: center
@@ -91,11 +91,14 @@ export default class createAccount extends Vue {
 .con-form
   display: flex
   align-items: center
-  justify-content: center
+  justify-content: flex-start
   flex-direction: column
   flex: 1
   width: 100%
   max-width: 400px
+  overflow: auto
+  max-height: calc(100vh - 110px)
+  padding-bottom: 40px
 
 
 @media (min-width: 812px)

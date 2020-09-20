@@ -22,7 +22,11 @@
     >
       <div ref="con" v-show="open" class="con">
         <input-file>
-          Comprobante transferencia bancario
+          Comprobante transferencia bancaria
+
+          <template #text>
+            Tome o suba <br> imagen de comprobante
+          </template>
         </input-file>
         <divider>
           O

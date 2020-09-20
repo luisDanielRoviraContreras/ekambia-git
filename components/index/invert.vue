@@ -16,7 +16,7 @@
       </svg>
     </button>
     <p>
-      {{ !sendDollar ? 'Dólares' : 'Guaraní' }}
+      {{ !sendDollar ? 'Dólares' : 'Guaraníes' }}
     </p>
   </div>
 </template>

@@ -74,7 +74,7 @@
               Fecha
             </span>
             <p>
-              {{ li.date }}
+              {{ li.datex }}
             </p>
           </div>
           <div class="data">
@@ -90,7 +90,7 @@
               Recibido
             </span>
             <p>
-              {{ li.receive }}
+              {{ li.received }}
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@
               Fecha
             </span>
             <p>
-              {{ li.date }}
+              {{ li.datex }}
             </p>
           </div>
           <div class="data">
@@ -121,7 +121,7 @@
               Recibido
             </span>
             <p>
-              {{ li.receive }}
+              {{ li.received }}
             </p>
           </div>
         </div>

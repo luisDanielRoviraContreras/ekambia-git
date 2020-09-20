@@ -162,8 +162,8 @@ export default class accountsBank extends Vue {
   handleSend () {
     this.send = true
     axios.post('/account-store', { ...this.form }).then((res) => {
-      this.scrollMoveBack()
       this.getAccounts()
+      this.scrollMoveBack()
       this.$notification({
         title: 'Cuenta Creada',
         text: 'La cuenta ha sido creada exitosamente.'
@@ -177,7 +177,7 @@ export default class accountsBank extends Vue {
       this.getAccounts()
       this.$notification({
         title: 'Datos actualizados',
-        text: 'Los cambios han sido actualizados con satisfactoriamente.'
+        text: 'Los cambios han sido actualizados satisfactoriamente.'
       })
     })
   }
@@ -193,6 +193,7 @@ export default class accountsBank extends Vue {
     })
   }
   scrollMoveBack() {
+    this.send = false;
     (this.$refs.accounts as any).scrollLeft = 0
     this.$router.push({
       path: '/accounts'
@@ -280,8 +281,8 @@ export default class accountsBank extends Vue {
     height: 60px
     border-radius: 25px
     border: 0px
-    bottom: 85px
-    position: fixed
+    bottom: 45px
+    position: absolute
     right: 15px
     transition: width .25s ease, height .25s ease, opacity .2s ease
     overflow: hidden

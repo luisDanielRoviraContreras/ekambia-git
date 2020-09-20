@@ -247,6 +247,11 @@ export default class name extends Vue {
   flex-wrap: wrap
 // responsive
 
+@media (max-height: 700px)
+  .con-change
+    .con-img
+      img
+        display: none
 @media (min-width: 812px)
   .index
     display: flex

@@ -152,8 +152,6 @@ export default class createAccount extends Vue {
   width: 100%
 .con-create
   display: flex
-  align-items: center
-  justify-content: center
   flex-direction: column
   .button
     max-width: 400px
@@ -162,13 +160,16 @@ export default class createAccount extends Vue {
     text-align: center
     width: 100%
 .con-form
-  display: flex
-  align-items: center
-  justify-content: center
-  flex-direction: column
+  // display: flex
+  // align-items: center
+  // justify-content: center
+  // flex-direction: column
   flex: 1
   width: 100%
   max-width: 400px
+  max-height: calc(100vh - 110px)
+  overflow: auto
+  padding-bottom: 50px
 
 @media (min-width: 812px), (pointer:cursor)
   .con-form
