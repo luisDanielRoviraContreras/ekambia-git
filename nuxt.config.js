@@ -47,7 +47,8 @@ export default {
     {src: '@/plugins/touch.client.ts', ssr: false},
     {src: '@/plugins/notification.client.ts', ssr: false},
     {src: '@/plugins/dialog.client.ts', ssr: false},
-    {src: '@/plugins/bounce.client.ts', ssr: false}
+    {src: '@/plugins/bounce.client.ts', ssr: false},
+    {src: '@/plugins/guide.client.ts', ssr: false}
   ],
   /*
   ** Auto import components

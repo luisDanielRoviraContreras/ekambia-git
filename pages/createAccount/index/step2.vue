@@ -60,7 +60,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
-  step: number = 2
+  step: number = 1
   loading: boolean = false
   form: any = {
     tel: null,

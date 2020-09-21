@@ -107,17 +107,19 @@ export default class name extends Vue {
     }
   }
 
-  getDataOperation() {
-    axios.get('/operation-create').then(({ data }) => {
+  getFirstOperation() {
+    axios.get('/firstoperation').then(({ data }) => {
       console.log('data', data)
-      if (data.accounts.length == 0) {
-        this.$router.push('/accounts')
-      }
+
+      // this.$guide()
+      // if (data.accounts.length == 0) {
+      //   this.$router.push('/accounts')
+      // }
     })
   }
 
   mounted () {
-    this.getDataOperation()
+    this.getFirstOperation()
     const page: any = this.$refs.page
     page.addEventListener('scroll', (evt) => {
       this.scrollTop = evt.target.scrollTop
