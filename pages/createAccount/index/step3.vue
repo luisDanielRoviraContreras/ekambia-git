@@ -36,7 +36,7 @@
       </Alert>
     </div>
 
-    <Button @click="handleSend" class="mb-6 mt-6" block yellow>
+    <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
       Siguiente
     </Button>
   </div>
@@ -47,6 +47,7 @@ import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
   send: boolean = false
+  loading: boolean = false
   form: any = {
     cedulaFront: '',
     cedulaPost: '',
@@ -54,6 +55,11 @@ export default class createAccount extends Vue {
   }
 
   handleSend() {
+    this.send = true
+    if (!this.form.cedulaFront || !this.form.cedulaPost || !this.form.selfie) {
+      return
+    }
+    this.loading = true
     var formData = new FormData()
     formData.append("cedulaFront", this.form.cedulaFront)
     formData.append("cedulaPost", this.form.cedulaPost)
@@ -64,6 +70,7 @@ export default class createAccount extends Vue {
         'Content-Type': 'multipart/form-data'
       }
     }).then((res) => {
+      this.loading = false
       this.$router.push('/createAccount/step4')
     })
   }

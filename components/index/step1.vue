@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <Select v-if="data" v-model="form.source_account_id" class="mt-6" block>
+        <Select :danger="!form.source_account_id && send" v-if="data" v-model="form.source_account_id" class="mt-6" block>
           <option hidden value="0">
             Cuenta de origen
           </option>
@@ -58,7 +58,11 @@
             {{ option.alias }}
           </option>
         </Select>
-        <Select v-if="data" class="mt-6" v-model="form.destination_account_id" block>
+        <Alert :open="!form.source_account_id && send">
+          Este campo es requerido
+        </Alert>
+
+        <Select :danger="!form.destination_account_id && send" v-if="data" class="mt-6" v-model="form.destination_account_id" block>
           <option hidden value="0">
             Cuenta de destino
           </option>
@@ -66,7 +70,11 @@
             {{ option.alias }}
           </option>
         </Select>
-        <Select class="mt-6" v-model="form.source_funds" block>
+        <Alert :open="!form.destination_account_id && send">
+          Este campo es requerido
+        </Alert>
+
+        <Select :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
           <option hidden value="0">
             Origen de fondos
           </option>
@@ -83,7 +91,10 @@
             Otro
           </option>
         </Select>
-        <Button @click="createOperation" class="mt-6" block yellow>
+        <Alert :open="!form.source_funds && send">
+          Este campo es requerido
+        </Alert>
+        <Button :loading="loading" @click="createOperation" class="mt-6" block yellow>
           Iniciar Operación
         </Button>
       </div>
@@ -99,6 +110,8 @@ export default class step1 extends Vue {
   @Prop() open: boolean
   @Prop() ready: boolean
   data: any = null
+  loading: boolean = false
+  send: boolean = false
 
   form: any = {
     destination_account_id: 0,
@@ -142,6 +155,13 @@ export default class step1 extends Vue {
   }
 
   createOperation() {
+    this.send = true
+    if (!this.form.destination_account_id || !this.form.source_account_id || !this.form.source_funds) {
+      return
+    }
+
+    this.loading = true
+
     axios.post('/operation-store', {
       send: this.getSend,
       received: this.getReceive,
@@ -151,7 +171,8 @@ export default class step1 extends Vue {
       source_account_id: "1",
       source_funds: "Venta de inmueble",
       exchange_type: '1'
-    }).then(({ data }) => {
+    }).then(() => {
+      this.loading = false;
       (this.$parent as any).isOpen = 2
     })
   }

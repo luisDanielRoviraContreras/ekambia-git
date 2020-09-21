@@ -25,6 +25,7 @@
           v-model="form.numberEmail"
           class="mt-6"
           :danger="!form.numberEmail && send"
+          @keypress.enter="handleSend"
         >
           Número de teléfono o correo
         </c-input>
@@ -37,6 +38,7 @@
           inputmode="password"
           type="password"
           :danger="!form.password && send"
+          @keypress.enter="handleSend"
         >
           Contraseña
         </c-input>
@@ -47,6 +49,7 @@
           class="mt-6"
           yellow
           block
+          :loading="loading"
           @click="handleSend"
         >
           Iniciar Sesión
@@ -80,19 +83,24 @@ import axios from '~/plugins/axios'
 export default class login extends Vue {
   // navigator.credentials
   send: boolean = false
+  loading: boolean = false
   form: any = {
     numberEmail: '',
     password: ''
   }
 
   @State(state => state.bounce) bounce
+
+
   handleSend (evt: any) {
     this.send = true
     if (!this.form.numberEmail || !this.form.password) {
       return
     }
+    this.loading = true
+
     axios.post('/login', {
-      email: this.form.numberEmail,
+      email: this.form.numberEmail.toLowerCase(),
       password: this.form.password
     }).then(({ data }: any) => {
       this.$bounce({
@@ -109,7 +117,9 @@ export default class login extends Vue {
           this.$router.push('/')
         })
       }, 300)
+      this.loading = false
     }).catch(() => {
+      this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
         text: 'Numero de teléfono incorrecto, Correo electrónico incorrecto o contraseña incorrecta.'
@@ -166,8 +176,10 @@ export default class login extends Vue {
     flex: 1
     position: relative
     .con-logo
+      min-height: 127px
       img
         max-width: 140px
+        display: block
   h2
     font-weight: 600
   a

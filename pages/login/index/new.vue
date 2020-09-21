@@ -45,7 +45,7 @@
         <div class="text-3 text">
           <h2>Simple y poderoso</h2>
           <p>
-            Pensamos en la simplicidad para ti y dejanos lo complejo a nosotros
+            Simplicidad para ti, déjanos lo complejo a nosotros.
           </p>
         </div>
         <!-- <div class="text-4 text">

@@ -23,6 +23,7 @@
         :currency="account.coin.coin"
         :account="account"
         ownAccount="si"
+        :animate="i == 0"
         />
 
       <Button v-if="!$device.isMobile" class="mt-6" @click="handleOpenAdd" yellow block>
@@ -118,10 +119,10 @@
           <Button v-if="!$device.isMobile" block @click="visibleAdd = false">
             Cancelar
           </Button>
-          <Button v-if="!$route.query.edit" @click="handleSend" block yellow>
+          <Button :loading="loading" v-if="!$route.query.edit" @click="handleSend" block yellow>
             Agregar Cuenta
           </Button>
-          <Button v-else @click="handleUpdate" block yellow>
+          <Button v-else :loading="loading" @click="handleUpdate" block yellow>
             Guardar Cambios
           </Button>
         </footer>
@@ -142,8 +143,9 @@ import axios from '~/plugins/axios'
 })
 export default class accountsBank extends Vue {
   visibleAdd: boolean = false
-  @State(state => state.accounts.accounts) accounts
+  loading: boolean = false
 
+  @State(state => state.accounts.accounts) accounts
   @Action('accounts/getAccounts') getAccounts
 
   scrollLeft: number = 0
@@ -161,6 +163,10 @@ export default class accountsBank extends Vue {
 
   handleSend () {
     this.send = true
+    if (!this.form.alias || !this.form.account_type_id || !this.form.account_number || !this.form.coin_id || !this.form.bank_id) {
+      return
+    }
+    this.loading = true
     axios.post('/account-store', { ...this.form }).then((res) => {
       this.getAccounts()
       this.scrollMoveBack()
@@ -168,17 +174,23 @@ export default class accountsBank extends Vue {
         title: 'Cuenta Creada',
         text: 'La cuenta ha sido creada exitosamente.'
       })
+      this.loading = false
     })
   }
 
   handleUpdate () {
     this.send = true
+    if (!this.form.alias || !this.form.account_type_id || !this.form.account_number || !this.form.coin_id || !this.form.bank_id) {
+      return
+    }
+    this.loading = true
     axios.post(`/account-update/${this.$route.query.id}`, { ...this.form }).then((res) => {
       this.getAccounts()
       this.$notification({
         title: 'Datos actualizados',
         text: 'Los cambios han sido actualizados satisfactoriamente.'
       })
+      this.loading = false
     })
   }
 
@@ -238,7 +250,6 @@ export default class accountsBank extends Vue {
 
   getDataCreate() {
     axios.get('/account-create').then((res) => {
-      console.log(res.data)
       this.data = res.data
     })
   }
@@ -250,6 +261,9 @@ export default class accountsBank extends Vue {
     accounts.addEventListener('scroll', (evt) => {
       this.scrollLeft = evt.target.scrollLeft
     })
+    setTimeout(() => {
+      this.$cookies.set('anima', true)
+    }, 3000);
   }
 }
 </script>
@@ -281,7 +295,7 @@ export default class accountsBank extends Vue {
     height: 60px
     border-radius: 25px
     border: 0px
-    bottom: 45px
+    bottom: 85px
     position: absolute
     right: 15px
     transition: width .25s ease, height .25s ease, opacity .2s ease
@@ -324,6 +338,10 @@ export default class accountsBank extends Vue {
     z-index: 1000
     overflow: auto
     padding-bottom: 110px
+    .con-create-account__content
+      overflow: auto
+      max-height: calc(100vh - 110px)
+      padding-bottom: 50px
     footer
       display: flex
       align-items: center

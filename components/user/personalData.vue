@@ -8,6 +8,10 @@
     >
       Correo electrónico
     </c-input>
+    <Alert :open="!form.email && send">
+      Este campo es requerido
+    </Alert>
+
     <c-input
       :value="form.tel"
       @input="handleUpdateValue('tel', $event)"
@@ -16,6 +20,10 @@
     >
       Teléfono
     </c-input>
+    <Alert :open="!form.tel && send">
+      Este campo es requerido
+    </Alert>
+
     <c-input
       :value="form.firstName"
       @input="handleUpdateValue('firstName', $event)"
@@ -24,6 +32,10 @@
     >
       Nombres
     </c-input>
+    <Alert :open="!form.firstName && send">
+      Este campo es requerido
+    </Alert>
+
     <c-input
       :value="form.lastName"
       @input="handleUpdateValue('lastName', $event)"
@@ -32,6 +44,10 @@
     >
       Apellidos
     </c-input>
+    <Alert :open="!form.lastName && send">
+      Este campo es requerido
+    </Alert>
+
     <c-input
       :value="form.date_of_birth"
       @input="handleUpdateValue('date_of_birth', $event)"
@@ -40,6 +56,10 @@
     >
       Fecha de nacimiento
     </c-input>
+    <Alert :open="!form.date_of_birth && send">
+      Este campo es requerido
+    </Alert>
+
     <c-input
       :value="form.dni"
       @input="handleUpdateValue('dni', $event)"
@@ -48,6 +68,9 @@
     >
       DNI
     </c-input>
+    <Alert :open="!form.dni && send">
+      Este campo es requerido
+    </Alert>
 
     <Button v-if="!edit" @click="edit = true" class="mb-6 mt-6" block yellow>
       Editar usuario
@@ -56,7 +79,7 @@
       <Button @click="edit = false" class="mr-3">
         Cancelar
       </Button>
-      <Button @click="send" class="mb-6 mt-6" block yellow>
+      <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
         Guardar cambios
       </Button>
     </footer>
@@ -69,6 +92,8 @@ import { Action } from 'vuex-class'
 @Component
 export default class personalData extends Vue {
   edit: boolean = false
+  send: boolean = false
+  loading: boolean = false
   get form() {
     return (this.$parent as any).data
   }
@@ -79,12 +104,21 @@ export default class personalData extends Vue {
     this.updateValue({ prop, val })
   }
 
-  send() {
+  handleSend() {
+    this.send = true
+
+    if (!this.form.dni || !this.form.date_of_birth || !this.form.lastName || !this.form.firstName || !this.form.tel || !this.form.email) {
+      return
+    }
+
+    this.loading = true
+
     axios.post('/update-emailandtel', {
       tel: this.form.tel,
       email: this.form.email
     }).then((res: any) => {
       this.edit = false
+      this.loading = false
 
       this.$notification({
         title: 'Datos Guardados',

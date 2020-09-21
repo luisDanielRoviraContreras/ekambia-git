@@ -298,7 +298,8 @@ export default class OperationsClass extends Vue {
       background: transparent
       transition: all .25s ease
       &.active
-        background: -color('bg')
+        background: -color('black')
+        color: -color('bg')
   header
     border-radius: 30px 30px 0px 0px
     position: relative

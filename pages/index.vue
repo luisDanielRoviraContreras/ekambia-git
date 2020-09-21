@@ -21,7 +21,7 @@
           identificador="send"
           @focus="inputFocus"
         >
-          Tu enviás
+          Tu envías
         </c-input>
         <c-input
           ref="receive"
@@ -50,7 +50,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { State, Mutation } from 'vuex-class'
+import { State, Mutation, Action } from 'vuex-class'
 import operations from '@/components/index/operations.vue'
 import invert from '@/components/index/invert.vue'
 import teclado from '@/components/common/teclado.vue'
@@ -107,8 +107,17 @@ export default class name extends Vue {
     }
   }
 
+  getDataOperation() {
+    axios.get('/operation-create').then(({ data }) => {
+      console.log('data', data)
+      if (data.accounts.length == 0) {
+        this.$router.push('/accounts')
+      }
+    })
+  }
+
   mounted () {
-    console.dir(this)
+    this.getDataOperation()
     const page: any = this.$refs.page
     page.addEventListener('scroll', (evt) => {
       this.scrollTop = evt.target.scrollTop

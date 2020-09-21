@@ -4,6 +4,7 @@
     @touchmove="handleTouch"
     @touchend="handleEnd"
     class="account-card"
+    :class="{ animate: anima }"
     >
     <div
       @click="handleClickRemove"
@@ -22,6 +23,7 @@
       }" -->
     <div
       ref="condiv"
+      @click="handleClickEdit"
       class="con-div">
       <div class="div-1">
         <div class="con-icon">
@@ -63,6 +65,9 @@ export default class cardAccount extends Vue {
   @Prop({}) currency: string
   @Prop({}) ownAccount: string
   @Prop({}) account: any
+  @Prop({}) animate: boolean
+
+  anima: boolean = false
 
   x: number = 0
   move: number = 0
@@ -164,9 +169,28 @@ export default class cardAccount extends Vue {
       }
     })
   }
+
+  mounted() {
+    if (this.animate && !this.$cookies.get('anima')) {
+      this.anima = true
+    }
+  }
 }
 </script>
 <style lang="sass" scoped>
+@keyframes guide
+  0%
+    transform: translate(0px)
+  33%
+    transform: translate(80px)
+  66%
+    transform: translate(-80px)
+  100%
+    transform: translate(0px)
+
+.animate
+  .con-div
+    animation: guide 3s ease 1 1s
 .account-card
   width: 100%
   position: relative

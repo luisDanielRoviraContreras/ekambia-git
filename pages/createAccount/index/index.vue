@@ -27,10 +27,6 @@ export default class step0 extends Vue {}
 </script>
 <style lang="sass" scoped>
 .step0
-  display: flex
-  align-items: center
-  justify-content: flex-start
-  flex-direction: column
   flex: 1
   max-width: 400px
   overflow: auto
@@ -45,10 +41,12 @@ export default class step0 extends Vue {}
     &.empresa
       img
         max-width: 260px
+        min-height: 198px
     img
       margin-bottom: -15px
       width: 100%
       max-width: 180px
+      min-height: 227px
   h3
     text-align: center
 // responsive

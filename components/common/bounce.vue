@@ -26,8 +26,6 @@ export default class BounceBase extends Vue {
     el.style.width = 0
     el.style.left = `${this.x}px`
     el.style.top = `${this.y}px`
-    console.log(this.x)
-    console.log(this.y)
   }
 
   enter (el: any, done: any) {

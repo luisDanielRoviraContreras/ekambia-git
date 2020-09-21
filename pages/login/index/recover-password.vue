@@ -58,7 +58,7 @@ import axios from '~/plugins/axios'
 export default class recover extends Vue {
   send: boolean = false
   form: any = {
-    email: 'luisdanielrovira8@gmail.com'
+    email: ''
   }
 
   get emailValid() {
@@ -117,8 +117,10 @@ export default class recover extends Vue {
   padding: 20px 30px
   padding-top: 60px
   .con-logo
+      min-height: 127px
       img
         max-width: 140px
+        display: block
   .btn-send
     justify-self: flex-end
     max-width: 400px

@@ -203,7 +203,7 @@ export default class InputDate extends Vue {
       .select
         &:nth-child(1)
           select
-            border-radius: 18px 0px 0px 0px !important
+            border-radius: 24px 0px 0px 0px !important
         &:nth-child(2)
           select
             border-radius: 0px !important
@@ -211,7 +211,7 @@ export default class InputDate extends Vue {
             border-right: 0px
         &:nth-child(3)
           select
-            border-radius: 0px 18px 0px 0px !important
+            border-radius: 0px 24px 0px 0px !important
         select
           color: rgba(255,54,95, 1) !important
           border-radius: 24px 24px 0px 0px
@@ -284,7 +284,7 @@ export default class InputDate extends Vue {
     .select
       &:nth-child(1)
         select
-          border-radius: 18px 0px 0px 18px !important
+          border-radius: 24px 0px 0px 24px !important
       &:nth-child(2)
         select
           border-radius: 0px !important
@@ -292,7 +292,7 @@ export default class InputDate extends Vue {
           border-right: 0px
       &:nth-child(3)
         select
-          border-radius: 0px 18px 18px 0px !important
+          border-radius: 0px 24px 24px 0px !important
     .con-password
       min-width: 46px
       min-height: 46px

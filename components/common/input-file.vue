@@ -115,7 +115,6 @@ export default class InputComponent extends Vue {
         text-align: center
         margin-top: 8px
     &:hover
-      background: -color('gray', 1)
       img.img
         opacity: .5
       .reload

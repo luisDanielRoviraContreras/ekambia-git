@@ -5,6 +5,7 @@
   >
       <!-- v-bind="$attrs" -->
     <select
+      :class="{'empty': !this.value}"
       :value="value"
       @change="change"
       name=""
@@ -59,7 +60,7 @@ export default class Select extends Vue {
       width: 100%
   i
     position: absolute
-    right: 12px
+    right: 20px
     pointer-events: none
     font-size: 1.2rem
   select
@@ -73,6 +74,11 @@ export default class Select extends Vue {
     text-overflow: ''
     background: transparent
     transition: all .25s ease
+    font-weight: 600
+    &:focus
+      color: -color('black', 1) !important
+    &.empty
+      color: -color('black', .25)
 
 // responsive
 

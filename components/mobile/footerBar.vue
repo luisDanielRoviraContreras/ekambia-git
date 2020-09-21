@@ -72,8 +72,10 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class footerBar extends Vue {
   handleClickHome () {
     if (this.$route.name === 'index') {
-      const page = document.querySelector('.index.page')
-      page.scrollTo(0, 0)
+      this.$nextTick(() => {
+        const page = document.querySelector('.index.page')
+        page.scrollTo(0, 0)
+      })
     } else {
       setTimeout(() => {
         const page = document.querySelector('.index.page')

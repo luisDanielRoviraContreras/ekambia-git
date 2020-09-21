@@ -30,16 +30,16 @@
 
       <div class="con-inputs">
         <div class="con-input">
-          <input ref="input1" v-model="form.n1" @input="handleInput($event, 2)" maxlength="1" pattern="\d*" type="text" >
+          <input ref="input1" v-model="form.n1" @input="handleInput($event, 2)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
         <div class="con-input">
-          <input ref="input2" v-model="form.n2" @input="handleInput($event, 3)" maxlength="1" pattern="\d*" type="text" >
+          <input ref="input2" v-model="form.n2" @input="handleInput($event, 3)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
         <div class="con-input">
-          <input ref="input3" v-model="form.n3" @input="handleInput($event, 4)" maxlength="1" pattern="\d*" type="text" >
+          <input ref="input3" v-model="form.n3" @input="handleInput($event, 4)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
         <div class="con-input">
-          <input ref="input4" v-model="form.n4" @input="handleInput($event, null)" maxlength="1" pattern="\d*" type="text" >
+          <input ref="input4" v-model="form.n4" @input="handleInput($event, null)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
       </div>
 
@@ -47,10 +47,10 @@
         Volver a enviar el código
       </div>
     </div>
-    <Button v-if="step == 1" :disabled="hasNumber" @click="handleSendSMS" class="mb-6" block yellow>
+    <Button v-if="step == 1" :loading="loading" :disabled="hasNumber" @click="handleSendSMS" class="mb-6" block yellow>
       Enviar SMS
     </Button>
-    <Button v-else :disabled="hasCode" @click="handleSendVerificar" class="mb-6" block yellow>
+    <Button v-else :loading="loading" :disabled="hasCode" @click="handleSendVerificar" class="mb-6" block yellow>
       Verificar
     </Button>
   </div>
@@ -60,7 +60,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
-  step: number = 1
+  step: number = 2
+  loading: boolean = false
   form: any = {
     tel: null,
     n1: null,
@@ -87,18 +88,21 @@ export default class createAccount extends Vue {
     axios.post('/useraddtel', {
       tel: this.form.tel
     }).then((res) => {
-      console.log(res)
+      this.$notification({
+        title: 'Numero celular verificado',
+        text: 'Verificación de numero celular exitosa'
+      })
+      this.loading = false
       this.$router.push('/createAccount/step3')
     })
   }
 
   handleSendVerificar() {
     const code = `${this.form.n1}${this.form.n2}${this.form.n3}${this.form.n4}`
-    console.log(code)
+    this.loading = true
     axios.post('/register-verifycode', {
       codex: code
     }).then((res) => {
-      console.log(res)
       this.handleSaveTel()
     })
   }
@@ -107,12 +111,13 @@ export default class createAccount extends Vue {
     axios.post('/send-sms', {
       tel: this.form.tel
     }).then((res) => {
-      console.log(res)
+      this.loading = false
       this.step = 2
     })
   }
 
   handleSendSMS() {
+    this.loading = true
     this.serverSendSMS()
     // this.step = 2
   }

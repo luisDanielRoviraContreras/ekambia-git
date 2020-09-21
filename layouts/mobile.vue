@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <!-- <guide /> -->
     <OffLine v-if="$nuxt.isOffline" />
     <Nuxt keep-alive />
     <footerBar />

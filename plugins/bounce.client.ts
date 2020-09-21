@@ -10,8 +10,8 @@ bounceConstructor.prototype.close = function () {
 const bounce: any = (params: any = {}) => {
   // eslint-disable-next-line new-cap
   const instance = new bounceConstructor()
-  params.x && (instance.$data.x = params.x)
-  params.y && (instance.$data.y = params.y)
+  instance.$data.x = !params.x ? window.outerWidth / 2 : params.x
+  instance.$data.y = !params.y ? window.outerHeight / 2 : params.y
   params.color && (instance.$data.color = params.color)
 
   document.body.appendChild(instance.$mount().$el)

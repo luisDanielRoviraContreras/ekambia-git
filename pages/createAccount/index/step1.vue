@@ -89,7 +89,7 @@
         Este campo es requerido
       </Alert>
     </div>
-    <Button @click="handleSend" class="mb-6" block yellow>
+    <Button :loading="loading" @click="handleSend" class="mb-6" block yellow>
       Siguiente
     </Button>
   </div>
@@ -100,6 +100,7 @@ import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
   send: boolean = false
+  loading: boolean = false
   form: any = {
     email: '',
     password: '',
@@ -119,6 +120,8 @@ export default class createAccount extends Vue {
       return
     }
 
+    this.loading = true
+
     this.serverSend()
   }
 
@@ -137,7 +140,9 @@ export default class createAccount extends Vue {
       const token = data.token
       this.$cookies.set('token', token)
       this.$router.push('/createAccount/step2')
+      this.loading = false
     }).catch((error) => {
+      this.loading = false
       console.log(error)
     })
   }
