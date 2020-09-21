@@ -38,7 +38,7 @@
           class="ml-3"
           :danger="!form.dni && send"
         >
-          Número
+          Nro de documento
         </c-input>
       </div>
       <Alert :open="!form.dni && send">

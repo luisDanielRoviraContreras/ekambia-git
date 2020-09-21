@@ -17,6 +17,7 @@
         block
         @change="handleChange"
       >
+        <option hidden selected value=""> Dia </option>
         <option
           v-for="(day, index) in 31"
           :key="index"
@@ -33,6 +34,7 @@
         block
         @change="handleChange"
       >
+        <option hidden selected value=""> Mes </option>
         <option
           v-for="(month, index) in months"
           :key="index"
@@ -49,6 +51,7 @@
         block
         @change="handleChange"
       >
+        <option hidden selected value=""> Año </option>
         <option
           v-for="(year, index) in getYears"
           :key="index"

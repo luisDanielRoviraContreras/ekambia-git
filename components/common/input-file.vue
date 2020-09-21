@@ -7,7 +7,7 @@
       <slot />
     </label>
     <div class="con-file">
-      <div v-if="user" class="con-text">
+      <div v-if="user" v-show="!src" class="con-text">
         <img src="/user.png" alt="">
       </div>
       <div v-else class="con-text">

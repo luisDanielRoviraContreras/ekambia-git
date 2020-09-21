@@ -9,10 +9,8 @@
           </g>
         </svg>
       </nuxt-link>
-
-      <steps :value="getNumberValue" :items="3" />
+      <steps v-if="$route.name !== 'createAccount-index'" :value="getNumberValue" :items="3" />
     </header>
-
     <nuxt-child />
   </div>
 </template>
@@ -24,29 +22,13 @@ import axios from '~/plugins/axios'
 })
 export default class createAccount extends Vue {
   send: boolean = false
-  // form: any = {
-  //   email: '',
-  //   password: '',
-  //   dniType: 1,
-  //   dni: '',
-  //   tel: '',
-  //   // two step
-  //   firstName: '',
-  //   lastName: '',
-  //   date: '01-01-2020',
-  //   // step 3
-  //   image1: '',
-  //   image2: '',
-  //   image3: '',
-  //   profileId: 1
-  // }
 
   get getNumberValue () {
-    if (this.$route.name === 'createAccound-index') {
+    if (this.$route.name === 'createAccount-index-step1') {
       return 1
-    } else if (this.$route.name === 'createAccound-index-step2') {
+    } else if (this.$route.name === 'createAccount-index-step2') {
       return 2
-    } else if (this.$route.name === 'createAccound-index-step3') {
+    } else if (this.$route.name === 'createAccount-index-step3') {
       return 3
     }
   }
