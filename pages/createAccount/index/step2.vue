@@ -8,12 +8,12 @@
       </h2>
       <header>
         <p>
-          Agrega tu numero de teléfono al cual le enviaremos un código de 4 dígitos para verificarlo
+          Agrega tu número de teléfono al cual le enviaremos un código de 4 dígitos para verificarlo
         </p>
       </header>
 
       <c-input inputmode="tel" v-model="form.tel" class="mt-6" block>
-        Numero de teléfono
+        Número de teléfono
       </c-input>
     </div>
     <div
@@ -24,7 +24,7 @@
       </h2>
       <header>
         <p v-if="step == 2">
-          Por favor ingresa el código que enviamos a tu numero {{`*******${form.tel[form.tel.length - 2]}${form.tel[form.tel.length - 1]}`}}
+          Por favor ingresa el código que enviamos a tu número {{`*******${form.tel[form.tel.length - 2]}${form.tel[form.tel.length - 1]}`}}
         </p>
       </header>
 
@@ -87,8 +87,8 @@ export default class createAccount extends Vue {
       tel: this.form.tel
     }).then((res) => {
       this.$notification({
-        title: 'Numero celular verificado',
-        text: 'Verificación de numero celular exitosa'
+        title: 'Número celular verificado',
+        text: 'Verificación de número celular exitosa'
       })
       this.loading = false
       this.$router.push('/createAccount/step3')
@@ -104,6 +104,7 @@ export default class createAccount extends Vue {
       this.handleSaveTel()
     }).catch(() => {
       this.loading = false
+      this.step = 1
       this.$notification({
         title: 'Oops! Algo salió mal',
         text: 'No se pudo verificar el código.'

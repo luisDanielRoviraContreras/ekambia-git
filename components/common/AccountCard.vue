@@ -37,7 +37,7 @@
             </span>
           </p>
           <p class="lastNumber">
-            {{ lastNumber }}
+            ****{{ lastNumber.substr(lastNumber.length - 4) }}
           </p>
         </div>
       </div>
@@ -166,6 +166,9 @@ export default class cardAccount extends Vue {
             text: 'No se pudo eliminar la cuenta.'
           })
         })
+      },
+      cancel: () => {
+        this.resetSwipe()
       }
     })
   }

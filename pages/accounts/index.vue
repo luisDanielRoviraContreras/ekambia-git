@@ -73,12 +73,13 @@
 
         <c-input
           v-model="form.account_number"
-          type="email"
+          type="text"
           class="mt-6"
           :danger="!form.account_number && send"
           gray
+          maxlength="24"
         >
-          Numero de cuenta
+          Número de cuenta
         </c-input>
 
         <Alert :open="!form.account_number && send">
@@ -175,6 +176,12 @@ export default class accountsBank extends Vue {
         text: 'La cuenta ha sido creada exitosamente.'
       })
       this.loading = false
+    }).catch(() => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'La cuenta bancaria no se pudo crear por favor intentar de nuevo en unos minutos.'
+      })
     })
   }
 
@@ -186,11 +193,18 @@ export default class accountsBank extends Vue {
     this.loading = true
     axios.post(`/account-update/${this.$route.query.id}`, { ...this.form }).then((res) => {
       this.getAccounts()
+      this.scrollMoveBack()
       this.$notification({
         title: 'Datos actualizados',
         text: 'Los cambios han sido actualizados satisfactoriamente.'
       })
       this.loading = false
+    }).catch(() => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'Los datos no se pudieron actualizar por favor intentar de nuevo en unos minutos.'
+      })
     })
   }
 
@@ -327,7 +341,6 @@ export default class accountsBank extends Vue {
 
   .con-create-account
     // padding: 20px
-    padding-bottom: 70px
     padding-top: 70px
     height: 100%
     width: 100%
@@ -337,7 +350,7 @@ export default class accountsBank extends Vue {
     position: relative
     z-index: 1000
     overflow: auto
-    padding-bottom: 110px
+    padding-bottom: 90px
     .con-create-account__content
       padding: 0px 20px
     //   overflow: auto

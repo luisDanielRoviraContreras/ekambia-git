@@ -36,7 +36,7 @@
                 Tu recibes
               </span>
               <p>
-                {{ getReceive }} Guarani
+                {{ getReceive }}
               </p>
             </div>
           </div>
@@ -50,25 +50,29 @@
           </div>
         </div>
 
-        <Select :danger="!form.source_account_id && send" v-if="data" v-model="form.source_account_id" class="mt-6" block>
+        <Select :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
           <option hidden value="0">
             Cuenta de origen
           </option>
-          <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-            {{ option.alias }}
-          </option>
+          <template v-if="data">
+            <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+              {{ option.alias }}
+            </option>
+          </template>
         </Select>
         <Alert :open="!form.source_account_id && send">
           Este campo es requerido
         </Alert>
 
-        <Select :danger="!form.destination_account_id && send" v-if="data" class="mt-6" v-model="form.destination_account_id" block>
+        <Select :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
           <option hidden value="0">
             Cuenta de destino
           </option>
-          <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-            {{ option.alias }}
-          </option>
+          <template v-if="data">
+            <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+              {{ option.alias }}
+            </option>
+          </template>
         </Select>
         <Alert :open="!form.destination_account_id && send">
           Este campo es requerido
@@ -174,6 +178,12 @@ export default class step1 extends Vue {
     }).then(() => {
       this.loading = false;
       (this.$parent as any).isOpen = 2
+    }).catch(() => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'La operación no se pudo crar con éxito, por favor intentar de nuevo en unos minutos.'
+      })
     })
   }
 

@@ -7,10 +7,10 @@
       </div>
       <div class="con-prices">
         <div class="price-1 price">
-          Compra: 3483
+          Compra: <span v-if="data">{{ data.exchange_purchase.price_purchase }}</span>
         </div>
         <div class="price-2 price">
-          Venta: 3.517
+          Venta: <span v-if="data">{{ data.exchange_sale.price_sale }}</span>
         </div>
       </div>
       <div class="con-inputs mt-6">
@@ -31,6 +31,7 @@
           class="mt-6 receive"
           identificador="receive"
           @focus="inputFocus"
+          readonly
         >
           Tu recibes
         </c-input>
@@ -64,18 +65,17 @@ import axios from '~/plugins/axios'
     operations,
     invert,
     teclado
-  }
+  },
 })
 export default class name extends Vue {
   scrollTop: number = 0
+  reverse: boolean = false
   focus: any = null
-
+  data: any = null
   form: any = {
     send: '',
     receive: ''
   }
-
-  @State(state => state.change.operation) operation
 
   @Mutation('change/CHANGE_SEND') changeSend
 
@@ -88,6 +88,23 @@ export default class name extends Vue {
   @Mutation('operation/SET_DATA') setDataOperation
 
   @Mutation('SET_GUIDE') setGuide
+
+  @Watch('form.send')
+  handleFormSend(val) {
+    if (!this.reverse) {
+      this.form.receive = (Math.round((val * this.data.exchange_sale.price_sale) * 100) / 100).toFixed(2)
+    }
+    if (this.reverse && focus) {
+      this.form.receive = (Math.round((val / this.data.exchange_sale.price_sale) * 100) / 100).toFixed(2)
+    }
+  }
+
+  getData() {
+    axios.get('/operation-create').then(({ data }) => {
+      console.log('data', data)
+      this.data = data
+    })
+  }
 
   handleInitOperation() {
     this.$router.push({
@@ -126,6 +143,7 @@ export default class name extends Vue {
   }
 
   mounted () {
+    this.getData()
     this.getFirstOperation()
     const page: any = this.$refs.page
     page.addEventListener('scroll', (evt) => {
@@ -148,6 +166,7 @@ export default class name extends Vue {
     const oldForm = JSON.parse(JSON.stringify(this.form))
     // this.setSend(`${oldForm.receive}`)
     // this.setReceive(`${oldForm.send}`)
+    this.reverse = !this.reverse
     this.form.send = `${oldForm.receive}`
     this.form.receive = `${oldForm.send}`
   }

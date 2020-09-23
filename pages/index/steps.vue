@@ -50,7 +50,7 @@ export default class steps extends Vue {
   width: 100%
   height: 100%
   background: -color('gray')
-  top: 0px
+  bottom: 0px
   left: 0px
   z-index: 3000
   display: flex

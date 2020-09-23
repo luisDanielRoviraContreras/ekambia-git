@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ danger }"
+    :class="{ danger, disabled }"
     class="con-input-file"
   >
     <label v-if="$slots.default" :for="_uid">
@@ -38,6 +38,7 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean }) notMargin!: boolean
   @Prop({ type: Boolean }) danger!: boolean
   @Prop({ type: Boolean }) user!: boolean
+  @Prop({ type: Boolean }) disabled!: boolean
 
   src: any = ''
 
@@ -81,6 +82,9 @@ export default class InputComponent extends Vue {
   flex-direction: column
   margin-top: 10px
   width: 100%
+  &.disabled
+    opacity: .5
+    pointer-events: none
   &.danger
     color: -color('color-2', 1)
     .con-file

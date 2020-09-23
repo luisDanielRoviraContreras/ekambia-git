@@ -5,7 +5,7 @@
     </label>
     <!-- <button @click="notifyMe">Notify me!</button> -->
     <div class="con-switch">
-      <c-input type="number">
+      <c-input v-model="form.alert1" type="number">
         Monto
       </c-input>
       <c-switch />
@@ -16,7 +16,7 @@
     </label>
 
     <div class="con-switch">
-      <c-input type="number">
+      <c-input v-model="form.alert2" type="number">
         Monto
       </c-input>
       <c-switch />
@@ -27,6 +27,10 @@
 import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class name extends Vue {
+  form: any = {
+    alert1: '',
+    alert2: ''
+  }
   notifyMe() {
     navigator.serviceWorker.register('sw.js');
     Notification.requestPermission(function(result) {

@@ -141,9 +141,12 @@ export default class createAccount extends Vue {
       this.$cookies.set('token', token)
       this.$router.push('/createAccount/step2')
       this.loading = false
-    }).catch((error) => {
+    }).catch(() => {
       this.loading = false
-      console.log(error)
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'No se pudo registrar el usuario por favor revise los datos y vulva a intentarlo.'
+      })
     })
   }
 

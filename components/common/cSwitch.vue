@@ -34,7 +34,7 @@ export default class SwitchElement extends Vue {}
     z-index: 9
     color: -color('black')
     transition: all .25s ease
-    font-size: 1rem
+    font-size: 1.1rem
 
   .circle
     width: 18px

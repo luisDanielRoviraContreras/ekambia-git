@@ -3,7 +3,8 @@
     :class="{
       hasValue: !!value,
       danger,
-      gray
+      gray,
+      disabled
     }"
     class="con-input"
   >
@@ -39,6 +40,7 @@ export default class InputComponent extends Vue {
   @Prop({}) value: any
   @Prop({ type: Boolean, default: false }) danger: boolean
   @Prop({ type: Boolean, default: false }) gray: boolean
+  @Prop({ type: Boolean, default: false }) disabled: boolean
   focus: boolean = false
   forceInputText: boolean = false
 
@@ -71,6 +73,9 @@ export default class InputComponent extends Vue {
   display: flex
   align-items: center
   justify-content: flex-start
+  &.disabled
+    opacity: .5
+    pointer-events: none
   &.gray
     .placeholder
       background: -color('gray')

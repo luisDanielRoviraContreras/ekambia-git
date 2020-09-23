@@ -21,7 +21,7 @@
       @leave="leave"
     >
       <div ref="con" v-show="open" class="con">
-        <input-file>
+        <input-file :disabled="!!form.ref" v-model="form.file">
           Comprobante transferencia bancaria
 
           <template #text>
@@ -32,9 +32,11 @@
           O
         </divider>
         <c-input
+          v-model="form.ref"
           class="mt-6"
           inputmode="number"
           gray
+          :disabled="!!form.file"
         >
           Nro de referencia
         </c-input>
@@ -51,6 +53,11 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class step2 extends Vue {
   @Prop() open: boolean
   @Prop() ready: boolean
+
+  form: any = {
+    file: null,
+    ref: null
+  }
 
   beforeEnter (el: any) {
     el.style.height = 0
