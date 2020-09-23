@@ -326,7 +326,7 @@ export default class accountsBank extends Vue {
     padding-top: 70px
 
   .con-create-account
-    padding: 20px
+    // padding: 20px
     padding-bottom: 70px
     padding-top: 70px
     height: 100%
@@ -339,9 +339,10 @@ export default class accountsBank extends Vue {
     overflow: auto
     padding-bottom: 110px
     .con-create-account__content
-      overflow: auto
-      max-height: calc(100vh - 110px)
-      padding-bottom: 50px
+      padding: 0px 20px
+    //   overflow: auto
+    //   max-height: calc(100vh - 110px)
+    //   padding-bottom: 50px
     footer
       display: flex
       align-items: center

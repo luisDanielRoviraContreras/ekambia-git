@@ -12,7 +12,7 @@
         </p>
       </header>
 
-      <c-input v-model="form.tel" class="mt-6" block>
+      <c-input inputmode="tel" v-model="form.tel" class="mt-6" block>
         Numero de teléfono
       </c-input>
     </div>
@@ -23,8 +23,8 @@
         Código de verificación
       </h2>
       <header>
-        <p>
-          Por favor ingresa el código que enviamos a tu numero *******78
+        <p v-if="step == 2">
+          Por favor ingresa el código que enviamos a tu numero {{`*******${form.tel[form.tel.length - 2]}${form.tel[form.tel.length - 1]}`}}
         </p>
       </header>
 
@@ -39,11 +39,11 @@
           <input ref="input3" v-model="form.n3" @input="handleInput($event, 4)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
         <div class="con-input">
-          <input ref="input4" v-model="form.n4" @input="handleInput($event, null)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
+          <input @enter="handleSendVerificar" ref="input4" v-model="form.n4" @input="handleInput($event, null)" maxlength="1" pattern="\d*" type="text" inputmode="numeric" >
         </div>
       </div>
 
-      <div class="re-send">
+      <div @click="serverSendSMS" class="re-send">
         Volver a enviar el código
       </div>
     </div>
@@ -67,9 +67,7 @@ export default class createAccount extends Vue {
     n1: null,
     n2: null,
     n3: null,
-    n4: null,
-    n5: null,
-    n6: null,
+    n4: null
   }
 
   get hasNumber() {
@@ -104,6 +102,12 @@ export default class createAccount extends Vue {
       codex: code
     }).then((res) => {
       this.handleSaveTel()
+    }).catch(() => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'No se pudo verificar el código.'
+      })
     })
   }
 
@@ -113,6 +117,12 @@ export default class createAccount extends Vue {
     }).then((res) => {
       this.loading = false
       this.step = 2
+    }).catch(() => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: 'No se pudo enviar el código de verificación.'
+      })
     })
   }
 

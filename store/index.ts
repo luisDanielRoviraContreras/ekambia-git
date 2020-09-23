@@ -3,7 +3,8 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({
   authenticated: false,
-  bounce: null
+  bounce: null,
+  guide: false
 })
 
 export type RootState = ReturnType<typeof state>
@@ -14,6 +15,7 @@ export const getters: GetterTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
   CHANGE_AUTHENTICATED: (state, newVal: boolean) => (state.authenticated = newVal),
+  SET_GUIDE: (state, newVal: boolean) => (state.guide = newVal),
 }
 
 export const actions: ActionTree<RootState, RootState> = {

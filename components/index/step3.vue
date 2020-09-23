@@ -142,6 +142,7 @@ export default class step3 extends Vue {
     width: 260px
     height: 260px
     margin-bottom: 50px
+    z-index: 10
     .con-icon
       position: absolute
       z-index: 100
@@ -151,9 +152,11 @@ export default class step3 extends Vue {
       &.con-send
         top: -10px
         left: -10px
+        z-index: 110
       &.con-receive
         right: -10px
         bottom: -10px
+        z-index: 110
         span
           top: auto
           bottom: -10px
@@ -172,6 +175,8 @@ export default class step3 extends Vue {
         align-items: center
         justify-content: center
         box-shadow: 0px 10px 20px 0px -color('color', .4)
+        z-index: 110
+        position: relative
         svg
           width: 30px
         img
@@ -188,6 +193,7 @@ export default class step3 extends Vue {
       justify-content: center
       animation: rotate 6s ease-out infinite
       position: absolute
+      z-index: -10
       &:after
         content: ''
         position: absolute

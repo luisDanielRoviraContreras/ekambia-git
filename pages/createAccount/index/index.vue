@@ -1,7 +1,7 @@
 <template>
   <div class="step0">
     <h3>
-      Como deseas registrarte para usar Ekambia?
+      Como deseas usar Ekambia?
     </h3>
     <div @click="$router.push('/createAccount/step1')" class="con-img-btn mt-6">
       <img src="/personal.svg" alt="">
@@ -28,10 +28,13 @@ export default class step0 extends Vue {}
 <style lang="sass" scoped>
 .step0
   flex: 1
-  max-width: 400px
+  max-width: 460px
   overflow: auto
   max-height: calc(100vh - 60px)
   padding-bottom: 50px
+  width: 100%
+  position: relative
+  padding: 0px 30px
   .con-img-btn
     width: 100%
     display: flex
@@ -39,6 +42,7 @@ export default class step0 extends Vue {}
     justify-content: center
     flex-direction: column
     &.empresa
+      margin-bottom: 50px
       img
         max-width: 260px
         min-height: 198px

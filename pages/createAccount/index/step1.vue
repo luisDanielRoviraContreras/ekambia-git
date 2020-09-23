@@ -88,10 +88,10 @@
       <Alert :open="!form.password && send">
         Este campo es requerido
       </Alert>
+      <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
+        Siguiente
+      </Button>
     </div>
-    <Button :loading="loading" @click="handleSend" class="mb-6" block yellow>
-      Siguiente
-    </Button>
   </div>
 </template>
 <script lang="ts">
@@ -177,10 +177,10 @@ export default class createAccount extends Vue {
   // flex-direction: column
   flex: 1
   width: 100%
-  max-width: 400px
-  max-height: calc(100vh - 110px)
-  overflow: auto
-  padding-bottom: 50px
+  max-width: 460px
+  // max-height: calc(100vh - 110px)
+  // overflow: auto
+  // padding-bottom: 50px
 
 @media (min-width: 812px), (pointer:cursor)
   .con-create

@@ -223,12 +223,8 @@ export default class name extends Vue {
     height: auto
     border-radius: 20px
     margin-top: 20px
-    flex: 1
-    display: flex
-    align-items: flex-start
-    justify-content: flex-start
-    flex-direction: column
     max-width: 500px
+    padding-bottom: 60px
     h3
       font-size: 1rem
   .con-info

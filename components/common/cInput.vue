@@ -44,6 +44,7 @@ export default class InputComponent extends Vue {
 
   handleClickHidePassword () {
     this.forceInputText = !this.forceInputText
+    this.$el.querySelector('input').focus()
   }
 
   get listeners () {

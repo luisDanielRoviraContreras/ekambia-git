@@ -41,11 +41,15 @@ export default class createAccount extends Vue {
   height: calc(var(--vh, 1vh) * 100)
   display: flex
   flex-direction: column
-  padding: 0px 30px
+  width: 100%
+  position: absolute
+  bottom: 0px
+  // padding: 0px 30px
   .con-create
     width: 100%
     overflow: auto
     flex: 1
+    padding: 0px 30px
     // display: flex
     // align-items: center
     // justify-content: flex-start
@@ -60,7 +64,7 @@ export default class createAccount extends Vue {
     align-items: center
     justify-content: space-between
     width: 100%
-    // padding-right: 30px
+    padding-right: 30px
     z-index: 200
     background: -color('bg')
     a

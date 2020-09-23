@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <!-- <guide v-model="guide" /> -->
     <OffLine v-if="$nuxt.isOffline" />
     <Nuxt keep-alive />
     <footerBar />
@@ -9,6 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import footerBar from '@/components/mobile/footerBar.vue'
 import navBar from '@/components/mobile/navBar.vue'
+import { State } from 'vuex-class'
 @Component({
   components: {
     footerBar,
@@ -16,6 +18,14 @@ import navBar from '@/components/mobile/navBar.vue'
   }
 })
 export default class name extends Vue {
+  guideActive: boolean = false
+
+  @State(state => state.guide) guide
+
+  handleActiveGuide() {
+    this.guideActive = true
+  }
+
   mounted () {
     const vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)

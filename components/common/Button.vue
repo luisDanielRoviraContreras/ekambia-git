@@ -43,7 +43,7 @@ export default class btn extends Vue {
       z-index: 10
       width: 100%
       height: 100%
-      background: -color('color')
+      background: inherit
       top: 0px
       left: 0px
       border-radius: inherit
@@ -59,7 +59,7 @@ export default class btn extends Vue {
         border: 3px dashed #fff
         border-top: 3px solid transparent
         border-left: 3px solid transparent
-        animation: load 1s linear infinite .1s
+        animation: load 1s linear infinite
       &:before
         content: ''
         width: 32px

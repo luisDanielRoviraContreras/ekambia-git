@@ -26,6 +26,7 @@
           class="mt-6"
           :danger="!form.numberEmail && send"
           @keypress.enter="handleSend"
+          type="email"
         >
           Número de teléfono o correo
         </c-input>
@@ -150,8 +151,9 @@ export default class login extends Vue {
   flex-direction: column
   overflow: auto
   bottom: 0px
-  position: relative
+  position: absolute
   overflow: auto
+  width: 100%
   .button
     max-width: 400px
   .content-login

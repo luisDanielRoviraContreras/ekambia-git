@@ -16,17 +16,18 @@
       <div class="con-inputs mt-6">
         <c-input
           ref="send"
-          v-model="operation.send"
-          inputmode="none"
+          v-model="form.send"
+          :inputmode="$device.isIos ? 'numeric' : 'none'"
           identificador="send"
           @focus="inputFocus"
         >
           Tu envías
         </c-input>
+          <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
         <c-input
           ref="receive"
-          v-model="operation.receive"
-          inputmode="none"
+          v-model="form.receive"
+          :inputmode="$device.isIos ? 'numeric' : 'none'"
           class="mt-6 receive"
           identificador="receive"
           @focus="inputFocus"
@@ -42,7 +43,7 @@
 
     <operations v-if="$device.isMobile" :scroll-top="scrollTop" ref="operations" @touchend="handleTouchend" />
     <transition name="fade-teclado">
-      <teclado v-if="focus && $device.isMobile" @click="handleTeclado" />
+      <teclado v-if="focus && $device.isMobile && !$device.isIos" @click="handleTeclado" />
     </transition>
 
     <nuxt-child />
@@ -86,11 +87,13 @@ export default class name extends Vue {
 
   @Mutation('operation/SET_DATA') setDataOperation
 
+  @Mutation('SET_GUIDE') setGuide
+
   handleInitOperation() {
     this.$router.push({
       path: '/steps', query: {
-        s: this.operation.send,
-        r: this.operation.receive
+        s: this.form.send,
+        r: this.form.receive
       }
     })
   }
@@ -109,9 +112,13 @@ export default class name extends Vue {
 
   getFirstOperation() {
     axios.get('/firstoperation').then(({ data }) => {
-      console.log('data', data)
+      console.log('data', data);
 
-      // this.$guide()
+      this.setGuide(true)
+      // (this.$parent as any).handleActiveGuide()
+      // this.$guide({
+      //   this: this
+      // })
       // if (data.accounts.length == 0) {
       //   this.$router.push('/accounts')
       // }
@@ -138,11 +145,11 @@ export default class name extends Vue {
   }
 
   handleChange () {
-    const oldForm = JSON.parse(JSON.stringify(this.operation))
-    this.setSend(`${oldForm.receive}`)
-    this.setReceive(`${oldForm.send}`)
-    // this.form.send = oldForm.receive
-    // this.form.receive = oldForm.send
+    const oldForm = JSON.parse(JSON.stringify(this.form))
+    // this.setSend(`${oldForm.receive}`)
+    // this.setReceive(`${oldForm.send}`)
+    this.form.send = `${oldForm.receive}`
+    this.form.receive = `${oldForm.send}`
   }
 
   inputFocus (evt: any) {
@@ -169,19 +176,21 @@ export default class name extends Vue {
   }
 
   handleTeclado (val: any) {
+    console.log(val)
     if (val !== 'back') {
-      if (this.focus == 'send') {
-        this.changeSend(`${val}`)
-      } else {
-        this.changeReceive(`${val}`)
-      }
+      this.form[this.focus] += `${val}`
+      // if (this.focus == 'send') {
+      //   this.changeSend(`${val}`)
+      // } else {
+      //   this.changeReceive(`${val}`)
+      // }
     } else {
-      if (this.focus == 'send') {
-        this.setSend(`${this.operation[this.focus].slice(0, -1)}`)
-      } else {
-        this.setReceive(`${this.operation[this.focus].slice(0, -1)}`)
-      }
-      // this.operation[this.focus] = this.form[this.focus].slice(0, -1)
+      // if (this.focus == 'send') {
+      //   this.setSend(`${this.operation[this.focus].slice(0, -1)}`)
+      // } else {
+      //   this.setReceive(`${this.operation[this.focus].slice(0, -1)}`)
+      // }
+      this.form[this.focus] = this.form[this.focus].slice(0, -1)
     }
     if (this.focus) {
       (this.$refs[this.focus] as any).$el.querySelector(`.${this.focus}`).focus()

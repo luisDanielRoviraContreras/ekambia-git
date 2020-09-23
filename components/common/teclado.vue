@@ -146,6 +146,7 @@ export default class teclado extends Vue {
       transition: all .25s ease
       color: -color('bg')
       border-radius: 15px
+      touch-action: manipulation
       &:active
         background: -color('bg', .1)
         span
