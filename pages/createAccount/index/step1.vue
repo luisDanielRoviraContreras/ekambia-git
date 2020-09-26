@@ -127,7 +127,7 @@ export default class createAccount extends Vue {
 
   serverSend() {
     axios.post('/register', {
-      email: this.form.email,
+      email: this.form.email.toLowerCase(),
       password: this.form.password,
       profile_id: this.form.profileId,
       firstName: this.form.firstName,
@@ -141,11 +141,11 @@ export default class createAccount extends Vue {
       this.$cookies.set('token', token)
       this.$router.push('/createAccount/step2')
       this.loading = false
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'No se pudo registrar el usuario por favor revise los datos y vulva a intentarlo.'
+        text: err.response.data.message.toString()
       })
     })
   }

@@ -176,10 +176,10 @@ export default class name extends Vue {
           this.$nextTick(() => {
             this.$router.push('/login')
           })
-        }).catch(() => {
+        }).catch((err) => {
           this.$notification({
             title: 'Oops! Algo salió mal',
-            text: 'No se pudo cerrar la sesión por favor intentar de nuevo.'
+            text: err.response.data.message.toString()
           })
         })
       }

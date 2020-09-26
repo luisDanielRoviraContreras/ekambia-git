@@ -104,6 +104,7 @@ export default class login extends Vue {
       email: this.form.numberEmail.toLowerCase(),
       password: this.form.password
     }).then(({ data }: any) => {
+      console.log('paso')
       this.$bounce({
         x: evt.pageX,
         y: evt.pageY
@@ -119,11 +120,11 @@ export default class login extends Vue {
         })
       }, 300)
       this.loading = false
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'Numero de teléfono incorrecto, Correo electrónico incorrecto o contraseña incorrecta.'
+        text: err.response.data.message.toString()
       })
     })
   }

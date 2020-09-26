@@ -61,8 +61,8 @@ export default class createAccount extends Vue {
   display: flex
   flex-direction: column
   width: 100%
-  position: absolute
-  bottom: 0px
+  // position: absolute
+  // bottom: 0px
   // padding: 0px 30px
   .con-create
     width: 100%

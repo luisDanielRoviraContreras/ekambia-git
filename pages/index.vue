@@ -198,17 +198,7 @@ export default class name extends Vue {
     console.log(val)
     if (val !== 'back') {
       this.form[this.focus] += `${val}`
-      // if (this.focus == 'send') {
-      //   this.changeSend(`${val}`)
-      // } else {
-      //   this.changeReceive(`${val}`)
-      // }
     } else {
-      // if (this.focus == 'send') {
-      //   this.setSend(`${this.operation[this.focus].slice(0, -1)}`)
-      // } else {
-      //   this.setReceive(`${this.operation[this.focus].slice(0, -1)}`)
-      // }
       this.form[this.focus] = this.form[this.focus].slice(0, -1)
     }
     if (this.focus) {

@@ -22,7 +22,7 @@ export default class success extends Vue {}
   position: absolute
   width: 100vw
   height: 100vh
-  background: -color('bg')
+  background: -color('gray')
   display: flex
   align-items: center
   justify-content: center
@@ -36,6 +36,7 @@ export default class success extends Vue {}
     max-width: 280px
     margin-bottom: -30px
     margin-top: 20px
+    min-height: 348px
   p
     font-weight: 600
     text-align: center

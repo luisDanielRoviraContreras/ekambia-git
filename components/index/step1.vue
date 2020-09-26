@@ -117,6 +117,8 @@ export default class step1 extends Vue {
   loading: boolean = false
   send: boolean = false
 
+  @Action('operations/getOperations') getOperations
+
   form: any = {
     destination_account_id: 0,
     source_account_id: 0,
@@ -155,6 +157,11 @@ export default class step1 extends Vue {
     axios.get('/operation-create').then(({ data }) => {
       console.log('data', data)
       this.data = data
+    }).catch((err) => {
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: err.response.data.message.toString()
+      })
     })
   }
 
@@ -178,22 +185,28 @@ export default class step1 extends Vue {
     }).then(() => {
       this.loading = false;
       (this.$parent as any).isOpen = 2
-    }).catch(() => {
+      this.getOperations()
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'La operación no se pudo crar con éxito, por favor intentar de nuevo en unos minutos.'
+        text: err.response.data.message.toString()
       })
     })
   }
 
   mounted () {
+    setTimeout(function () {
+      window.scrollTo(0, 1)
+    }, 0)
     this.getData()
     const header = document.querySelector('.navbar-mobile')
     const step2 = document.querySelector('.step2 header')
     const step3 = document.querySelector('.step3 header')
-    const h = window.innerHeight - header.scrollHeight - step2.scrollHeight - step3.scrollHeight - (this.$refs.header as any).scrollHeight;
-    (this.$refs.con as any).style.height = h - 1 + 'px'
+    setTimeout(() => {
+      const h = window.innerHeight - header.scrollHeight - step2.scrollHeight - step3.scrollHeight - (this.$refs.header as any).scrollHeight;
+      (this.$refs.con as any).style.height = h - 1 + 'px'
+    }, 100);
   }
 }
 </script>

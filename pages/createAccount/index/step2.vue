@@ -102,12 +102,12 @@ export default class createAccount extends Vue {
       codex: code
     }).then((res) => {
       this.handleSaveTel()
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.step = 1
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'No se pudo verificar el código.'
+        text: err.response.data.message.toString()
       })
     })
   }
@@ -118,11 +118,11 @@ export default class createAccount extends Vue {
     }).then((res) => {
       this.loading = false
       this.step = 2
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'No se pudo enviar el código de verificación.'
+        text: err.response.data.message.toString()
       })
     })
   }

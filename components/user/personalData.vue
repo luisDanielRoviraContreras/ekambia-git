@@ -124,6 +124,13 @@ export default class personalData extends Vue {
         title: 'Datos Guardados',
         text: 'Los datos personales han sido guardados con éxito'
       })
+    }).catch((err) => {
+      this.edit = false
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: err.response.data.message.toString()
+      })
     })
     // axios.post(`/user-update/${this.form.id}`, {
     //   firstName: this.form.firstName,

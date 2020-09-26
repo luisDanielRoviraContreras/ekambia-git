@@ -99,6 +99,7 @@
         <div
           v-for="(li, i) in filterOperations(3)"
           :key="i"
+          @click="handleClickOperationFinish(li)"
           class="info">
           <div class="data">
             <span>
@@ -159,6 +160,17 @@ export default class OperationsClass extends Vue {
       path: 'steps',
       query: {
         step: '3',
+        id: operation.id
+      }
+    })
+  }
+
+  handleClickOperationFinish(operation) {
+    this.setStepData(operation)
+    this.$router.push({
+      path: 'steps',
+      query: {
+        step: '4',
         id: operation.id
       }
     })

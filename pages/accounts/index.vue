@@ -176,11 +176,11 @@ export default class accountsBank extends Vue {
         text: 'La cuenta ha sido creada exitosamente.'
       })
       this.loading = false
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'La cuenta bancaria no se pudo crear por favor intentar de nuevo en unos minutos.'
+        text: err.response.data.message.toString()
       })
     })
   }
@@ -199,11 +199,11 @@ export default class accountsBank extends Vue {
         text: 'Los cambios han sido actualizados satisfactoriamente.'
       })
       this.loading = false
-    }).catch(() => {
+    }).catch((err) => {
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'Los datos no se pudieron actualizar por favor intentar de nuevo en unos minutos.'
+        text: err.response.data.message.toString()
       })
     })
   }
