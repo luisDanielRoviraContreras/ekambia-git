@@ -19,7 +19,8 @@ export const actions: ActionTree<RootState, RootState> = {
       return
     }
     axios.get(`/operation-show/${id}`).then(({ data }: any) => {
-      commit('SET_DATA', data[0])
+      console.log(data)
+      commit('SET_DATA', data.info)
     })
   }
 }

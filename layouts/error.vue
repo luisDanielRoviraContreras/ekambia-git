@@ -16,14 +16,14 @@ export default class errorPage extends Vue {}
 </script>
 <style lang="sass" scoped>
 .error
-  position: absolute
+  position: fixed
   width: 100vw
   height: 100vh
   background: -color('bg')
   display: flex
   align-items: center
   justify-content: center
-  z-index: 200
+  z-index: 200000
   flex-direction: column
   padding: 25px
   img

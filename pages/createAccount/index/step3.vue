@@ -35,10 +35,10 @@
         Este campo es requerido
       </Alert>
     </div>
+      <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
+        Siguiente
+      </Button>
 
-    <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
-      Siguiente
-    </Button>
   </div>
 </template>
 <script lang="ts">
@@ -74,6 +74,19 @@ export default class createAccount extends Vue {
       this.$router.push('/createAccount/step4')
     })
   }
+
+  mounted() {
+    this.$bounceClose()
+
+    if (this.$route.query.check) {
+      setTimeout(() => {
+        this.$notification({
+          title: 'Bienvenido de nuevo',
+          text: 'Para poder continuar necesitamos terminar de verificar tus datos'
+        })
+      }, 600);
+    }
+  }
 }
 </script>
 <style lang="sass" scoped>
@@ -103,9 +116,9 @@ export default class createAccount extends Vue {
   flex: 1
   width: 100%
   max-width: 400px
-  overflow: auto
-  max-height: calc(100vh - 110px)
-  padding-bottom: 40px
+  // overflow: auto
+  // max-height: calc(100vh - 110px)
+  // padding-bottom: 40px
 
 
 @media (min-width: 812px)

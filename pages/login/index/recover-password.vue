@@ -32,7 +32,7 @@
         Ingrese su correo electrónico
       </c-input>
 
-      <Alert :open="!emailValid && send">
+      <Alert :open="(form.email ? !emailValid : false) && send">
         Correo electrónico Invalido
       </Alert>
 
@@ -42,6 +42,7 @@
     </div>
 
     <Button
+      :disabled="!form.email"
       class="btn-send"
       yellow
       block

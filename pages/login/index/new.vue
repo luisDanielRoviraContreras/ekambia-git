@@ -14,21 +14,42 @@
         class="illus-1 illus"
       >
         <img src="/Ilustration_01.svg" alt="">
+
+        <div class="text-1 text">
+          <h2>Cotiza tu operación</h2>
+          <p>
+            Utiliza la calculadora para verificar el tipo de cambio en tiempo real
+          </p>
+        </div>
       </div>
       <div class="illus-2 illus">
         <img src="/Ilustration_02.svg" alt="">
+
+        <div class="text-2 text">
+          <h2>Ahorra con cada intercambio</h2>
+          <p>
+            vamos a darte una de las mejores tasas de cambio con lo cual vas a ahorrar por cada intercambio
+          </p>
+        </div>
       </div>
       <div class="illus-3 illus">
         <img src="/Ilustration_03.svg" alt="">
+
+        <div class="text-3 text">
+          <h2>Simple y poderoso</h2>
+          <p>
+            Simplicidad para ti, déjanos lo complejo a nosotros.
+          </p>
+        </div>
       </div>
     </div>
     <div
       ref="infos"
       class="con-info">
-      <div
+        <!-- @touchstart="focused = 'texts'" -->
+      <!-- <div
         ref="texts"
         class="con-texts"
-        @touchstart="focused = 'texts'"
       >
         <div class="text-1 text">
           <h2>Cotiza tu operación</h2>
@@ -48,20 +69,13 @@
             Simplicidad para ti, déjanos lo complejo a nosotros.
           </p>
         </div>
-        <!-- <div class="text-4 text">
-          <h2>Cotiza tu operación 4</h2>
-          <p>
-            utiliza la calculadora para verificar el tipo de cambio en tiempo real
-          </p>
-        </div> -->
-      </div>
+      </div> -->
 
       <div
         ref="steps"
         class="steps-btns">
         <span :class="{ active: scrollLeft < windowInnerWidth - windowInnerWidth / 2 }" />
         <span :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }" />
-        <!-- <span :class="{ active : scrollLeft < windowInnerWidth * 3 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }" /> -->
         <span :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }" />
       </div>
 
@@ -146,16 +160,16 @@ export default class New extends Vue {
 
   mounted () {
     this.windowInnerWidth = window.innerWidth
-    const texts: any = this.$refs.texts
+    // const texts: any = this.$refs.texts
     const slides: any = this.$refs.slides
-    texts.addEventListener('scroll', (evt: any) => {
-      if (this.focused === 'texts') {
-        evt.target.classList.remove('not-scroll-animate')
-        slides.classList.add('not-scroll-animate')
-        slides.scrollLeft = evt.target.scrollLeft
-        this.scrollLeft = evt.target.scrollLeft
-      }
-    })
+    // texts.addEventListener('scroll', (evt: any) => {
+    //   if (this.focused === 'texts') {
+    //     evt.target.classList.remove('not-scroll-animate')
+    //     slides.classList.add('not-scroll-animate')
+    //     slides.scrollLeft = evt.target.scrollLeft
+    //     this.scrollLeft = evt.target.scrollLeft
+    //   }
+    // })
     slides.addEventListener('scroll', (evt: any) => {
       const circle: any = document.querySelector('.new .circle')
       if (circle && !this.end) {
@@ -169,12 +183,12 @@ export default class New extends Vue {
         }
       }
 
-      if (this.focused === 'slides') {
-        evt.target.classList.remove('not-scroll-animate')
-        texts.classList.add('not-scroll-animate')
-        texts.scrollLeft = evt.target.scrollLeft
+      // if (this.focused === 'slides') {
+      //   evt.target.classList.remove('not-scroll-animate')
+      //   texts.classList.add('not-scroll-animate')
+      //   texts.scrollLeft = evt.target.scrollLeft
+      // }
         this.scrollLeft = evt.target.scrollLeft
-      }
     })
   }
 }
@@ -222,9 +236,9 @@ export default class New extends Vue {
     display: flex
     align-items: center
     justify-content: flex-start
-    &.not-scroll-animate
-      scroll-snap-type: none !important
-      scroll-behavior: auto !important
+    // &.not-scroll-animate
+    //   scroll-snap-type: none !important
+    //   scroll-behavior: auto !important
     .illus
       min-width: 100%
       height: 100%
@@ -233,42 +247,45 @@ export default class New extends Vue {
       display: flex
       align-items: center
       justify-content: center
-      font-size: 5rem
+      flex-direction: column
       z-index: 20
       img
         width: calc(100% - 80px)
         pointer-events: none
+  .text
+    width: 100%
+    box-sizing: border-box
+    position: relative
+    pointer-events: none
+    text-align: center
+    margin-top: 30px
+    h2
+      font-size: 1.2rem
+    p
+      font-size: .9rem
+      width: 100%
+      opacity: .7
+      box-sizing: border-box
+      padding: 10px 20px
   .con-info
     position: relative
     background: -color('bg')
     border-radius: 30px 30px 0px 0px
     text-align: center
-    padding-top: 30px
+    padding-top: 10px
     width: 100%
     z-index: 30
     .con-texts
       display: flex
       align-items: center
       justify-content: flex-start
-      scroll-snap-type: x mandatory
+      // scroll-snap-type: x mandatory
       overflow: auto
       width: 100%
-      scroll-behavior: smooth
+      // scroll-behavior: smooth
       &.not-scroll-animate
         scroll-snap-type: none !important
         scroll-behavior: auto !important
-      .text
-        scroll-snap-align: center
-        width: 50%
-        // min-width: 100%
-        flex: 0 0 100%
-        // min-width: 100vw
-        box-sizing: border-box
-        position: relative
-        p
-          width: 100%
-          box-sizing: border-box
-          padding: 20px
     .steps-btns
       width: 100%
       display: flex

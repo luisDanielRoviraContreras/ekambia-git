@@ -1,5 +1,6 @@
 <template>
   <div class="recovery">
+    <nav-bar v-if="$device.isMobile" absolute />
     <div class="con-recovery">
       <h2>
         Cambiar contraseña
@@ -83,7 +84,7 @@ export default class recovery extends Vue {
     }).catch(() => {
       this.$notification({
         title: 'Oops! Algo salió mal',
-        text: 'Correo electrónico incorrecto.'
+        text: 'No se logro actualizar la contraseña por favor intentar de nuevo en unos minutos.'
       })
     })
   }
@@ -103,6 +104,7 @@ export default class recovery extends Vue {
     h2
       text-align: center
       padding: 20px
+      font-size: 1.3rem
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

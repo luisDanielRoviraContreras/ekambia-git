@@ -97,7 +97,7 @@ export default class step3 extends Vue {
   background: -color('gray')
   width: 100%
   border-radius: 30px 30px 0px 0px
-  transition: all .25s ease
+  // transition: all .25s ease
   display: flex
   align-items: center
   justify-content: center
@@ -116,7 +116,7 @@ export default class step3 extends Vue {
     header
       color: -color('text')
   .con
-    transition: all .25s ease
+    // transition: all .25s ease
     overflow: auto
     display: flex
     align-items: center

@@ -22,8 +22,7 @@ export const mutations: MutationTree<any> = {
 export const actions: ActionTree<any, any> = {
   getData({ commit }) {
     axios.get('/operation-create').then(({ data }) => {
-      console.log('data', data)
-      commit('SET_DATA', data)
+      commit('SET_DATA', data.data)
     })
   },
   setData({ commit }, val) {

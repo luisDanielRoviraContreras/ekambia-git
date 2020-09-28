@@ -8,7 +8,8 @@
     </label>
     <div class="con-file">
       <div v-if="user" v-show="!src" class="con-text">
-        <img src="/user.png" alt="">
+        <!-- <img src="/user.png" alt=""> -->
+        <i class='bx bx-user'></i>
       </div>
       <div v-else class="con-text">
         <i v-if="src" class="bx bx-revision reload" />
@@ -87,6 +88,8 @@ export default class InputComponent extends Vue {
     pointer-events: none
   &.danger
     color: -color('color-2', 1)
+    label
+      color: rgba(255,54,95, 1)
     .con-file
       transition: all .25s ease, border-radius .15s ease 0s !important
       border-radius: 18px 18px 0px 0px
@@ -112,6 +115,8 @@ export default class InputComponent extends Vue {
       align-items: center
       justify-content: center
       flex-direction: column
+      .bx-user
+        font-size: 3rem
       img
         height: 70%
       p

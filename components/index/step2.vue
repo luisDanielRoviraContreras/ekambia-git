@@ -94,7 +94,7 @@ export default class step2 extends Vue {
   background: -color('black')
   width: 100%
   border-radius: 30px 30px 0px 0px
-  transition: all .25s ease
+  // transition: all .25s ease
   padding-bottom: 30px
   margin-bottom: -30px
   border: 0px solid transparent
@@ -114,7 +114,7 @@ export default class step2 extends Vue {
     header
       color: -color('text')
   .con
-    transition: all .25s ease
+    // transition: all .25s ease
     overflow: auto
     padding: 0px 20px
     max-width: 600px

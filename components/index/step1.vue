@@ -49,36 +49,44 @@
             </p>
           </div>
         </div>
-
-        <Select :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
-          <option hidden value="0">
-            Cuenta de origen
-          </option>
-          <template v-if="data">
-            <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-              {{ option.alias }}
+        <template v-if="data">
+          <Select v-if="data.accounts.length > 0" :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
+            <option hidden value="0">
+              Cuenta de origen
             </option>
-          </template>
-        </Select>
+            <template v-if="data">
+              <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+                {{ option.alias }}
+              </option>
+            </template>
+          </Select>
+        </template>
+        <template v-if="data">
+          <Button @click="handleCreateAccount" class="mt-6" block v-if="data.accounts.length == 0">
+            Crear cuenta bancaria
+          </Button>
+        </template>
+
         <Alert :open="!form.source_account_id && send">
           Este campo es requerido
         </Alert>
-
-        <Select :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
-          <option hidden value="0">
-            Cuenta de destino
-          </option>
-          <template v-if="data">
-            <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-              {{ option.alias }}
+        <template v-if="data">
+          <Select v-if="data.accounts.length > 0" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
+            <option hidden value="0">
+              Cuenta de destino
             </option>
-          </template>
-        </Select>
-        <Alert :open="!form.destination_account_id && send">
-          Este campo es requerido
-        </Alert>
+            <template v-if="data">
+              <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
+                {{ option.alias }}
+              </option>
+            </template>
+          </Select>
+          <Alert :open="!form.destination_account_id && send">
+            Este campo es requerido
+          </Alert>
+        </template>
 
-        <Select :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
+        <Select v-if="data && data.accounts.length > 0" :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
           <option hidden value="0">
             Origen de fondos
           </option>
@@ -98,7 +106,7 @@
         <Alert :open="!form.source_funds && send">
           Este campo es requerido
         </Alert>
-        <Button :loading="loading" @click="createOperation" class="mt-6" block yellow>
+        <Button v-if="data && data.accounts.length > 0" :loading="loading" @click="createOperation" class="mt-6" block yellow>
           Iniciar Operación
         </Button>
       </div>
@@ -155,8 +163,7 @@ export default class step1 extends Vue {
 
   getData() {
     axios.get('/operation-create').then(({ data }) => {
-      console.log('data', data)
-      this.data = data
+      this.data = data.info
     }).catch((err) => {
       this.$notification({
         title: 'Oops! Algo salió mal',
@@ -195,6 +202,17 @@ export default class step1 extends Vue {
     })
   }
 
+  handleCreateAccount() {
+    this.$router.push({
+      path: '/accounts',
+      query: {
+        create: true,
+        s: this.getSend,
+        r: this.getReceive
+      }
+    })
+  }
+
   mounted () {
     setTimeout(function () {
       window.scrollTo(0, 1)
@@ -214,7 +232,7 @@ export default class step1 extends Vue {
 .step1
   background: -color('gray')
   width: 100%
-  transition: all .25s ease
+  // transition: all .25s ease
   border-radius: 30px 30px 0px 0px
   padding-bottom: 30px
   margin-bottom: -30px
@@ -229,7 +247,7 @@ export default class step1 extends Vue {
     header
       color: -color('bg')
   .con
-    transition: all .25s ease
+    // transition: all .25s ease
     overflow: auto
     padding: 0px 20px
     max-width: 600px

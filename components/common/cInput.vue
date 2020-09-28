@@ -4,7 +4,9 @@
       hasValue: !!value,
       danger,
       gray,
-      disabled
+      disabled,
+      sticky,
+      stickyPrev
     }"
     class="con-input"
   >
@@ -41,6 +43,9 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean, default: false }) danger: boolean
   @Prop({ type: Boolean, default: false }) gray: boolean
   @Prop({ type: Boolean, default: false }) disabled: boolean
+  @Prop({ type: Boolean }) sticky: boolean
+  @Prop({ type: Boolean }) stickyPrev: boolean
+
   focus: boolean = false
   forceInputText: boolean = false
 
@@ -73,6 +78,9 @@ export default class InputComponent extends Vue {
   display: flex
   align-items: center
   justify-content: flex-start
+  &.sticky
+    .bg
+      border-radius: 24px 0px 0px 24px
   &.disabled
     opacity: .5
     pointer-events: none
@@ -87,6 +95,14 @@ export default class InputComponent extends Vue {
     .bg
       border-radius: 24px 24px 0px 0px
       border: 2px solid rgba(255,54,95, .2) !important
+    i
+      color: rgba(255,54,95, 1) !important
+  &.stickyPrev
+    margin-left: 0px !important
+    .bg
+      border-left: 0px !important
+      border-top-left-radius: 0px !important
+      border-bottom-left-radius: 0px !important
   &.hasValue
     .placeholder
       transform: translate(9px, -30px) scale(1)
@@ -139,7 +155,7 @@ export default class InputComponent extends Vue {
     font-weight: 600
     line-height: 1rem
     border-radius: 5px
-    font-size: .9rem
+    font-size: 16px
   .bg
     width: 100%
     height: 100%

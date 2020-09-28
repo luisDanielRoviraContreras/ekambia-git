@@ -12,9 +12,12 @@
         </p>
       </header>
 
-      <c-input inputmode="tel" v-model="form.tel" class="mt-6" block>
+      <c-input :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
         Número de teléfono
       </c-input>
+      <Alert :open="!validateNumber && send">
+        El numero de teléfono es invalido
+      </Alert>
     </div>
     <div
       :class="{visible: step == 2}"
@@ -61,13 +64,20 @@ import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
   step: number = 1
+  send: boolean = false
   loading: boolean = false
   form: any = {
-    tel: null,
+    tel: '',
     n1: null,
     n2: null,
     n3: null,
     n4: null
+  }
+
+  get validateNumber() {
+    // eslint-disable-next-line no-useless-escape
+    const regex = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌​)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌​|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})\s*(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+)\s*)?$/i
+    return regex.test(this.form.tel.trim())
   }
 
   get hasNumber() {
@@ -78,9 +88,9 @@ export default class createAccount extends Vue {
     return (!this.form.n1 || !this.form.n2 || !this.form.n3 || !this.form.n4)
   }
 
-  get send () {
-    return (this.$parent as any).send
-  }
+  // get send () {
+  //   return (this.$parent as any).send
+  // }
 
   handleSaveTel() {
     axios.post('/useraddtel', {
@@ -109,10 +119,15 @@ export default class createAccount extends Vue {
         title: 'Oops! Algo salió mal',
         text: err.response.data.message.toString()
       })
+      this.form.n1 = null
+      this.form.n2 = null
+      this.form.n3 = null
+      this.form.n4 = null
     })
   }
 
   serverSendSMS() {
+
     axios.post('/send-sms', {
       tel: this.form.tel
     }).then((res) => {
@@ -128,9 +143,14 @@ export default class createAccount extends Vue {
   }
 
   handleSendSMS() {
+    this.send = true
+    if (!this.validateNumber) {
+      return
+    }
+
+    this.send = false
     this.loading = true
     this.serverSendSMS()
-    // this.step = 2
   }
 
   handleInput(evt, number) {
@@ -140,6 +160,19 @@ export default class createAccount extends Vue {
       } else {
         evt.target.blur()
       }
+    }
+  }
+
+  mounted() {
+    this.$bounceClose()
+
+    if (this.$route.query.check) {
+      setTimeout(() => {
+        this.$notification({
+          title: 'Bienvenido de nuevo',
+          text: 'Para poder continuar necesitamos terminar de verificar tus datos'
+        })
+      }, 600);
     }
   }
 }

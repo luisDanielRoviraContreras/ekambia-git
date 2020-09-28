@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login scroll">
     <div v-if="$device.isDesktop" class="con-slide">
       <div class="con-images">
         <div class="con-image">
@@ -18,7 +18,7 @@
         <div class="con-logo">
           <img src="/logo2.png" alt="">
         </div>
-        <h2 class="mt-6">
+        <h2 class="mt-3">
           Acceder
         </h2>
         <c-input
@@ -62,7 +62,7 @@
         </nuxt-link>
       </div>
       <Button
-        class="btn-create"
+        class="btn-create mt-6 mb-6"
         block
         @click="$router.push('/createAccount/')"
       >
@@ -104,22 +104,48 @@ export default class login extends Vue {
       email: this.form.numberEmail.toLowerCase(),
       password: this.form.password
     }).then(({ data }: any) => {
-      console.log('paso')
+      console.log(data)
+
       this.$bounce({
         x: evt.pageX,
         y: evt.pageY
       })
 
-      const token = data.token
-
+      const token = data.info.token
       this.$cookies.set('token', token)
-      this.$cookies.set('authenticated', true)
-      setTimeout(() => {
-        this.$nextTick(() => {
-          this.$router.push('/')
-        })
-      }, 300)
+
+      if (data.info.status_user_id == '1') {
+        setTimeout(() => {
+          this.$nextTick(() => {
+            this.$router.push({
+              path: '/createAccount/step2',
+              query: {
+                check: true
+              }
+            })
+          })
+        }, 300)
+      } else if (data.info.status_user_id == '2') {
+        setTimeout(() => {
+          this.$nextTick(() => {
+            this.$router.push({
+              path: '/createAccount/step3',
+              query: {
+                check: true
+              }
+            })
+          })
+        }, 300)
+      } else {
+        this.$cookies.set('authenticated', true)
+        setTimeout(() => {
+          this.$nextTick(() => {
+            this.$router.push('/')
+          })
+        }, 300)
+      }
       this.loading = false
+
     }).catch((err) => {
       this.loading = false
       this.$notification({
@@ -151,9 +177,6 @@ export default class login extends Vue {
   justify-content: flex-start
   flex-direction: column
   overflow: auto
-  bottom: 0px
-  position: absolute
-  overflow: auto
   width: 100%
   .button
     max-width: 400px
@@ -165,23 +188,22 @@ export default class login extends Vue {
     justify-content: flex-start
     flex-direction: column
     height: calc(var(--vh, 1vh) * 100)
-    padding: 20px 30px
-    padding-bottom: calc(30px + env(safe-area-inset-bottom))
+    padding: 20px
+    padding-bottom: env(safe-area-inset-bottom)
+    overflow: hidden
   .con-login
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
     width: 100%
-    // height: calc(100vh - 60px)
-    overflow: auto
     max-width: 400px
     flex: 1
     position: relative
     .con-logo
       min-height: 127px
       img
-        max-width: 140px
+        max-width: 120px
         display: block
   h2
     font-weight: 600

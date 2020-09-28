@@ -2,9 +2,9 @@
   <div class="steps-transfer">
     <nav-bar back @click="$router.push('/')" />
     <div class="con-steps">
-      <step-1 @click="isOpen = 1" :ready="isOpen == 2 || isOpen == 3" :open="isOpen == 1" />
-      <step-2 @click="isOpen = 2" :ready="isOpen == 3" :open="isOpen == 2" />
-      <step-3 @click="isOpen = 3" :black="isOpen == 2" :open="isOpen == 3" />
+      <step-1 :ready="isOpen == 2 || isOpen == 3" :open="isOpen == 1" />
+      <step-2 :ready="isOpen == 3" :open="isOpen == 2" />
+      <step-3 :black="isOpen == 2" :open="isOpen == 3" />
       <Success v-if="isOpen == 4" />
     </div>
   </div>
@@ -21,7 +21,7 @@ import axios from '~/plugins/axios'
   fetchOnServer: false
 })
 export default class steps extends Vue {
-  isOpen: any = 3
+  isOpen: any = 1
 
   @State(state => state.steps.data) operation
 

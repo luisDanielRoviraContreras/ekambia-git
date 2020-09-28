@@ -206,7 +206,7 @@ export default class name extends Vue {
 .user
   height: calc(var(--vh, 1vh) * 100)
   padding: 15px
-  padding-top: 70px
+  padding-top: 50px
   padding-bottom: 80px
   background: -color('gray')
   display: flex

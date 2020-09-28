@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { Service } from 'axios-middleware'
 
-const service = new Service(axios, {
-  returnRejectedPromiseOnError: true
-})
+const service = new Service(axios)
+// , {
+//   returnRejectedPromiseOnError: true
+// }
 const addTokenHeader = (requestData) => {
   const token = window.$nuxt.$cookies.get('token')
   if (token) {
@@ -24,6 +25,6 @@ service.register({
   }
   // onResponseError(error) {
   //   window.$nuxt.$cookies.remove('authenticated')
-  //   return error.response
+  //   // return error.response
   // }
 })

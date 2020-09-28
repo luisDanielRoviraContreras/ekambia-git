@@ -145,6 +145,7 @@ import axios from '~/plugins/axios'
 export default class accountsBank extends Vue {
   visibleAdd: boolean = false
   loading: boolean = false
+  create: boolean = false
 
   @State(state => state.accounts.accounts) accounts
   @Action('accounts/getAccounts') getAccounts
@@ -176,6 +177,17 @@ export default class accountsBank extends Vue {
         text: 'La cuenta ha sido creada exitosamente.'
       })
       this.loading = false
+
+      if (this.$route.query.create) {
+        this.$router.push({
+          path: '/steps',
+          query: {
+            r: this.$route.query.r,
+            s: this.$route.query.s,
+          }
+        })
+      }
+
     }).catch((err) => {
       this.loading = false
       this.$notification({
@@ -214,16 +226,10 @@ export default class accountsBank extends Vue {
 
   scrollMove() {
     (this.$refs.accounts as any).scrollLeft = window.innerWidth
-    this.$router.push({
-      path: '/accounts'
-    })
   }
   scrollMoveBack() {
     this.send = false;
     (this.$refs.accounts as any).scrollLeft = 0
-    this.$router.push({
-      path: '/accounts'
-    })
     setTimeout(() => {
       this.form = {
         alias: '',
@@ -263,8 +269,8 @@ export default class accountsBank extends Vue {
   }
 
   getDataCreate() {
-    axios.get('/account-create').then((res) => {
-      this.data = res.data
+    axios.get('/account-create').then(({ data }) => {
+      this.data = data.info
     })
   }
 
@@ -278,6 +284,12 @@ export default class accountsBank extends Vue {
     setTimeout(() => {
       this.$cookies.set('anima', true)
     }, 3000);
+
+    if (this.$route.query.create) {
+      (this.$refs.accounts as any).scrollLeft = window.innerWidth
+    } else {
+      (this.$refs.accounts as any).scrollLeft = 0
+    }
   }
 }
 </script>

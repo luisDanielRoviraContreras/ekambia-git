@@ -7,7 +7,8 @@
   >
     <slot></slot>
     <div class="load">
-
+      <span class="span1"></span>
+      <span class="span2"></span>
     </div>
   </button>
 </template>
@@ -50,7 +51,7 @@ export default class btn extends Vue {
       display: flex
       align-items: center
       justify-content: center
-      &:after
+      .span1
         content: ''
         width: 32px
         height: 32px
@@ -59,8 +60,8 @@ export default class btn extends Vue {
         border: 3px dashed #fff
         border-top: 3px solid transparent
         border-left: 3px solid transparent
-        animation: load 1s linear infinite
-      &:before
+        animation: load1 1s linear infinite
+      .span2
         content: ''
         width: 32px
         height: 32px
@@ -69,7 +70,7 @@ export default class btn extends Vue {
         border: 3px solid #fff
         border-top: 3px solid transparent
         border-left: 3px solid transparent
-        animation: load 1s ease infinite
+        animation: load2 1s ease infinite
   &.yellow
     background: -color('color')
     color: #000
@@ -80,10 +81,23 @@ export default class btn extends Vue {
     opacity: .5
 // responsive
 
-@keyframes load
+@keyframes load1
   0%
     transform: rotate(0deg)
+    animation-timing-function: linear
+    -webkit-animation-timing-function: linear
   100%
     transform: rotate(360deg)
+    animation-timing-function: linear
+    -webkit-animation-timing-function: linear
+@keyframes load2
+  0%
+    transform: rotate(0deg)
+    animation-timing-function: ease
+    -webkit-animation-timing-function: ease
+  100%
+    transform: rotate(360deg)
+    animation-timing-function: ease
+    -webkit-animation-timing-function: ease
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)
 </style>

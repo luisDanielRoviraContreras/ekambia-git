@@ -19,8 +19,7 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
   getAccounts ({ commit }) {
     axios.get('/account').then(({ data }: any) => {
-      console.log(data.data)
-      commit('SET_ACCOUNTS', data.data)
+      commit('SET_ACCOUNTS', data.info.data)
     })
   }
 }

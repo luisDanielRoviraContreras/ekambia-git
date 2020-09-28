@@ -22,7 +22,7 @@
       <div
         class="con-select-input mt-6"
       >
-        <Select v-model="form.dniType" :danger="!form.dni && send">
+        <Select sticky v-model="form.dniType" :danger="!form.dni && send">
           <option value="1">
             DNI
           </option>
@@ -34,6 +34,7 @@
           </option>
         </Select>
         <c-input
+          sticky-prev
           v-model="form.dni"
           class="ml-3"
           :danger="!form.dni && send"
@@ -67,13 +68,16 @@
       <InputDate
         v-model="form.date"
         class="mt-3"
-        :danger="form.date.split('-').includes('') && send"
+        :danger="(form.date.split('-').includes('') || form.date.split('-')[0] > 2002) && send"
         label-center
       >
         Ingrese su fecha de nacimiento
       </InputDate>
       <Alert :open="form.date.split('-').includes('') && send">
         Este campo es requerido
+      </Alert>
+      <Alert :open="form.date.split('-')[0] > 2002 && send">
+        La fecha de nacimiento es invalida (tienes que ser mayor de 18 años)
       </Alert>
 
       <c-input

@@ -2,7 +2,8 @@
   <div class="app">
     <!-- <guide v-model="guide" /> -->
     <OffLine v-if="$nuxt.isOffline" />
-    <Nuxt keep-alive />
+    <!-- <Nuxt keep-alive /> -->
+    <Nuxt />
     <footerBar />
   </div>
 </template>
@@ -26,13 +27,19 @@ export default class name extends Vue {
     this.guideActive = true
   }
 
-  mounted () {
+  setHeight() {
     const vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
 
     setTimeout(function () {
       window.scrollTo(0, 1)
     }, 0)
+  }
+
+  mounted () {
+    this.setHeight()
+
+    window.addEventListener('resize', this.setHeight)
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ block, danger }"
+    :class="{ block, danger, sticky, stickyPrev }"
     class="select"
   >
       <!-- v-bind="$attrs" -->
@@ -22,6 +22,8 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class Select extends Vue {
   @Prop({ type: Boolean }) block: boolean
   @Prop({ type: Boolean }) danger: boolean
+  @Prop({ type: Boolean }) sticky: boolean
+  @Prop({ type: Boolean }) stickyPrev: boolean
   @Prop({}) value: any
 
   change(evt: any) {
@@ -47,6 +49,13 @@ export default class Select extends Vue {
   align-items: center
   justify-content: center
   position: relative
+  &.sticky
+    select
+      border-radius: 24px 0px 0px 24px
+      border-top-right-radius: 0px !important
+  &.stickyPrev
+    select
+      border-radius: 0px 24px 24px 0px
   &.danger
     select
       color: rgba(255,54,95, 1) !important
@@ -66,8 +75,8 @@ export default class Select extends Vue {
   select
     border: 2px solid -color('black', .1)
     border-radius: 24px
-    padding: 19px 15px
-    padding-right: 50px
+    padding: 17px 15px
+    padding-right: 40px
     -webkit-appearance: none
     -moz-appearance: none
     text-indent: 1px
@@ -75,6 +84,8 @@ export default class Select extends Vue {
     background: transparent
     transition: all .25s ease
     font-weight: 600
+    font-size: 16px
+    display: block
     &:focus
       color: -color('black', 1) !important
     &.empty

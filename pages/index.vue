@@ -31,13 +31,13 @@
           class="mt-6 receive"
           identificador="receive"
           @focus="inputFocus"
-          readonly
+          disabled
         >
           Tu recibes
         </c-input>
         <invert @change="handleChange"/>
       </div>
-      <Button @click="handleInitOperation" class="mt-6" yellow block>
+      <Button :disabled="!form.send || !form.receive" @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
       </Button>
     </div>
@@ -101,8 +101,7 @@ export default class name extends Vue {
 
   getData() {
     axios.get('/operation-create').then(({ data }) => {
-      console.log('data', data)
-      this.data = data
+      this.data = data.info
     })
   }
 
@@ -129,8 +128,6 @@ export default class name extends Vue {
 
   getFirstOperation() {
     axios.get('/firstoperation').then(({ data }) => {
-      console.log('data', data);
-
       this.setGuide(true)
       // (this.$parent as any).handleActiveGuide()
       // this.$guide({

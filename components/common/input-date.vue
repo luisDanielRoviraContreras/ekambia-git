@@ -110,9 +110,9 @@ export default class InputDate extends Vue {
 
   mounted () {
     const value = this.value.split('-')
-    this.date.day = value[0]
-    this.date.month = value[1]
-    this.date.year = value[2]
+    this.date.day = value[0] || ''
+    this.date.month = value[1] || ''
+    this.date.year = value[2] || ''
   }
 
   get getYears () {
