@@ -120,7 +120,7 @@ export default class login extends Vue {
             this.$router.push({
               path: '/createAccount/step2',
               query: {
-                check: true
+                check: 'true'
               }
             })
           })
@@ -131,7 +131,7 @@ export default class login extends Vue {
             this.$router.push({
               path: '/createAccount/step3',
               query: {
-                check: true
+                check: 'true'
               }
             })
           })

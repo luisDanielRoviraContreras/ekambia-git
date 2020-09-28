@@ -206,7 +206,7 @@ export default class step1 extends Vue {
     this.$router.push({
       path: '/accounts',
       query: {
-        create: true,
+        create: 'true',
         s: this.getSend,
         r: this.getReceive
       }
