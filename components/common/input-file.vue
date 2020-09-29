@@ -71,7 +71,9 @@ export default class InputComponent extends Vue {
     }
 
     const file = event.target.files[0]
-    getBase64(file)
+    if (file) {
+      getBase64(file)
+    }
   }
 }
 </script>

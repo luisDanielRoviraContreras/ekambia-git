@@ -260,7 +260,13 @@ export default class name extends Vue {
     position: relative
     display: flex
     align-items: center
+    font-size: .9rem
     justify-content: center
+    span
+      font-size: 1rem
+      font-weight: bold
+      display: block
+      padding-left: 5px
     &:last-child
      &:after
        content: ''

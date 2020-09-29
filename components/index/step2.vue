@@ -21,13 +21,16 @@
       @leave="leave"
     >
       <div ref="con" v-show="open" class="con">
-        <input-file :disabled="!!form.ref" v-model="form.file">
+        <input-file :danger="!form.ref && !form.file && send" :disabled="!!form.ref" v-model="form.file">
           Comprobante transferencia bancaria
 
           <template #text>
             Tome o suba <br> imagen de comprobante
           </template>
         </input-file>
+        <Alert :open="!form.ref && !form.file && send">
+          Este campo es requerido
+        </Alert>
         <divider>
           O
         </divider>
@@ -37,10 +40,14 @@
           inputmode="number"
           gray
           :disabled="!!form.file"
+          :danger="!form.ref && !form.file && send"
         >
           Nro de referencia
         </c-input>
-        <Button class="mt-6" block yellow>
+        <Alert :open="!form.ref && !form.file && send">
+          Este campo es requerido
+        </Alert>
+        <Button @click="handleSend" class="mt-6" block yellow>
           Verificar
         </Button>
       </div>
@@ -54,9 +61,17 @@ export default class step2 extends Vue {
   @Prop() open: boolean
   @Prop() ready: boolean
 
+  send: boolean = false
+  loading: boolean = false
+
   form: any = {
     file: null,
     ref: null
+  }
+
+  handleSend() {
+    this.loading = true
+    this.send = true
   }
 
   beforeEnter (el: any) {
