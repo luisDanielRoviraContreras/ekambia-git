@@ -6,7 +6,8 @@
       gray,
       disabled,
       sticky,
-      stickyPrev
+      stickyPrev,
+      lowercase
     }"
     class="con-input"
   >
@@ -45,6 +46,7 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean, default: false }) disabled: boolean
   @Prop({ type: Boolean }) sticky: boolean
   @Prop({ type: Boolean }) stickyPrev: boolean
+  @Prop({ type: Boolean }) lowercase: boolean
 
   focus: boolean = false
   forceInputText: boolean = false
@@ -78,6 +80,9 @@ export default class InputComponent extends Vue {
   display: flex
   align-items: center
   justify-content: flex-start
+  &.lowercase
+    input
+      text-transform: lowercase
   &.sticky
     .bg
       border-radius: 24px 0px 0px 24px

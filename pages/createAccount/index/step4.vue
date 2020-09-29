@@ -5,7 +5,7 @@
     </h3>
     <img src="/register.png" alt="">
     <p>
-      Ya puedes disfrutar de las mejores tasas de cambio y una experiencia innovadora para cambiar de divisas
+      Ya puedes disfrutar de las mejores tasas de cambio y de una experiencia innovadora para cambiar divisas.
     </p>
     <Button class="mt-6" yellow block @click="$router.push('/')">
       Aceptar

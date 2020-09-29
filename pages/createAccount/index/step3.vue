@@ -29,7 +29,7 @@
         :danger="!form.selfie && send"
         user
       >
-        Tomate un selfie
+        Tómate un selfie
       </input-file>
       <Alert :open="!form.selfie && send">
         Este campo es requerido

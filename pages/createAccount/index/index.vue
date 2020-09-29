@@ -1,7 +1,7 @@
 <template>
   <div class="step0">
     <h3>
-      Como deseas usar Ekambia?
+      ¿Cómo deseas usar Ekambia?
     </h3>
     <div @click="$router.push('/createAccount/step1')" class="con-img-btn mt-6">
       <img src="/personal.svg" alt="">

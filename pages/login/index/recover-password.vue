@@ -28,12 +28,13 @@
         type="email"
         class="mt-6"
         :danger="(!form.email || !emailValid) && send"
+        lowercase
       >
         Ingrese su correo electrónico
       </c-input>
 
       <Alert :open="(form.email ? !emailValid : false) && send">
-        Correo electrónico Invalido
+        Correo electrónico inválido
       </Alert>
 
       <Alert :open="!form.email && send">

@@ -10,11 +10,12 @@
         class="mt-6"
         inputmode="email"
         :danger="(!form.email || !emailValid) && send"
+        lowercase
       >
         Email
       </c-input>
       <Alert v-if="form.email" :open="!emailValid && send">
-        Correo electrónico Invalido
+        Correo electrónico inválido
       </Alert>
       <Alert :open="!form.email && send">
         Este campo es requerido

@@ -27,6 +27,7 @@
           :danger="!form.numberEmail && send"
           @keypress.enter="handleSend"
           type="email"
+          lowercase
         >
           Número de teléfono o correo
         </c-input>

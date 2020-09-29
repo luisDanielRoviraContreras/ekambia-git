@@ -8,7 +8,7 @@
       </h2>
       <header>
         <p>
-          Agrega tu número de teléfono al cual le enviaremos un código de 4 dígitos para verificarlo
+          Agrega tu numero de teléfono. Le enviaremos un código de verificación de 4 dígitos.
         </p>
       </header>
 
@@ -127,7 +127,6 @@ export default class createAccount extends Vue {
   }
 
   serverSendSMS() {
-
     axios.post('/send-sms', {
       tel: this.form.tel
     }).then((res) => {
