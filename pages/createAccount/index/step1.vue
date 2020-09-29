@@ -142,7 +142,7 @@ export default class createAccount extends Vue {
       date_of_birth: this.form.date,
       referred: this.$cookies.get('ref')
     }).then(({data}) => {
-      const token = data.token
+      const token = data.info.token
       this.$cookies.set('token', token)
       this.$router.push('/createAccount/step2')
       this.loading = false
