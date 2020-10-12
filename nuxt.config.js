@@ -96,6 +96,6 @@ export default {
   },
 
   env: {
-    API: 'https://ekambia.lusaxweb.pro/api/'
+    API: 'http://3.16.43.49/ekambiault/public/api/'
   }
 }

@@ -64,7 +64,6 @@ export default class createAccount extends Vue {
     formData.append("cedulaFront", this.form.cedulaFront)
     formData.append("cedulaPost", this.form.cedulaPost)
     formData.append("selfie", this.form.selfie)
-    console.log(this.form)
     axios.post('/update-userimages', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'

@@ -47,7 +47,7 @@
         <Alert :open="!form.ref && !form.file && send">
           Este campo es requerido
         </Alert>
-        <Button @click="handleSend" class="mt-6" block yellow>
+        <Button :loading="loading" @click="handleSend" class="mt-6" block yellow>
           Verificar
         </Button>
       </div>
@@ -56,6 +56,8 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import axios from '~/plugins/axios'
+import { State, Action } from 'vuex-class'
 @Component
 export default class step2 extends Vue {
   @Prop() open: boolean
@@ -69,9 +71,33 @@ export default class step2 extends Vue {
     ref: null
   }
 
+  @Action('operations/getOperations') getOperations
+
   handleSend() {
-    this.loading = true
     this.send = true
+    if (!this.form.file && !this.form.ref) {
+      return
+    }
+    this.loading = true
+
+    var formData = new FormData()
+    formData.append('voucher', this.form.file)
+    axios.post(`/operation-voucherupdate/${this.$route.query.id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(() => {
+      this.loading = false;
+      (this.$parent as any).isOpen = 3
+      this.getOperations()
+    }).catch((err) => {
+      console.log(err)
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: err.response.data.message.toString()
+      })
+    })
   }
 
   beforeEnter (el: any) {
