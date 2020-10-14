@@ -15,13 +15,13 @@
         :class="{ active : scrollLeft < windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(0)"
       >
-        Verificando
+        Pagando
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth)"
       >
-        Pagando
+        Verificando
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
@@ -32,11 +32,11 @@
     </div>
 
     <div ref="infos" class="con-infos">
-      <div class="parent-info-1 parent-info">
+      <div class="parent-info-2 parent-info">
         <div
-          v-for="(li, i) in filterOperations(1)"
+          v-for="(li, i) in filterOperations(2)"
           :key="i"
-          @click="handleClickOperation(li)"
+          @click="handleClickOperationPay(li)"
           class="info">
           <div class="data">
             <span>
@@ -64,11 +64,11 @@
           </div>
         </div>
       </div>
-      <div class="parent-info-2 parent-info">
+      <div class="parent-info-1 parent-info">
         <div
-          v-for="(li, i) in filterOperations(2)"
+          v-for="(li, i) in filterOperations(1)"
           :key="i"
-          @click="handleClickOperationPay(li)"
+          @click="handleClickOperation(li)"
           class="info">
           <div class="data">
             <span>
@@ -160,7 +160,7 @@ export default class OperationsClass extends Vue {
     this.$router.push({
       path: 'steps',
       query: {
-        step: '2',
+        step: '3',
         id: operation.id
       }
     })
@@ -171,7 +171,7 @@ export default class OperationsClass extends Vue {
     this.$router.push({
       path: 'steps',
       query: {
-        step: '3',
+        step: '2',
         id: operation.id
       }
     })

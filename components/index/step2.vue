@@ -79,9 +79,9 @@ export default class step2 extends Vue {
       return
     }
     this.loading = true
-
     var formData = new FormData()
     formData.append('voucher', this.form.file)
+    formData.append('num_reference', this.form.ref)
     axios.post(`/operation-voucherupdate/${this.$route.query.id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -91,7 +91,6 @@ export default class step2 extends Vue {
       (this.$parent as any).isOpen = 3
       this.getOperations()
     }).catch((err) => {
-      console.log(err)
       this.loading = false
       this.$notification({
         title: 'Oops! Algo salió mal',

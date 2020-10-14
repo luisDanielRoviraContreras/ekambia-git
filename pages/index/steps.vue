@@ -50,13 +50,14 @@ export default class steps extends Vue {
   width: 100%
   height: 100%
   background: -color('gray')
-  bottom: 0px
+  top: 0px
   left: 0px
   z-index: 3000
   display: flex
   align-items: flex-start
   justify-content: flex-start
   flex-direction: column
+  overflow: auto
   .con-steps
     width: 100%
     max-width: 600px

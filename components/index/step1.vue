@@ -189,9 +189,15 @@ export default class step1 extends Vue {
       source_account_id: "1",
       source_funds: "Venta de inmueble",
       exchange_type: '1'
-    }).then(() => {
+    }).then((res) => {
       this.loading = false;
       (this.$parent as any).isOpen = 2
+      this.$router.push({
+        path: 'steps',
+        query: {
+          id: res.data.info.operation_id
+        }
+      })
       this.getOperations()
     }).catch((err) => {
       this.loading = false

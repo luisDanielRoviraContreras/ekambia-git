@@ -112,6 +112,9 @@ export default class name extends Vue {
         r: this.form.receive
       }
     })
+
+    this.form.send = ''
+    this.form.receive = ''
   }
 
   @Watch('$route.hash')

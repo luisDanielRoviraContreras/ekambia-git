@@ -56,7 +56,7 @@
     <div class="footer">
       <h4>Créditos</h4>
       <span>
-        20 Guaranies
+        0 Guaranies
       </span>
       <Button class="mt-6 mb-6" block yellow>
         Compartir
@@ -72,7 +72,7 @@ export default class win extends Vue {
   @State(state => state.user.data) data
 
   get urlRef() {
-    return `http://localhost:3000/login/?ref=${this.data && this.data.recommendation_code}`
+    return `https://ekambia.herokuapp.com/login/?ref=${this.data && this.data.recommendation_code}`
   }
 
   share() {
