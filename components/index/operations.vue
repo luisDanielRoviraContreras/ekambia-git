@@ -2,7 +2,7 @@
   <div
     id="operations"
     class="operations"
-    :class="{ open: scrollTop > 100}"
+    :class="{ open: this.$route.query.operations}"
   >
     <header ref="header" @click="$emit('click')">
       <h2>
@@ -15,118 +15,144 @@
         :class="{ active : scrollLeft < windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(0)"
       >
-        Pagando
+        Pagando <span class="badge">{{ filterOperations(2).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth)"
       >
-        Verificando
+        Verificando <span class="badge">{{ filterOperations(1).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth * 2)"
       >
-        Finalizando
+        Finalizando <span class="badge">{{ filterOperations(3).length }}</span>
       </button>
     </div>
 
     <div ref="infos" class="con-infos">
       <div class="parent-info-2 parent-info">
-        <div
-          v-for="(li, i) in filterOperations(2)"
-          :key="i"
-          @click="handleClickOperationPay(li)"
-          class="info">
-          <div class="data">
-            <span>
-              Fecha
-            </span>
-            <p>
-              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
-            </p>
+        <template v-if="operations.length !== 0">
+          <div
+            v-for="(li, i) in filterOperations(2)"
+            :key="i"
+            @click="handleClickOperationPay(li)"
+            class="info">
+            <div class="data">
+              <span>
+                Fecha
+              </span>
+              <p>
+                {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Enviado
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibido
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
           </div>
-          <div class="data">
-            <span>
-              Enviado
-            </span>
-            <p>
-              {{ li.send }}
-            </p>
-          </div>
-          <div class="data">
-            <span>
-              Recibido
-            </span>
-            <p>
-              {{ li.received }}
-            </p>
-          </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+        </template>
       </div>
       <div class="parent-info-1 parent-info">
-        <div
-          v-for="(li, i) in filterOperations(1)"
-          :key="i"
-          @click="handleClickOperation(li)"
-          class="info">
-          <div class="data">
-            <span>
-              Fecha
-            </span>
-            <p>
-              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
-            </p>
+        <template v-if="operations.length !== 0">
+          <div
+            v-for="(li, i) in filterOperations(1)"
+            :key="i"
+            @click="handleClickOperation(li)"
+            class="info">
+            <div class="data">
+              <span>
+                Fecha
+              </span>
+              <p>
+                {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Enviado
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibido
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
           </div>
-          <div class="data">
-            <span>
-              Enviado
-            </span>
-            <p>
-              {{ li.send }}
-            </p>
-          </div>
-          <div class="data">
-            <span>
-              Recibido
-            </span>
-            <p>
-              {{ li.received }}
-            </p>
-          </div>
-        </div>
+        </template>
+        <template v-else>
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+        </template>
       </div>
       <div class="parent-info-3 parent-info">
-        <div
-          v-for="(li, i) in filterOperations(3)"
-          :key="i"
-          @click="handleClickOperationFinish(li)"
-          class="info">
-          <div class="data">
-            <span>
-              Fecha
-            </span>
-            <p>
-              {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
-            </p>
+        <template v-if="operations.length !== 0">
+          <div
+            v-for="(li, i) in filterOperations(3)"
+            :key="i"
+            @click="handleClickOperationFinish(li)"
+            class="info">
+            <div class="data">
+              <span>
+                Fecha
+              </span>
+              <p>
+                {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Enviado
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibido
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
           </div>
-          <div class="data">
-            <span>
-              Enviado
-            </span>
-            <p>
-              {{ li.send }}
-            </p>
-          </div>
-          <div class="data">
-            <span>
-              Recibido
-            </span>
-            <p>
-              {{ li.received }}
-            </p>
-          </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+        </template>
       </div>
     </div>
   </div>
@@ -306,24 +332,27 @@ export default class OperationsClass extends Vue {
     margin-bottom: 0px
     position: relative
     z-index: 20
-    // &:after
-    //   content: ''
-    //   position: absolute
-    //   bottom: 0px
-    //   width: 100%
-    //   height: 35px
-    //   background-image: linear-gradient(180deg, -color('gray') 0%, rgba(0,0,0,0.001) 100%)
-    //   transform: translate(0,100%)
-
     button
       padding: 12px 20px
       border-radius: 18px
       border: 0px
       background: transparent
       transition: all .25s ease
+      position: relative
       &.active
         background: -color('black')
         color: -color('bg')
+      span
+        position: absolute
+        top: -6px
+        background: #fff
+        color: #000
+        min-width: 20px
+        border-radius: 7px
+        font-weight: bold
+        font-size: .75rem
+        padding: 2px 0px
+        right: -4px
   header
     border-radius: 30px 30px 0px 0px
     position: relative

@@ -2,7 +2,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import axios from '~/plugins/axios'
 
 export const state = () => ({
-  data: {}
+  data: null
 })
 
 export type RootState = ReturnType<typeof state>
@@ -19,8 +19,7 @@ export const actions: ActionTree<RootState, RootState> = {
       return
     }
     axios.get(`/operation-show/${id}`).then(({ data }: any) => {
-      console.log(data)
-      commit('SET_DATA', data.info)
+      commit('SET_DATA', data.info[0])
     })
   }
 }

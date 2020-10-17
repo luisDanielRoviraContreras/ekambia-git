@@ -58,7 +58,7 @@
       <span>
         0 Guaranies
       </span>
-      <Button class="mt-6 mb-6" block yellow>
+      <Button @click="share" class="mt-6 mb-6" block yellow>
         Compartir
       </Button>
     </div>

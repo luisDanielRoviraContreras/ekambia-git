@@ -2,10 +2,11 @@
   <div ref="page" class="index page">
     <nav-bar v-if="$device.isMobile" />
     <div id="change" class="con-change">
-      <div class="con-img">
+      <div v-if="data" class="con-img">
         <img src="home.png" alt="">
       </div>
-      <div class="con-prices">
+      <load v-else class="mb-6" height="150px" width="240px" />
+      <div v-if="data" class="con-prices">
         <div class="price-1 price">
           Compra: <span v-if="data">{{ data.exchange_purchase.price_purchase }}</span>
         </div>
@@ -13,6 +14,7 @@
           Venta: <span v-if="data">{{ data.exchange_sale.price_sale }}</span>
         </div>
       </div>
+      <load v-else />
       <div class="con-inputs mt-6">
         <c-input
           ref="send"
@@ -145,18 +147,6 @@ export default class name extends Vue {
   mounted () {
     this.getData()
     this.getFirstOperation()
-    const page: any = this.$refs.page
-    // page.addEventListener('scroll', (evt) => {
-    //   this.scrollTop = evt.target.scrollTop
-
-    //   if (this.scrollTop > window.innerHeight / 2) {
-    //     if (this.$route.hash !== '#operations') {
-    //       this.$router.push('/#operations')
-    //     }
-    //   } else if (this.$route.hash === '#operations') {
-    //     this.$router.push('/')
-    //   }
-    // })
     this.handleOperations()
     this.$bounceClose()
   }
@@ -244,10 +234,13 @@ export default class name extends Vue {
     flex-direction: column
     box-sizing: border-box
     max-width: 450px
+    padding-top: 10px
     .con-img
       margin-bottom: -20px
+      z-index: 10
+      position: relative
       img
-        max-width: 260px
+        max-width: 240px
         transition: all .25s ease
 .con-inputs
   position: relative
@@ -258,12 +251,14 @@ export default class name extends Vue {
   justify-content: center
   width: 100%
   background: -color('black')
-  border-radius: 20px
+  border-radius: 24px
   color: #fff
+  z-index: 100
+  position: relative
   .price
     width: 50%
     text-align: center
-    padding: 14px 10px
+    padding: 19px 10px
     position: relative
     display: flex
     align-items: center

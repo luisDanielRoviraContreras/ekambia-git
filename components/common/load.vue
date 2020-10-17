@@ -1,7 +1,8 @@
 <template>
   <div
     :style="{
-      height: this.height
+      height: this.height,
+      maxWidth: this.width
     }"
     class="load">
   </div>
@@ -11,6 +12,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class load extends Vue {
   @Prop({}) height: any
+  @Prop({}) width: any
 }
 </script>
 <style lang="sass" scoped>

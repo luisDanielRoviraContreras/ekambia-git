@@ -27,7 +27,7 @@
             <div class="icon">
               <img src="/logo-dark.png" alt="">
             </div>
-            <span>
+            <span v-if="this.$parent.operation">
               {{ this.$parent.operation.send }}
             </span>
           </div>
@@ -40,7 +40,7 @@
                 </g>
               </svg>
             </div>
-            <span>
+            <span v-if="this.$parent.operation">
               {{ this.$parent.operation.received }}
             </span>
           </div>
@@ -159,13 +159,14 @@ export default class step3 extends Vue {
         z-index: 110
         span
           top: auto
-          bottom: -10px
+          bottom: -15px
           transform: translate(0, 100%)
       span
         position: absolute
-        top: -10px
+        top: -12px
         transform: translate(0,-100%)
         font-weight: bold
+        font-size: .9rem
       .icon
         background: -color('color')
         width: 70px
@@ -185,7 +186,7 @@ export default class step3 extends Vue {
       width: 140px
     .circle
       border-radius: 50%
-      border: 2px dashed -color('black')
+      border: 2px dashed -color('black', .3)
       width: 260px
       height: 260px
       display: flex
