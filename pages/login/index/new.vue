@@ -28,7 +28,7 @@
         <div class="text-2 text">
           <h2>Ahorra con cada intercambio</h2>
           <p>
-            Vamos a darte una de las mejores tasas de cambio, así podrás ahorrar con cada intercambio. Aunque me imagino que estos textos se los va a dar el cliente.
+            Vamos a darte una de las mejores tasas de cambio, así podrás ahorrar con cada intercambio.
           </p>
         </div>
       </div>
