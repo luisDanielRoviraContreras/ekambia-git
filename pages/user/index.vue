@@ -32,7 +32,7 @@
           @leave="leave"
         >
           <div v-if="open == 1" class="content-info">
-            <personal-data />
+            <personal-data @cancel="cancelData" />
           </div>
         </transition>
       </div>
@@ -165,6 +165,10 @@ export default class name extends Vue {
 
   @Action('user/updateUserData') updateUserData
 
+  cancelData() {
+    this.getUserData(this.$route.query.id)
+  }
+
   handleClickLogOut () {
     this.$dialog({
       title: 'Estas seguro de cerrar la sesión?',
@@ -193,12 +197,18 @@ export default class name extends Vue {
   enter (el: any, done: any) {
     const h = el.scrollHeight
     el.style.height = h - 1 + 'px'
+    setTimeout(() => {
+      el.style.height = 'auto'
+    }, 300);
     done()
   }
 
   leave (el: any) {
-    el.style.minHeight = '0px'
-    el.style.height = '0px'
+    const h = el.scrollHeight
+    el.style.height = h - 1 + 'px'
+    setTimeout(() => {
+      el.style.height = '0px'
+    }, 10);
   }
 }
 </script>

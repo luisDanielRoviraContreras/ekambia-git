@@ -63,7 +63,7 @@
         </nuxt-link>
       </div>
       <Button
-        class="btn-create mt-6 mb-6"
+        class="btn-create mt-6"
         block
         @click="$router.push('/createAccount/')"
       >
@@ -177,7 +177,7 @@ export default class login extends Vue {
   align-items: center
   justify-content: flex-start
   flex-direction: column
-  overflow: auto
+  overflow: hidden
   width: 100%
   .button
     max-width: 400px
@@ -188,9 +188,10 @@ export default class login extends Vue {
     align-items: center
     justify-content: flex-start
     flex-direction: column
+    height: 100vh
     height: calc(var(--vh, 1vh) * 100)
     padding: 20px
-    padding-bottom: env(safe-area-inset-bottom)
+    padding-bottom: calc(env(safe-area-inset-bottom) + 30px)
     overflow: hidden
   .con-login
     display: flex

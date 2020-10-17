@@ -4,7 +4,7 @@
     class="operations"
     :class="{ open: scrollTop > 100}"
   >
-    <header ref="header" @touchend="handleEnd" @touchstart="handleStart">
+    <header ref="header" @click="$emit('click')">
       <h2>
         Operaciones
       </h2>

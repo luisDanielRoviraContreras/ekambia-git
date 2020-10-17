@@ -42,12 +42,12 @@
       </Button>
     </div>
 
-    <operations v-if="$device.isMobile" :scroll-top="scrollTop" ref="operations" @touchend="handleTouchend" />
+    <nuxt-child />
+    <operations v-if="$device.isMobile" :scroll-top="scrollTop" ref="operations" @click="handleClick" />
     <transition name="fade-teclado">
       <teclado v-if="focus && $device.isMobile && !$device.isIos" @click="handleTeclado" />
     </transition>
 
-    <nuxt-child />
   </div>
 </template>
 <script lang="ts">
@@ -117,14 +117,14 @@ export default class name extends Vue {
     this.form.receive = ''
   }
 
-  @Watch('$route.hash')
-  handleRoute (val) {
-    const page: any = this.$refs.page
-    if (val === '#operations' && this.$route.query.c === 'y') {
-      this.$nextTick(() => {
-        page.scrollTo(0, (this.$refs.operations as any).$el.scrollHeight)
-      })
-    } else if (this.$route.query.c === 'y') {
+  @Watch('$route.query.operations')
+  handleOperations() {
+    if (this.$route.query.operations) {
+      const page: any = document.querySelector('.index.page')
+      const operations: any = page.querySelector('#operations')
+      page.scrollTo(0, operations.scrollHeight)
+    } else {
+      const page: any = document.querySelector('.index.page')
       page.scrollTo(0, 0)
     }
   }
@@ -146,19 +146,18 @@ export default class name extends Vue {
     this.getData()
     this.getFirstOperation()
     const page: any = this.$refs.page
-    page.addEventListener('scroll', (evt) => {
-      this.scrollTop = evt.target.scrollTop
+    // page.addEventListener('scroll', (evt) => {
+    //   this.scrollTop = evt.target.scrollTop
 
-      if (this.scrollTop > window.innerHeight / 2) {
-        if (this.$route.hash !== '#operations') {
-          this.$router.push('/#operations')
-        }
-      } else if (this.$route.hash === '#operations') {
-        this.$router.push('/')
-      }
-    })
-
-    this.handleRoute(this.$route.hash)
+    //   if (this.scrollTop > window.innerHeight / 2) {
+    //     if (this.$route.hash !== '#operations') {
+    //       this.$router.push('/#operations')
+    //     }
+    //   } else if (this.$route.hash === '#operations') {
+    //     this.$router.push('/')
+    //   }
+    // })
+    this.handleOperations()
     this.$bounceClose()
   }
 
@@ -206,14 +205,19 @@ export default class name extends Vue {
     }
   }
 
-  handleTouchend (el: any) {
+  handleClick (el: any) {
     const page: any = this.$refs.page
     if (page.scrollTop > 100) {
-      this.$router.push('/')
-      page.scrollTo(0, 0)
+      this.$router.push({
+        path: '/'
+      })
     } else {
-      this.$router.push('/#operations')
-      page.scrollTo(0, el.scrollHeight)
+      this.$router.push({
+        path: '/',
+        query: {
+          operations: 'true'
+        }
+      })
     }
   }
 }

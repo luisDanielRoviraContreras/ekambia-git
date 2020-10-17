@@ -12,7 +12,7 @@
         <b>
           Paso 1
         </b>
-        Verifica el monto y la cuenta
+        Ingreso de datos de transacción
       </h3>
     </header>
     <transition
@@ -25,7 +25,7 @@
           <div class="texts">
             <div class="text">
               <span>
-                Tu enviás
+                Tu envías
               </span>
               <p>
                 {{ getSend }}
@@ -61,6 +61,8 @@
             </template>
           </Select>
         </template>
+        <load class="mt-6" v-else />
+
         <template v-if="data">
           <Button @click="handleCreateAccount" class="mt-6" block v-if="data.accounts.length == 0">
             Crear cuenta bancaria
@@ -85,6 +87,7 @@
             Este campo es requerido
           </Alert>
         </template>
+        <load class="mt-6" v-else />
 
         <Select v-if="data && data.accounts.length > 0" :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
           <option hidden value="0">
@@ -103,10 +106,11 @@
             Otro
           </option>
         </Select>
+        <load class="mt-6" v-else />
         <Alert :open="!form.source_funds && send">
           Este campo es requerido
         </Alert>
-        <Button v-if="data && data.accounts.length > 0" :loading="loading" @click="createOperation" class="mt-6" block yellow>
+        <Button :disabled="!data" :loading="loading" @click="createOperation" class="mt-6" block yellow>
           Iniciar Operación
         </Button>
       </div>
@@ -210,7 +214,7 @@ export default class step1 extends Vue {
 
   handleCreateAccount() {
     this.$router.push({
-      path: '/accounts',
+      path: '/accounts/create',
       query: {
         create: 'true',
         s: this.getSend,

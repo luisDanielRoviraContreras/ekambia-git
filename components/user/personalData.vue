@@ -5,6 +5,7 @@
       @input="handleUpdateValue('email', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.email && send"
     >
       Correo electrónico
     </c-input>
@@ -17,6 +18,7 @@
       @input="handleUpdateValue('tel', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.tel && send"
     >
       Teléfono
     </c-input>
@@ -29,6 +31,7 @@
       @input="handleUpdateValue('firstName', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.firstName && send"
     >
       Nombres
     </c-input>
@@ -41,6 +44,7 @@
       @input="handleUpdateValue('lastName', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.lastName && send"
     >
       Apellidos
     </c-input>
@@ -53,6 +57,7 @@
       @input="handleUpdateValue('date_of_birth', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.date_of_birth && send"
     >
       Fecha de nacimiento
     </c-input>
@@ -65,6 +70,7 @@
       @input="handleUpdateValue('dni', $event)"
       class="mt-6"
       :readonly="!edit"
+      :danger="!form.dni && send"
     >
       DNI
     </c-input>
@@ -76,7 +82,7 @@
       Editar usuario
     </Button>
     <footer class="con-btns" v-else>
-      <Button @click="edit = false" class="mr-3">
+      <Button @click="edit = false, send = false, handleCancel()" class="mr-3">
         Cancelar
       </Button>
       <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
@@ -98,6 +104,10 @@ export default class personalData extends Vue {
     return (this.$parent as any).data
   }
 
+  handleCancel() {
+    this.$emit('cancel')
+  }
+
   @Action('user/updateValue') updateValue
 
   handleUpdateValue(prop, val) {
@@ -113,9 +123,32 @@ export default class personalData extends Vue {
 
     this.loading = true
 
-    axios.post('/update-emailandtel', {
-      tel: this.form.tel,
-      email: this.form.email
+    // axios.post('/update-emailandtel', {
+    //   tel: this.form.tel,
+    //   email: this.form.email
+    // }).then((res: any) => {
+    //   this.edit = false
+    //   this.loading = false
+
+    //   this.$notification({
+    //     title: 'Datos Guardados',
+    //     text: 'Los datos personales han sido guardados con éxito'
+    //   })
+    // }).catch((err) => {
+    //   this.edit = false
+    //   this.loading = false
+    //   this.$notification({
+    //     title: 'Oops! Algo salió mal',
+    //     text: err.response.data.message.toString()
+    //   })
+    // })
+    axios.post(`/user-update/${this.form.id}`, {
+      firstName: this.form.firstName,
+      lastName: this.form.lastName,
+      document_type_id: this.form.document_type_id,
+      dni: this.form.dni,
+      declare_id: 1,
+      date_of_birth: this.form.date_of_birth
     }).then((res: any) => {
       this.edit = false
       this.loading = false
@@ -132,21 +165,6 @@ export default class personalData extends Vue {
         text: err.response.data.message.toString()
       })
     })
-    // axios.post(`/user-update/${this.form.id}`, {
-    //   firstName: this.form.firstName,
-    //   lastName: this.form.lastName,
-    //   document_type_id: this.form.document_type_id,
-    //   dni: this.form.dni,
-    //   declare_id: 1,
-    //   date_of_birth: this.form.date_of_birth
-    // }).then((res: any) => {
-    //   this.edit = false
-
-    //   this.$notification({
-    //     title: 'Datos Guardados',
-    //     text: 'Los datos personales han sido guardados con éxito'
-    //   })
-    // })
   }
 }
 </script>

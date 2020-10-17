@@ -8,7 +8,7 @@
       </h2>
       <header>
         <p>
-          Agrega tu numero de teléfono. Le enviaremos un código de verificación de 4 dígitos.
+          Agrega tu número de teléfono. Le enviaremos un código de verificación de 4 dígitos.
         </p>
       </header>
 
@@ -16,7 +16,7 @@
         Número de teléfono
       </c-input>
       <Alert :open="!validateNumber && send">
-        El numero de teléfono es invalido
+        El número de teléfono es invalido
       </Alert>
     </div>
     <div

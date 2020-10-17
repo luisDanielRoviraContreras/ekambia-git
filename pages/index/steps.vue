@@ -3,7 +3,7 @@
     <nav-bar back @click="$router.push('/')" />
     <div class="con-steps">
       <step-1 :ready="isOpen == 2 || isOpen == 3" :open="isOpen == 1" />
-      <step-2 :ready="isOpen == 3" :open="isOpen == 2" />
+      <step-2 ref="step2" :ready="isOpen == 3" :open="isOpen == 2" />
       <step-3 :black="isOpen == 2" :open="isOpen == 3" />
       <Success v-if="isOpen == 4" />
     </div>
@@ -48,11 +48,11 @@ export default class steps extends Vue {
 .steps-transfer
   position: fixed
   width: 100%
-  height: 100%
+  height: 100vh
   background: -color('gray')
   top: 0px
   left: 0px
-  z-index: 3000
+  z-index: 5000
   display: flex
   align-items: flex-start
   justify-content: flex-start

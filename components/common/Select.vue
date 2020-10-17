@@ -12,7 +12,6 @@
     >
       <slot />
     </select>
-
     <i class='bx bxs-chevron-down'></i>
   </div>
 </template>
@@ -24,6 +23,7 @@ export default class Select extends Vue {
   @Prop({ type: Boolean }) danger: boolean
   @Prop({ type: Boolean }) sticky: boolean
   @Prop({ type: Boolean }) stickyPrev: boolean
+  @Prop({ type: Boolean }) load: boolean
   @Prop({}) value: any
 
   change(evt: any) {

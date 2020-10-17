@@ -7,7 +7,7 @@
     <a
       to="/"
       class="link1"
-      :class="{'nuxt-link-exact-active': this.$route.name === 'index' && this.$route.hash !== '#operations'}"
+      :class="{'nuxt-link-exact-active': this.$route.name === 'index' && !this.$route.query.operations}"
       @click="handleClickHome"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -25,7 +25,7 @@
     <a
       href="#"
       class="link2"
-      :class="{'nuxt-link-active': this.$route.name === 'index' && this.$route.hash == '#operations'}"
+      :class="{'nuxt-link-active': this.$route.name === 'index' && this.$route.query.operations}"
       @click="handleClickOperations"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.156 25.518">
@@ -71,35 +71,40 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class footerBar extends Vue {
   handleClickHome () {
-    if (this.$route.name === 'index') {
-      this.$nextTick(() => {
-        const page = document.querySelector('.index.page')
-        page.scrollTo(0, 0)
-      })
-    } else {
-      setTimeout(() => {
-        const page = document.querySelector('.index.page')
-        page.scrollTo(0, 0)
-      }, 300)
-    }
+    // if (this.$route.name === 'index') {
+    //   this.$nextTick(() => {
+    //     const page = document.querySelector('.index.page')
+    //     page.scrollTo(0, 0)
+    //   })
+    // } else {
+    //   setTimeout(() => {
+    //     const page = document.querySelector('.index.page')
+    //     page.scrollTo(0, 0)
+    //   }, 300)
+    // }
 
     this.$router.push('/')
   }
 
   handleClickOperations () {
-    if (this.$route.name === 'index') {
-      const page: any = document.querySelector('.index.page')
-      const operations: any = page.querySelector('#operations')
-      page.scrollTo(0, operations.scrollHeight)
-    } else {
-      setTimeout(() => {
-        const page: any = document.querySelector('.index.page')
-        const operations: any = page.querySelector('#operations')
-        page.scrollTo(0, operations.scrollHeight)
-      }, 300)
-    }
+    // if (this.$route.name === 'index') {
+    //   const page: any = document.querySelector('.index.page')
+    //   const operations: any = page.querySelector('#operations')
+    //   page.scrollTo(0, operations.scrollHeight)
+    // } else {
+    //   setTimeout(() => {
+    //     const page: any = document.querySelector('.index.page')
+    //     const operations: any = page.querySelector('#operations')
+    //     page.scrollTo(0, operations.scrollHeight)
+    //   }, 300)
+    // }
 
-    this.$router.push('/#operations')
+    this.$router.push({
+      path: '/',
+      query: {
+        operations: 'true'
+      }
+    })
   }
 
   generateOnda (evt: any) {

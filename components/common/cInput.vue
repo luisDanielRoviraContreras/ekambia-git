@@ -60,7 +60,16 @@ export default class InputComponent extends Vue {
     return {
       ...this.$listeners,
       input: (evt: any) => {
-        this.$emit('input', evt.target.value)
+        const max = Number(this.$attrs.maxlength)
+        if (!!this.$attrs.maxlength) {
+          if (evt.target.value.length < max) {
+              this.$emit('input', evt.target.value)
+          } else {
+            evt.target.value = evt.target.value.substring(0, max)
+          }
+        } else {
+          this.$emit('input', evt.target.value)
+        }
       }
     }
   }
@@ -161,6 +170,8 @@ export default class InputComponent extends Vue {
     line-height: 1rem
     border-radius: 5px
     font-size: 16px
+    &:first-letter
+      text-transform: uppercase
   .bg
     width: 100%
     height: 100%

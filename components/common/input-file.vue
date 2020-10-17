@@ -7,14 +7,17 @@
       <slot />
     </label>
     <div class="con-file">
+      <button @click="removeFile" v-if="src" class="remove">
+        <i class='bx bx-x'></i>
+      </button>
       <div v-if="user" v-show="!src" class="con-text">
         <!-- <img src="/user.png" alt=""> -->
         <i class='bx bx-user'></i>
       </div>
       <div v-else class="con-text">
-        <i v-if="src" class="bx bx-revision reload" />
-        <i v-else class="bx bx-image-add" />
-        <p>
+        <!-- <i v-if="src" class="bx bx-revision reload" /> -->
+        <i v-if="!src" class="bx bx-image-add" />
+        <p v-if="!src">
           <slot name="text"></slot>
         </p>
       </div>
@@ -45,6 +48,14 @@ export default class InputComponent extends Vue {
 
   beforeEnter (el: any) {
     el.style.height = 0
+  }
+
+  removeFile() {
+    this.$el.querySelector('input').type = 'text'
+    this.$el.querySelector('input').type = 'file'
+    this.$emit('change', null)
+    this.$emit('input', null)
+    this.src = ''
   }
 
   enter (el: any, done: any) {
@@ -78,6 +89,18 @@ export default class InputComponent extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.remove
+  position: absolute
+  right: 0px
+  top: 0px
+  margin: 10px
+  width: 40px
+  height: 40px
+  border-radius: 10px
+  border: 0px
+  background: #fff
+  box-shadow: 0px 10px 20px 0px rgba(0,0,0,.05)
+  z-index: 200
 .con-input-file
   display: flex
   align-items: flex-start
@@ -125,14 +148,14 @@ export default class InputComponent extends Vue {
         font-size: .8rem
         text-align: center
         margin-top: 8px
-    &:hover
-      img.img
-        opacity: .5
-      .reload
-        z-index: 20
-        opacity: 1
-      i
-        opacity: .6
+    // &:hover
+    //   img.img
+    //     opacity: .5
+    //   .reload
+    //     z-index: 20
+    //     opacity: 1
+    //   i
+    //     opacity: .6
     i
       position: relative
       font-size: 1.8rem
@@ -180,8 +203,6 @@ export default class InputComponent extends Vue {
     height: 150px
     opacity: 0
     cursor: pointer
-    &.hasValue
-      height: 200px
     &:read-only
      background: -color('bg-2')
      font-weight: bold

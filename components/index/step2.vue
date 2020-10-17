@@ -42,7 +42,7 @@
           :disabled="!!form.file"
           :danger="!form.ref && !form.file && send"
         >
-          Nro de referencia
+          Nro. de referencia
         </c-input>
         <Alert :open="!form.ref && !form.file && send">
           Este campo es requerido

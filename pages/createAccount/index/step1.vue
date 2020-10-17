@@ -40,7 +40,7 @@
           class="ml-3"
           :danger="!form.dni && send"
         >
-          Nro de documento
+          Nro. de documento
         </c-input>
       </div>
       <Alert :open="!form.dni && send">
@@ -144,6 +144,10 @@ export default class createAccount extends Vue {
     }).then(({data}) => {
       const token = data.info.token
       this.$cookies.set('token', token)
+      this.$notification({
+        title: 'Usuario registrado',
+        text: 'Complete los siguientes pasos para poder hacer operaciones en Ekambia'
+      })
       this.$router.push('/createAccount/step2')
       this.loading = false
     }).catch((err) => {

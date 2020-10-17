@@ -3,7 +3,7 @@
     <nav-bar v-if="$device.isMobile" absolute />
     <button
       v-if="$device.isMobile"
-      @click="scrollMove"
+      @click="handleCreateAccount"
       class="btn-plus">
       <i class='bx bx-plus' ></i>
     </button>
@@ -13,18 +13,24 @@
       </h3>
 
       <!-- <p v-if="$fetchState.pending">Fetching posts...</p> -->
-
-      <AccountCard
-        v-for="(account, i) in accounts"
-        :key="i"
-        class="mt-6"
-        :banco="account.bank.name"
-        :lastNumber="account.account_number"
-        :currency="account.coin.coin"
-        :account="account"
-        ownAccount="si"
-        :animate="i == 0"
-        />
+      <template v-if="accounts">
+        <AccountCard
+          v-for="(account, i) in accounts"
+          :key="i"
+          class="mt-6"
+          :banco="account.bank.name"
+          :lastNumber="account.account_number"
+          :currency="account.coin.coin"
+          :account="account"
+          ownAccount="si"
+          :animate="i == 0"
+          />
+      </template>
+      <template v-else>
+        <load class="mt-6" height="118px" />
+        <load class="mt-6" height="118px" />
+        <load class="mt-6" height="118px" />
+      </template>
 
       <Button v-if="!$device.isMobile" class="mt-6" @click="handleOpenAdd" yellow block>
         Agregar Cuenta
@@ -32,103 +38,7 @@
 
     </div>
 
-    <div :class="{visible: visibleAdd}" class="con-create-account">
-      <nav-bar back @click="scrollMoveBack" v-if="$device.isMobile" absolute/>
-      <div class="con-create-account__content">
-        <h3 v-if="!$route.query.edit">
-          Nueva Cuenta Bancaria
-        </h3>
-        <h3 v-else>
-          Editar Cuenta Bancaria
-        </h3>
-
-        <c-input
-          v-model="form.alias"
-          type="email"
-          class="mt-6"
-          :danger="!form.alias && send"
-          gray
-        >
-          Alias
-        </c-input>
-
-        <Alert :open="!form.alias && send">
-          Este campo es requerido
-        </Alert>
-
-        <Select v-if="data" class="mt-6" block v-model="form.bank_id" :danger="!form.bank_id && send">
-          <option hidden value="">
-            Banco
-          </option>
-          <option v-for="(option, index) in data.banks" :key="index" :value="option.id">
-            {{
-              option.name
-            }} {{ option.id }}
-          </option>
-        </Select>
-
-        <Alert :open="!form.bank_id && send">
-          Este campo es requerido
-        </Alert>
-
-        <c-input
-          v-model="form.account_number"
-          type="text"
-          class="mt-6"
-          :danger="!form.account_number && send"
-          gray
-          maxlength="24"
-        >
-          Número de cuenta
-        </c-input>
-
-        <Alert :open="!form.account_number && send">
-          Este campo es requerido
-        </Alert>
-
-        <Select v-if="data" class="mt-6" block v-model="form.account_type_id" :danger="!form.account_type_id && send">
-          <option hidden value="">
-            Tipo de cuenta
-          </option>
-          <option v-for="(option, index) in data.account_types" :key="index" :value="option.id">
-            {{
-              option.account_type
-            }}
-          </option>
-        </Select>
-
-        <Alert :open="!form.account_type_id && send">
-          Este campo es requerido
-        </Alert>
-
-        <Select v-if="data" class="mt-6" block v-model="form.coin_id" :danger="!form.coin_id && send">
-          <option hidden value="">
-            Moneda
-          </option>
-          <option v-for="(option, index) in data.coins" :key="index" :value="option.id">
-            {{
-              option.coin
-            }}
-          </option>
-        </Select>
-
-        <Alert :open="!form.coin_id && send">
-          Este campo es requerido
-        </Alert>
-
-        <footer class="mt-6">
-          <Button v-if="!$device.isMobile" block @click="visibleAdd = false">
-            Cancelar
-          </Button>
-          <Button :loading="loading" v-if="!$route.query.edit" @click="handleSend" block yellow>
-            Agregar Cuenta
-          </Button>
-          <Button v-else :loading="loading" @click="handleUpdate" block yellow>
-            Guardar Cambios
-          </Button>
-        </footer>
-      </div>
-    </div>
+    <nuxt-child />
   </div>
 </template>
 <script lang="ts">
@@ -143,124 +53,24 @@ import axios from '~/plugins/axios'
   fetchOnServer: false
 })
 export default class accountsBank extends Vue {
-  visibleAdd: boolean = false
-  loading: boolean = false
   create: boolean = false
 
   @State(state => state.accounts.accounts) accounts
   @Action('accounts/getAccounts') getAccounts
 
-  scrollLeft: number = 0
-  windowInnerWidth: number = 0
-  data: any = null
-  form: any = {
-    alias: '',
-    account_type_id: '',
-    account_number: '',
-    coin_id: '',
-    bank_id: ''
-  }
-
-  send: boolean = false
-
-  handleSend () {
-    this.send = true
-    if (!this.form.alias || !this.form.account_type_id || !this.form.account_number || !this.form.coin_id || !this.form.bank_id) {
-      return
-    }
-    this.loading = true
-    axios.post('/account-store', { ...this.form }).then((res) => {
-      this.getAccounts()
-      this.scrollMoveBack()
-      this.$notification({
-        title: 'Cuenta Creada',
-        text: 'La cuenta ha sido creada exitosamente.'
-      })
-      this.loading = false
-
-      if (this.$route.query.create) {
-        this.$router.push({
-          path: '/steps',
-          query: {
-            r: this.$route.query.r,
-            s: this.$route.query.s,
-          }
-        })
-      }
-
-    }).catch((err) => {
-      this.loading = false
-      this.$notification({
-        title: 'Oops! Algo salió mal',
-        text: err.response.data.message.toString()
-      })
-    })
-  }
-
-  handleUpdate () {
-    this.send = true
-    if (!this.form.alias || !this.form.account_type_id || !this.form.account_number || !this.form.coin_id || !this.form.bank_id) {
-      return
-    }
-    this.loading = true
-    axios.post(`/account-update/${this.$route.query.id}`, { ...this.form }).then((res) => {
-      this.getAccounts()
-      this.scrollMoveBack()
-      this.$notification({
-        title: 'Datos actualizados',
-        text: 'Los cambios han sido actualizados satisfactoriamente.'
-      })
-      this.loading = false
-    }).catch((err) => {
-      this.loading = false
-      this.$notification({
-        title: 'Oops! Algo salió mal',
-        text: err.response.data.message.toString()
-      })
-    })
+  handleCreateAccount() {
+    this.$router.push('/accounts/create/')
   }
 
   handleOpenAdd() {
-    this.visibleAdd = true
-  }
-
-  scrollMove() {
-    (this.$refs.accounts as any).scrollLeft = window.innerWidth
-  }
-  scrollMoveBack() {
-    this.send = false;
-    (this.$refs.accounts as any).scrollLeft = 0
-    setTimeout(() => {
-      this.form = {
-        alias: '',
-        account_type_id: '',
-        account_number: '',
-        coin_id: '',
-        bank_id: ''
-      }
-    }, 200);
-  }
-
-  handleTouch(evt) {
-    console.dir(evt)
-    evt.preventDefault()
+    this.$router.push({
+      path: '/accounts/create',
+    })
   }
 
   edit(account) {
-    this.form = {
-      alias: account.alias,
-      account_type_id: account.account_type_id,
-      account_number: account.account_number,
-      coin_id: account.coin_id,
-      bank_id: account.bank_id
-    }
-    if (this.$device.isMobile) {
-      this.scrollMove()
-    } else {
-      this.visibleAdd = true
-    }
     this.$router.push({
-      path: '/accounts',
+      path: '/accounts/create',
       query: {
         edit: 'true',
         id: account.id
@@ -268,28 +78,10 @@ export default class accountsBank extends Vue {
     })
   }
 
-  getDataCreate() {
-    axios.get('/account-create').then(({ data }) => {
-      this.data = data.info
-    })
-  }
-
   mounted () {
-    this.getDataCreate()
-    this.windowInnerWidth = window.innerWidth
-    const accounts: any = this.$refs.accounts
-    accounts.addEventListener('scroll', (evt) => {
-      this.scrollLeft = evt.target.scrollLeft
-    })
     setTimeout(() => {
       this.$cookies.set('anima', true)
     }, 3000);
-
-    if (this.$route.query.create) {
-      (this.$refs.accounts as any).scrollLeft = window.innerWidth
-    } else {
-      (this.$refs.accounts as any).scrollLeft = 0
-    }
   }
 }
 </script>
@@ -350,43 +142,6 @@ export default class accountsBank extends Vue {
     overflow-x: hidden
     padding-bottom: 140px
     padding-top: 70px
-
-  .con-create-account
-    // padding: 20px
-    padding-top: 70px
-    height: 100%
-    width: 100%
-    height: 100%
-    min-width: 100%
-    scroll-snap-align: center
-    position: relative
-    z-index: 1000
-    overflow: auto
-    padding-bottom: 90px
-    .con-create-account__content
-      padding: 0px 20px
-    //   overflow: auto
-    //   max-height: calc(100vh - 110px)
-    //   padding-bottom: 50px
-    footer
-      display: flex
-      align-items: center
-      justify-content: center
-      width: 100%
-      &.hiddenPlus
-        overflow: hidden
-        opacity: 0
-      // border-radius: 25% 0px 0px 95px
-      // overflow: hidden
-      // &:after
-      //   content: ''
-      //   background: -color('bg',1)
-      //   right: 0px
-      //   width: 100%
-      //   height: 100%
-      //   // border-radius: 25% 0px 0px 95px
-      //   position: absolute
-      //   transform: translate(20%)
 
 // responsive
 
