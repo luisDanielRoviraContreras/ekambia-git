@@ -37,10 +37,11 @@
         <c-input
           v-model="form.ref"
           class="mt-6"
-          inputmode="number"
+          type="number"
           gray
           :disabled="!!form.file"
           :danger="!form.ref && !form.file && send"
+          maxlength="20"
         >
           Nro. de referencia
         </c-input>

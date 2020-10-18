@@ -50,14 +50,9 @@
           </div>
         </div>
         <template v-if="data">
-          <Select v-if="data.accounts.length > 0" :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
-            <option hidden value="0">
-              Cuenta de origen
-            </option>
+          <Select :data="data.accounts" placeholder="Cuenta de origen" v-if="data.accounts.length > 0" :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
             <template v-if="data">
-              <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-                {{ option.alias }}
-              </option>
+              <Option :key="i" v-for="(option, i) in data.accounts" :value="option.id" :text="option.alias" />
             </template>
           </Select>
         </template>
@@ -73,14 +68,9 @@
           Este campo es requerido
         </Alert>
         <template v-if="data">
-          <Select v-if="data.accounts.length > 0" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
-            <option hidden value="0">
-              Cuenta de destino
-            </option>
+          <Select :data="data.accounts" placeholder="Cuenta de destino" v-if="data.accounts.length > 0" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
             <template v-if="data">
-              <option :key="i" v-for="(option, i) in data.accounts" :value="option.id">
-                {{ option.alias }}
-              </option>
+              <Option :key="i" v-for="(option, i) in data.accounts" :value="option.id" :text="option.alias" />
             </template>
           </Select>
           <Alert :open="!form.destination_account_id && send">
@@ -89,22 +79,10 @@
         </template>
         <load class="mt-6" v-else />
 
-        <Select v-if="data && data.accounts.length > 0" :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
-          <option hidden value="0">
-            Origen de fondos
-          </option>
-          <option value="2">
-            Venta de inmueble
-          </option>
-          <option value="3">
-            Trabajo
-          </option>
-          <option value="4">
-            Contrataciones
-          </option>
-          <option value="5">
-            Otro
-          </option>
+        <Select :data="data.origins" placeholder="Origen de fondos" v-if="data && data.accounts.length > 0" :danger="!form.source_funds && send" class="mt-6" v-model="form.source_funds" block>
+          <template v-if="data">
+            <Option :key="i" v-for="(option, i) in data.origins" :value="option.id" :text="option.alias" />
+          </template>
         </Select>
         <load class="mt-6" v-else />
         <Alert :open="!form.source_funds && send">
@@ -167,7 +145,28 @@ export default class step1 extends Vue {
 
   getData() {
     axios.get('/operation-create').then(({ data }) => {
-      this.data = data.info
+      console.log(data.info)
+      this.data = {
+        ...data.info,
+        origins: [
+          {
+            id: 1,
+            alias: 'Venta de inmueble'
+          },
+          {
+            id: 2,
+            alias: 'Trabajo'
+          },
+          {
+            id: 3,
+            alias: 'Contrataciones'
+          },
+          {
+            id: 4,
+            alias: 'Otro'
+          }
+        ]
+      }
     }).catch((err) => {
       this.$notification({
         title: 'Oops! Algo salió mal',

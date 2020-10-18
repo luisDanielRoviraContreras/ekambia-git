@@ -1,7 +1,7 @@
 <template>
   <div ref="page" class="index page">
     <nav-bar v-if="$device.isMobile" />
-    <div id="change" class="con-change">
+    <div ref="change" id="change" class="con-change">
       <div v-if="data" class="con-img">
         <img src="home.png" alt="">
       </div>
@@ -149,6 +149,23 @@ export default class name extends Vue {
     this.getFirstOperation()
     this.handleOperations()
     this.$bounceClose()
+    this.handleScroll()
+  }
+
+  handleScroll() {
+    const el: any = this.$el
+    el.addEventListener('scroll', () => {
+      if (el.scrollTop === 0) {
+        this.$router.push('/')
+      } else if (el.scrollTop + window.innerHeight / 5 >= el.scrollHeight - (this.$refs.operations as any).$el.scrollHeight) {
+        this.$router.push({
+          path: '/',
+          query: {
+            operations: 'true'
+          }
+        })
+      }
+    })
   }
 
   handleChange () {

@@ -171,7 +171,7 @@ export default class name extends Vue {
 
   handleClickLogOut () {
     this.$dialog({
-      title: 'Estas seguro de cerrar la sesión?',
+      title: '¿Estas seguro de cerrar la sesión?',
       bounce: true,
       success: () => {
         axios.post('/logout').then(() => {

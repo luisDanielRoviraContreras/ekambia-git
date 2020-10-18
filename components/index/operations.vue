@@ -27,7 +27,7 @@
         :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth * 2)"
       >
-        Finalizando <span class="badge">{{ filterOperations(3).length }}</span>
+        Finalizada <span class="badge">{{ filterOperations(3).length }}</span>
       </button>
     </div>
 

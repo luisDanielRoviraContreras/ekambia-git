@@ -9,6 +9,7 @@
         ref="front"
         v-model="form.cedulaFront"
         :danger="!form.cedulaFront && send"
+        :disabled="loading"
       >
         Foto de tu DNI (frontal)
       </input-file>
@@ -18,6 +19,7 @@
       <input-file
         v-model="form.cedulaPost"
         :danger="!form.cedulaPost && send"
+        :disabled="loading"
       >
         Foto de tu DNI (Posterior)
       </input-file>
@@ -28,6 +30,7 @@
         v-model="form.selfie"
         :danger="!form.selfie && send"
         user
+        :disabled="loading"
       >
         Tómate un selfie
       </input-file>
@@ -71,6 +74,12 @@ export default class createAccount extends Vue {
     }).then((res) => {
       this.loading = false
       this.$router.push('/createAccount/step4')
+    }).catch((err) => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: err.response.data.message.toString()
+      })
     })
   }
 

@@ -23,16 +23,10 @@
       <div
         class="con-select-input mt-6"
       >
-        <Select sticky v-model="form.dniType" :danger="!form.dni && send">
-          <option value="1">
-            DNI
-          </option>
-          <option value="2">
-            PAS
-          </option>
-          <option value="3">
-            NIE
-          </option>
+        <Select placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
+          <Option value="1" text="DNI" />
+          <Option value="2" text="PAS" />
+          <Option value="3" text="NIE" />
         </Select>
         <c-input
           sticky-prev
@@ -166,13 +160,17 @@ export default class createAccount extends Vue {
   }
 }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
 // responsive
 .con-select-input
   display: flex
   align-items: center
   justify-content: space-between
   width: 100%
+  .select
+    max-width: 100px
+    input
+      width: 100%
 .con-create
   display: flex
   flex-direction: column

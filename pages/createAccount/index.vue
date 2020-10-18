@@ -68,7 +68,7 @@ export default class createAccount extends Vue {
     width: 100%
     overflow: auto
     flex: 1
-    padding: 0px 30px
+    padding: 0px 20px
     // display: flex
     // align-items: center
     // justify-content: flex-start

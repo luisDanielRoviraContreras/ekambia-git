@@ -27,15 +27,8 @@
           Este campo es requerido
         </Alert>
 
-        <Select v-if="data" class="mt-6" block v-model="form.bank_id" :danger="!form.bank_id && send">
-          <option hidden value="">
-            Banco
-          </option>
-          <option v-for="(option, index) in data.banks" :key="index" :value="option.id">
-            {{
-              option.name
-            }} {{ option.id }}
-          </option>
+        <Select :data="data.banks" placeholder="Banco" v-if="data" class="mt-6" block v-model="form.bank_id" :danger="!form.bank_id && send">
+          <Option :key="i" v-for="(option, i) in data.banks" :value="option.id" :text="option.name" />
         </Select>
         <load class="mt-6" v-else />
 
@@ -60,15 +53,8 @@
           Este campo es requerido
         </Alert>
 
-        <Select v-if="data" class="mt-6" block v-model="form.account_type_id" :danger="!form.account_type_id && send">
-          <option hidden value="">
-            Tipo de cuenta
-          </option>
-          <option v-for="(option, index) in data.account_types" :key="index" :value="option.id">
-            {{
-              option.account_type
-            }}
-          </option>
+        <Select :data="data.account_types" placeholder="Tipo de cuenta" v-if="data" class="mt-6" block v-model="form.account_type_id" :danger="!form.account_type_id && send">
+          <Option :key="i" v-for="(option, i) in data.account_types" :value="option.id" :text="option.account_type" />
         </Select>
         <load class="mt-6" v-else />
 
@@ -76,15 +62,8 @@
           Este campo es requerido
         </Alert>
 
-        <Select v-if="data" class="mt-6" block v-model="form.coin_id" :danger="!form.coin_id && send">
-          <option hidden value="">
-            Moneda
-          </option>
-          <option v-for="(option, index) in data.coins" :key="index" :value="option.id">
-            {{
-              option.coin
-            }}
-          </option>
+        <Select :data="data.coins" placeholder="Moneda" v-if="data" class="mt-6" block v-model="form.coin_id" :danger="!form.coin_id && send">
+          <Option :key="i" v-for="(option, i) in data.coins" :value="option.id" :text="option.coin" />
         </Select>
         <load class="mt-6" v-else />
 

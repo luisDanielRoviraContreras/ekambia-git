@@ -11,20 +11,20 @@
     </label>
     <div class="content-input">
       <Select
+        placeholder="Día"
         v-model="date.day"
         label="Día"
         center
         block
         @change="handleChange"
       >
-        <option hidden selected value=""> Día </option>
-        <option
+        <!-- <option hidden selected value=""> Día </option> -->
+        <Option
           v-for="(day, index) in 31"
           :key="index"
           :value="day < 9 ? '0' + day : day"
-        >
-          {{ day }}
-        </option>
+          :text="day"
+        />
       </Select>
       <Select
         v-model="date.month"
@@ -33,15 +33,16 @@
         value="Enero"
         block
         @change="handleChange"
+        placeholder="Mes"
       >
-        <option hidden selected value=""> Mes </option>
-        <option
+        <!-- <option hidden selected value=""> Mes </option> -->
+        <Option
           v-for="(month, index) in months"
           :key="index"
           :value="index < 9 ? '0' + (index + 1) : (index + 1)"
+          :text="month"
         >
-          {{ month }}
-        </option>
+        </Option>
       </Select>
       <Select
         v-model="date.year"
@@ -50,15 +51,16 @@
         value="2010"
         block
         @change="handleChange"
+        placeholder="Año"
       >
-        <option hidden selected value=""> Año </option>
-        <option
+        <!-- <option hidden selected value=""> Año </option> -->
+        <Option
           v-for="(year, index) in getYears"
           :key="index"
           :value="year"
+          :text="year"
         >
-          {{ year }}
-        </option>
+        </Option>
       </Select>
       <!-- <div class="bg" /> -->
     </div>
@@ -202,17 +204,17 @@ export default class InputDate extends Vue {
     .content-input
       .select
         &:nth-child(1)
-          select
+          input
             border-radius: 24px 0px 0px 0px !important
         &:nth-child(2)
-          select
+          input
             border-radius: 0px !important
             border-left: 0px
             border-right: 0px
         &:nth-child(3)
-          select
+          input
             border-radius: 0px 24px 0px 0px !important
-        select
+        input
           color: rgba(255,54,95, 1) !important
           border-radius: 24px 24px 0px 0px
           border: 2px solid rgba(255,54,95, .2)
@@ -283,15 +285,15 @@ export default class InputDate extends Vue {
     color: inherit
     .select
       &:nth-child(1)
-        select
+        input
           border-radius: 24px 0px 0px 24px !important
       &:nth-child(2)
-        select
+        input
           border-radius: 0px !important
           border-left: 0px
           border-right: 0px
       &:nth-child(3)
-        select
+        input
           border-radius: 0px 24px 24px 0px !important
     .con-password
       min-width: 46px
@@ -331,32 +333,6 @@ export default class InputDate extends Vue {
       transition: all .25s ease
       i
         font-size: 1.3rem
-    input
-      padding: 11px 15px
-      transition: all .25s ease
-      border-radius: inherit
-      width: 100%
-      box-sizing: border-box
-      font-size: .85rem
-      background: transparent
-      width: 100%
-      display: block
-      border: 2px solid -color('color', 0)
-      color: inherit
-      &::placeholder
-        color: inherit
-        opacity: .6
-      &:read-only
-        background: -color('bg-2')
-        font-weight: bold
-        border: 2px solid -color('color', 0)
-      &:focus
-        ~ .bg
-          border: 2px solid -color('color', 1)
-        ~ .con-icon
-          background: -color('bg')
-          box-shadow: 0px 4px 20px 0px rgba(0,0,0,.08)
-          transform: translate(0, -10px)
 
 // responsive
 
