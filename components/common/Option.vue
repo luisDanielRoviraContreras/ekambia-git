@@ -35,6 +35,7 @@ export default class optionItem extends Vue {
   position: relative
   transition: all .2s ease
   border-radius: 15px
+  cursor: pointer
   i
     font-size: 1.4rem
     position: absolute

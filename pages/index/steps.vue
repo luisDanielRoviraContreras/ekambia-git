@@ -66,4 +66,7 @@ export default class steps extends Vue {
 @media (min-width: 812px)
   .steps-transfer
     align-items: center
+    .con-steps
+      width: 100%
+      max-width: 500px
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="create">
     <div class="con-create-account">
-      <nav-bar back @click="handleBack" v-if="$device.isMobile" absolute/>
+      <nav-bar back @click="handleBack" absolute />
       <div class="con-create-account__content">
         <h3 v-if="!$route.query.edit">
           Nueva Cuenta Bancaria
@@ -27,7 +27,7 @@
           Este campo es requerido
         </Alert>
 
-        <Select :data="data.banks" placeholder="Banco" v-if="data" class="mt-6" block v-model="form.bank_id" :danger="!form.bank_id && send">
+        <Select child="name" :data="data.banks" placeholder="Banco" v-if="data" class="mt-6" block v-model="form.bank_id" :danger="!form.bank_id && send">
           <Option :key="i" v-for="(option, i) in data.banks" :value="option.id" :text="option.name" />
         </Select>
         <load class="mt-6" v-else />
@@ -53,7 +53,7 @@
           Este campo es requerido
         </Alert>
 
-        <Select :data="data.account_types" placeholder="Tipo de cuenta" v-if="data" class="mt-6" block v-model="form.account_type_id" :danger="!form.account_type_id && send">
+        <Select child="account_type" :data="data.account_types" placeholder="Tipo de cuenta" v-if="data" class="mt-6" block v-model="form.account_type_id" :danger="!form.account_type_id && send">
           <Option :key="i" v-for="(option, i) in data.account_types" :value="option.id" :text="option.account_type" />
         </Select>
         <load class="mt-6" v-else />
@@ -62,7 +62,7 @@
           Este campo es requerido
         </Alert>
 
-        <Select :data="data.coins" placeholder="Moneda" v-if="data" class="mt-6" block v-model="form.coin_id" :danger="!form.coin_id && send">
+        <Select child="coin" :data="data.coins" placeholder="Moneda" v-if="data" class="mt-6" block v-model="form.coin_id" :danger="!form.coin_id && send">
           <Option :key="i" v-for="(option, i) in data.coins" :value="option.id" :text="option.coin" />
         </Select>
         <load class="mt-6" v-else />
@@ -72,7 +72,7 @@
         </Alert>
 
         <footer class="mt-6">
-          <Button v-if="!$device.isMobile" block @click="visibleAdd = false">
+          <Button v-if="!$device.isMobile" block @click="handleBack">
             Cancelar
           </Button>
           <Button :disabled="!data" :loading="loading" v-if="!$route.query.edit" @click="handleSend" block yellow>
@@ -218,5 +218,14 @@ export default class create extends Vue {
       opacity: 0
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .create
+    display: flex
+    align-items: flex-start
+    justify-content: center
+    .con-create-account
+      max-width: 500px
+      width: 100%
+      &__content
+        width: 100%
 </style>

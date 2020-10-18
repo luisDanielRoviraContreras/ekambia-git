@@ -12,7 +12,7 @@
         @enter="enter"
         @leave="leave"
       >
-        <div v-if="active" class="con-items">
+        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop }" class="con-items">
           <div class="shadow" @click="handleClickShadow"></div>
           <div class="items">
             <header>
@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 @Component
 export default class Select extends Vue {
   @Prop({ type: Boolean }) block: boolean
@@ -47,18 +47,30 @@ export default class Select extends Vue {
   @Prop({ type: Boolean }) stickyPrev: boolean
   @Prop({ type: Boolean }) load: boolean
   @Prop({ type: String }) placeholder: string
+  @Prop({ type: String, default: 'alias' }) child: string
   @Prop({ }) data: any
   @Prop({}) value: any
   inputValue: any = ''
   active: boolean = false
 
   beforeEnter (el: any) {
-    console.log(el)
-    document.body.appendChild(el)
+    // document.body.appendChild(el)
     // el.style.height = 0
   }
 
   enter (el: any, done: any) {
+
+    if (this.$device.isDesktop) {
+      let coords = this.$el.getBoundingClientRect()
+      el.querySelector('.items').style.top = `${coords.top}px`
+      el.querySelector('.items').style.left = `${coords.left}px`
+      el.querySelector('.items').style.width = `${coords.width}px`
+
+      if (coords.top + el.querySelector('.items').clientHeight > window.innerHeight) {
+        el.querySelector('.items').style.transform = 'translate(0,-100%)'
+      }
+    }
+
     document.body.appendChild(el)
     // const h = el.scrollHeight
     // el.style.height = h - 1 + 'px'
@@ -99,12 +111,15 @@ export default class Select extends Vue {
     this.$emit('change', evt.target.value)
   }
 
+  @Watch('value')
   setInputValue() {
-    this.data.forEach(item => {
-      if (item.id == this.value) {
-        this.inputValue = item.alias
-      }
-    })
+    if (this.data) {
+      this.data.forEach(item => {
+        if (item.id == this.value) {
+          this.inputValue = item[this.child]
+        }
+      })
+    }
   }
 
   mounted() {
@@ -130,37 +145,67 @@ export default class Select extends Vue {
   transition: all .2s ease
 
 .select-enter, .select-leave-to
-  .shadow
-    opacity: 0
-  .items
-    transform: translate(0, 100%)
+  &.isMobile
+    .shadow
+      opacity: 0
+    .items
+      transform: translate(0, 100%)
+
+.select-enter, .select-leave-to
+  &.isDesktop
+    .shadow
+      opacity: 0
+    .items
+      transform: scaleY(.85)
+      opacity: 0
 
 .con-items
-  position: fixed
-  bottom: 0px
-  width: 100%
-  z-index: 10000
-  height: 100vh
-  .shadow
-    background: rgba(0,0,0,.35)
+  &.isDesktop
     position: absolute
-    top: 0px
-    height: 100%
+    z-index: 6000
     width: 100%
-    transition: all .25s ease
-    z-index: 10
-  .items
-    z-index: 100
-    border-radius: 34px 34px 0px 0px
-    display: flex
-    flex-direction: column
-    max-height: 60vh
-    background: #fff
-    position: absolute
+    height: 100%
+    top: 0px
+    left: 0px
+    header
+      display: none
+    .shadow
+      background: rgba(0,0,0,0)
+      position: absolute
+      top: 0px
+      height: 100%
+      width: 100%
+      transition: all .25s ease
+      z-index: 10
+    .items
+      background: #fff
+      border-radius: 24px
+      position: absolute
+      z-index: 20
+      padding: 15px
+      transform-origin: top
+      transition: all .25s ease
+      box-shadow: 0px 10px 30px 0px rgba(0,0,0,.04)
+    ul
+      max-height: 300px
+      overflow: auto
+  &.isMobile
     bottom: 0px
     width: 100%
-    overflow: hidden
-    transition: all .3s ease
+    z-index: 10000
+    height: 100vh
+    position: fixed
+    .items
+      max-height: 60vh
+      position: absolute
+    .shadow
+      background: rgba(0,0,0,.35)
+      position: absolute
+      top: 0px
+      height: 100%
+      width: 100%
+      transition: all .25s ease
+      z-index: 10
     header
       padding: 15px
       background: -color(gray)
@@ -172,6 +217,17 @@ export default class Select extends Vue {
       flex: 1
       padding: 15px
       padding-top: 10px
+    .items
+      z-index: 100
+      border-radius: 34px 34px 0px 0px
+      display: flex
+      flex-direction: column
+      background: #fff
+      position: absolute
+      bottom: 0px
+      width: 100%
+      overflow: hidden
+      transition: all .3s ease
 </style>
 <style lang="sass" scoped>
 .select
@@ -216,6 +272,7 @@ export default class Select extends Vue {
     font-weight: 600
     font-size: 16px
     display: block
+    cursor: pointer
     &::placeholder
       color: -color('black', .3)
     &:focus

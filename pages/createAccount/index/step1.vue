@@ -23,10 +23,8 @@
       <div
         class="con-select-input mt-6"
       >
-        <Select placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
-          <Option value="1" text="DNI" />
-          <Option value="2" text="PAS" />
-          <Option value="3" text="NIE" />
+        <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
+          <Option :key="i" v-for="(item, i) in typeDocuments" :value="item.id" :text="item.alias" />
         </Select>
         <c-input
           sticky-prev
@@ -111,6 +109,20 @@ export default class createAccount extends Vue {
     lastName: ''
   }
 
+  typeDocuments: any = [
+    {
+      id: 1,
+      alias: 'DNI'
+    },
+    {
+      id: 2,
+      alias: 'PAS'
+    },
+    {
+      id: 3,
+      alias: 'NIE'
+    }
+  ]
   handleSend() {
     this.send = true
 
@@ -193,6 +205,11 @@ export default class createAccount extends Vue {
   // padding-bottom: 50px
 
 @media (min-width: 812px), (pointer:cursor)
+  .con-select-input
+    .select
+      max-width: 140px
+      input
+        width: 100%
   .con-create
     display: flex
     align-items: center
