@@ -57,11 +57,11 @@ export default class reload extends Vue {
         location.reload()
       }
 
-      this.$el.style.transition = 'all .25s ease'
+      (this.$el as any).style.transition = 'all .25s ease'
       this.translate = 0
 
       setTimeout(() => {
-        this.$el.style.transition = ''
+        (this.$el as any).style.transition = ''
       }, 250);
     })
   }
