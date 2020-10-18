@@ -14,11 +14,11 @@ export default class optionItem extends Vue {
   @Prop({}) text: any
 
   get valueParent() {
-    return this.$parent.value
+    return (this.$parent as any).value
   }
 
   handleClick() {
-    this.$parent.clickItem({
+    (this.$parent as any).clickItem({
       value: this.value,
       text: this.text
     })
