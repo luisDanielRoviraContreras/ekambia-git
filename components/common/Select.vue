@@ -98,7 +98,6 @@ export default class Select extends Vue {
 
   clickItem(obj) {
     this.inputValue = obj.text
-    console.log(obj)
     this.$emit('input', obj.value)
     this.$emit('change', obj.value)
     setTimeout(() => {

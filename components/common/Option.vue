@@ -1,5 +1,5 @@
 <template>
-  <li :class="{ active: valueParent == value }" @click="handleClick" class="option">
+  <li :class="{ active: valueParent == value, disabled }" @click="handleClick" class="option">
     <i class='bx bx-check'></i>
     <span>
       {{ text }}
@@ -12,6 +12,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class optionItem extends Vue {
   @Prop({}) value: any
   @Prop({}) text: any
+  @Prop({}) disabled: any
 
   get valueParent() {
     return (this.$parent as any).value
@@ -36,6 +37,9 @@ export default class optionItem extends Vue {
   transition: all .2s ease
   border-radius: 15px
   cursor: pointer
+  &.disabled
+    opacity: .4
+    pointer-events: none
   i
     font-size: 1.4rem
     position: absolute

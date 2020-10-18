@@ -28,7 +28,7 @@
                 Tu envías
               </span>
               <p>
-                {{ getSend }}
+                {{ getSend }} {{ coinSend[0].name }}
               </p>
             </div>
             <div class="text">
@@ -36,7 +36,7 @@
                 Tu recibes
               </span>
               <p>
-                {{ getReceive }}
+                {{ getReceive }} {{ coinReceive[0].name }}
               </p>
             </div>
           </div>
@@ -106,6 +106,32 @@ export default class step1 extends Vue {
   data: any = null
   loading: boolean = false
   send: boolean = false
+
+  coins: any = [
+    {
+      name: 'Dolares',
+      id: 1
+    },
+    {
+      name: 'Guaranies',
+      id: 2
+    },
+    {
+      name: 'Euros',
+      id: 3
+    },
+    {
+      name: 'Pesos',
+      id: 4
+    }
+  ]
+
+  get coinSend() {
+    return this.coins.filter(coin => coin.id == this.$route.query.cs)
+  }
+  get coinReceive() {
+    return this.coins.filter(coin => coin.id == this.$route.query.cr)
+  }
 
   @Action('operations/getOperations') getOperations
 

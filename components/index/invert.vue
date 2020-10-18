@@ -2,9 +2,9 @@
   <div
     :class="{ sendDollar }"
     class="invert">
-    <p>
+    <!-- <p>
       {{ sendDollar ? 'Dólares' : 'Guaraní' }}
-    </p>
+    </p> -->
     <button @click="handleChange">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
         <g id="Stockholm-icons-_-Navigation-_-Up-down" data-name="Stockholm-icons-/-Navigation-/-Up-down" transform="translate(30) rotate(90)">
@@ -15,9 +15,9 @@
         </g>
       </svg>
     </button>
-    <p>
+    <!-- <p>
       {{ !sendDollar ? 'Dólares' : 'Guaraníes' }}
-    </p>
+    </p> -->
   </div>
 </template>
 <script lang="ts">
@@ -34,15 +34,15 @@ export default class invert extends Vue {
 </script>
 <style lang="sass" scoped>
 .invert
-  position: absolute
-  right: 16px
-  top: 50%
-  transform: translate(0,-50%)
+  position: relative
   display: flex
   align-items: center
-  justify-content: center
-  flex-direction: column
+  justify-content: flex-end
   z-index: 50
+  margin-top: -11px
+  margin-bottom: -11px
+  margin-left: auto
+  margin-right: 30px
   &.sendDollar
     button
       svg
@@ -56,8 +56,8 @@ export default class invert extends Vue {
     position: relative
     color: -color('text', .5)
   button
-    width: 46px
-    height: 46px
+    width: 50px
+    height: 50px
     background: -color('black')
     border-radius: 16px
     border: 0px

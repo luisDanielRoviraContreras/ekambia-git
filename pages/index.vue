@@ -16,30 +16,40 @@
       </div>
       <load v-else />
       <div class="con-inputs mt-6">
-        <c-input
-          ref="send"
-          v-model="form.send"
-          :inputmode="$device.isIos ? 'numeric' : 'none'"
-          identificador="send"
-          @focus="inputFocus"
-        >
-          Tu envías
-        </c-input>
+        <div class="input-select">
+          <c-input
+            ref="send"
+            v-model="form.send"
+            :inputmode="$device.isIos ? 'numeric' : 'none'"
+            identificador="send"
+            @focus="inputFocus"
+          >
+            Yo tengo
+          </c-input>
+          <Select child="name" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
+            <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
+          </Select>
+        </div>
           <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
-        <c-input
-          ref="receive"
-          v-model="form.receive"
-          :inputmode="$device.isIos ? 'numeric' : 'none'"
-          class="mt-6 receive"
-          identificador="receive"
-          @focus="inputFocus"
-          disabled
-        >
-          Tu recibes
-        </c-input>
         <invert @change="handleChange"/>
+        <div class="input-select readonly">
+          <c-input
+            ref="receive"
+            v-model="form.receive"
+            :inputmode="$device.isIos ? 'numeric' : 'none'"
+            class="receive"
+            identificador="receive"
+            @focus="inputFocus"
+            disabled
+          >
+            Yo recibo
+          </c-input>
+          <Select child="name" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
+            <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
+          </Select>
+        </div>
       </div>
-      <Button :disabled="!form.send || !form.receive" @click="handleInitOperation" class="mt-6" yellow block>
+      <Button :disabled="form.send <= 0" @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
       </Button>
     </div>
@@ -76,18 +86,28 @@ export default class name extends Vue {
   data: any = null
   form: any = {
     send: '',
-    receive: ''
+    receive: '',
+    coinSend: '1',
+    coinReceive: '2'
   }
-
-  @Mutation('change/CHANGE_SEND') changeSend
-
-  @Mutation('change/CHANGE_RECEIVE') changeReceive
-
-  @Mutation('change/SET_SEND') setSend
-
-  @Mutation('change/SET_RECEIVE') setReceive
-
-  @Mutation('operation/SET_DATA') setDataOperation
+  coins: any = [
+    {
+      name: 'Dolares',
+      id: 1
+    },
+    {
+      name: 'Guaranies',
+      id: 2
+    },
+    {
+      name: 'Euros',
+      id: 3
+    },
+    {
+      name: 'Pesos',
+      id: 4
+    }
+  ]
 
   @Mutation('SET_GUIDE') setGuide
 
@@ -111,7 +131,9 @@ export default class name extends Vue {
     this.$router.push({
       path: '/steps', query: {
         s: this.form.send,
-        r: this.form.receive
+        r: this.form.receive,
+        cs: this.form.coinSend,
+        cr: this.form.coinReceive,
       }
     })
 
@@ -170,11 +192,10 @@ export default class name extends Vue {
 
   handleChange () {
     const oldForm = JSON.parse(JSON.stringify(this.form))
-    // this.setSend(`${oldForm.receive}`)
-    // this.setReceive(`${oldForm.send}`)
-    this.reverse = !this.reverse
     this.form.send = `${oldForm.receive}`
     this.form.receive = `${oldForm.send}`
+    this.form.coinSend = `${oldForm.coinReceive}`
+    this.form.coinReceive = `${oldForm.coinSend}`
   }
 
   inputFocus (evt: any) {
@@ -229,7 +250,32 @@ export default class name extends Vue {
   }
 }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
+.input-select
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 100%
+  max-width: 100%
+  position: relative
+  &.readonly
+    .select
+      input
+        border: 2px solid rgba(226, 231, 236, .5)
+  .con-input
+    .bg
+      // border-radius: 24px 0px 0px 24px !important
+      // border-right: 0px !important
+  .select
+    max-width: 140px
+    position: absolute !important
+    right: 0px
+    z-index: 10
+    i
+      right: 15px !important
+    input
+      border-radius: 0px 24px 24px 0px !important
+      border: 2px solid transparent !important
 .index
   height: 100vh
   overflow: auto
@@ -240,7 +286,7 @@ export default class name extends Vue {
   width: 100%
   .con-change
     width: 100%
-    padding: 20px 30px
+    padding: 20px 20px
     position: relative
     height: calc(var(--vh, 1vh) * 100 - 175px)
     scroll-snap-align: center
