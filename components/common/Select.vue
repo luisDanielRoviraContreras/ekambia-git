@@ -139,7 +139,7 @@ export default class Select extends Vue {
   position: fixed
   bottom: 0px
   width: 100%
-  z-index: 3000
+  z-index: 10000
   height: 100vh
   .shadow
     background: rgba(0,0,0,.35)

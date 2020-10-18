@@ -1,9 +1,5 @@
 
 export default {
-  /*
-  ** Nuxt rendering mode
-  ** See https://nuxtjs.org/api/configuration-mode
-  */
   components: true,
   mode: 'universal',
   router: {
