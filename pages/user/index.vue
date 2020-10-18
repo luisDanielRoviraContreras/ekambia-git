@@ -215,7 +215,7 @@ export default class name extends Vue {
 <style lang="sass" scoped>
 .user
   height: calc(var(--vh, 1vh) * 100)
-  padding: 15px
+  padding: 15px 10px
   padding-top: 50px
   padding-bottom: 80px
   background: -color('gray')
@@ -250,7 +250,7 @@ export default class name extends Vue {
         .right
           transform: rotate(-90deg)
     header
-      padding: 12px 20px
+      padding: 12px 15px
       display: flex
       align-items: center
       justify-content: space-between
@@ -275,7 +275,7 @@ export default class name extends Vue {
     .content-info
       overflow: hidden
       transition: all .25s ease
-      padding: 0px 20px
+      padding: 0px 15px
   .terms
     font-size: .7rem
     p

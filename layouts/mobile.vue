@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <reload />
     <!-- <guide v-model="guide" /> -->
     <OffLine v-if="$nuxt.isOffline" />
     <!-- <Nuxt keep-alive /> -->

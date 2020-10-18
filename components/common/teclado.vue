@@ -95,6 +95,7 @@ export default class teclado extends Vue {
   .con-change
     justify-content: flex-start !important
     .con-img
+      min-height: 0px !important
       img
         max-width: 80px !important
         opacity: 0

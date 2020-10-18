@@ -47,6 +47,9 @@
             <p v-if="data">
               {{ data.exchange_purchase.price_purchase }}
             </p>
+            <p v-else>
+              0.00
+            </p>
           </div>
         </div>
         <template v-if="data">

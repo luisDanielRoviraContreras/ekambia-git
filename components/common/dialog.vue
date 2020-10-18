@@ -1,7 +1,7 @@
 <template>
   <transition name="fade-dialog">
     <div v-if="isVisible" class="dialog">
-      <div class="bg"></div>
+      <div @click="isVisible = false" class="bg"></div>
       <div class="con-dialog">
         <h5 v-if="title">
           {{ title }}

@@ -16,7 +16,7 @@
       </div>
       <load v-else />
       <div class="con-inputs mt-6">
-        <div class="input-select">
+        <div v-if="data" class="input-select">
           <c-input
             ref="send"
             v-model="form.send"
@@ -30,9 +30,10 @@
             <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
           </Select>
         </div>
+        <load v-else />
           <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
         <invert @change="handleChange"/>
-        <div class="input-select readonly">
+        <div v-if="data" class="input-select readonly">
           <c-input
             ref="receive"
             v-model="form.receive"
@@ -48,6 +49,7 @@
             <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
           </Select>
         </div>
+        <load v-else />
       </div>
       <Button :disabled="form.send <= 0" @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
@@ -302,6 +304,7 @@ export default class name extends Vue {
       margin-bottom: -20px
       z-index: 10
       position: relative
+      min-height: 203px
       img
         max-width: 240px
         transition: all .25s ease
