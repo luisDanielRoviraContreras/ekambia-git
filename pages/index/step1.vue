@@ -1,12 +1,6 @@
 <template>
   <div class="steps-transfer">
-    <nav-bar back @click="$router.push('/')" />
-    <div class="con-steps">
-      <step-1 :ready="isOpen == 2 || isOpen == 3" :open="isOpen == 1" />
-      <step-2 ref="step2" :ready="isOpen == 3" :open="isOpen == 2" />
-      <step-3 :black="isOpen == 2" :open="isOpen == 3" />
-      <Success v-if="isOpen == 4" />
-    </div>
+    <nuxt-child />
   </div>
 </template>
 <script lang="ts">
@@ -22,10 +16,15 @@ import axios from '~/plugins/axios'
 })
 export default class steps extends Vue {
   isOpen: any = 1
+  mapVisible: boolean = false
 
   @State(state => state.steps.data) operation
 
   @Action('steps/getOperation') getOperation
+
+  openMap() {
+    this.mapVisible = true
+  }
 
   mounted() {
     this.$nextTick(() => {

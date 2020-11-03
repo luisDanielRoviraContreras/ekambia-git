@@ -116,22 +116,39 @@ export default class create extends Vue {
     }
     this.loading = true
     axios.post('/account-store', { ...this.form }).then((res) => {
-      this.getAccounts()
-      this.handleBack()
-      this.$notification({
-        title: 'Cuenta Creada',
-        text: 'La cuenta ha sido creada exitosamente.'
-      })
       this.loading = false
-
-      if (this.$route.query.create) {
-        this.$router.push({
-          path: '/steps',
-          query: {
-            r: this.$route.query.r,
-            s: this.$route.query.s,
+      this.send = false
+      if (this.$route.query.send) {
+        this.$dialog({
+          title: 'Cuenta Creada',
+          text: '¿Quieres crear otra cuenta bancaria o volver a la operación?',
+          textCancel: 'Crear cuenta',
+          textSuccess: 'Volver',
+          success: () => {
+            this.$router.push({
+              path: `/steps/step${(this.$route.query.step as any) == 2 ? 2 : 1}`,
+              query: {
+                ...this.$route.query
+              }
+            })
+          },
+          cancel: () => {
+            this.form = {
+              alias: '',
+              account_type_id: '',
+              account_number: '',
+              coin_id: '',
+              bank_id: ''
+            }
           }
         })
+      } else {
+        this.$notification({
+          title: 'Cuenta Creada',
+          text: 'La cuenta ha sido creada exitosamente.'
+        })
+        this.getAccounts()
+        this.handleBack()
       }
 
     }).catch((err) => {

@@ -10,10 +10,6 @@ export default {
     height: '5px',
     color: '#ffda1a'
   },
-  /*
-  ** Nuxt target
-  ** See https://nuxtjs.org/api/configuration-target
-  */
   target: 'server',
   head: {
     title: 'Ekambia',
@@ -40,7 +36,8 @@ export default {
     {src: '@/plugins/notification.client.ts', ssr: false},
     {src: '@/plugins/dialog.client.ts', ssr: false},
     {src: '@/plugins/bounce.client.ts', ssr: false},
-    {src: '@/plugins/guide.client.ts', ssr: false}
+    {src: '@/plugins/guide.client.ts', ssr: false},
+    {src: '@/plugins/maps.client.js', ssr: false},
   ],
   /*
   ** Auto import components
@@ -89,10 +86,13 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    transpile: [/^gmap-vue($|\/)/]
   },
 
+  transpile: [/^vue2-google-maps($|\/)/, /^gmap-vue($|\/)/],
+
   env: {
-    // API: 'http://3.16.43.49/ekambiault/public/api/'
+    // API: 'http://3.16.43.49/api/'
     API: 'https://ekambia.lusaxweb.pro/api/'
   }
 }

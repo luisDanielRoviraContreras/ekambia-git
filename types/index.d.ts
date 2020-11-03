@@ -10,6 +10,7 @@ declare global {
 declare module 'vue/types/vue' {
   // 3. Declare augmentation for Vue
   interface Vue {
+    $gmapApiPromiseLazy: any
     $device: any
     $bounceClose: Function
     $bounce: Function

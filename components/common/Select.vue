@@ -26,14 +26,6 @@
           </div>
         </div>
       </transition>
-    <!-- <select
-      :class="{'empty': !this.value}"
-      :value="value"
-      @change="change"
-      name=""
-    >
-      <slot />
-    </select> -->
     <i class='bx bxs-chevron-down'></i>
   </div>
 </template>
@@ -48,10 +40,12 @@ export default class Select extends Vue {
   @Prop({ type: Boolean }) load: boolean
   @Prop({ type: String }) placeholder: string
   @Prop({ type: String, default: 'alias' }) child: string
+  @Prop({ type: String, default: 'id' }) uid: string
   @Prop({ }) data: any
   @Prop({}) value: any
   inputValue: any = ''
   active: boolean = false
+  click: boolean = false
 
   beforeEnter (el: any) {
     // document.body.appendChild(el)
@@ -98,45 +92,51 @@ export default class Select extends Vue {
 
   clickItem(obj) {
     this.inputValue = obj.text
-    this.$emit('input', obj.value)
-    this.$emit('change', obj.value)
+    this.$emit('input', obj.value, obj.text, obj)
+    this.$emit('change', obj.value, obj.text, obj)
+    this.click = true
     setTimeout(() => {
       this.active = false
+      this.click = false
     }, 200)
   }
 
-  change(evt: any) {
-    this.$emit('input', evt.target.value)
-    this.$emit('change', evt.target.value)
-  }
 
-  @Watch('value')
   setInputValue() {
+    if (!this.value) {
+      this.inputValue = ''
+    }
+
     if (this.data) {
-      this.data.forEach(item => {
-        if (item.id == this.value) {
-          this.inputValue = item[this.child]
+      this.$nextTick(() => {
+        const getVal = this.data.filter((item) => {
+          return item[this.uid] == this.value
+        })
+
+        if (getVal.length > 0) {
+          this.inputValue = getVal[0][this.child]
+        }
+
+        if (getVal.length == 0 && !this.click) {
+          this.inputValue = ''
         }
       })
     }
   }
 
-  mounted() {
-    if (this.data) {
-      this.setInputValue()
-    }
+  @Watch('value')
+  handleValue() {
+    this.setInputValue()
   }
 
-  // get listeners () {
-  //   return {
-  //     ...this.$listeners,
-  //     change: (evt: any) => {
-  //       alert(evt.target.value)
-  //       this.$emit('input', evt.target.value)
-  //       this.$emit('change', evt.target.value)
-  //     }
-  //   }
-  // }
+  @Watch('data')
+  handleData() {
+    this.setInputValue()
+  }
+
+  mounted() {
+    this.setInputValue()
+  }
 }
 </script>
 <style lang="sass">

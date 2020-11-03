@@ -52,7 +52,43 @@
             </p>
           </div>
         </div>
-        <template v-if="data">
+
+        <div v-if="step == 1">
+          <div class="con-text">
+            <h5>
+              Paso 1.1
+            </h5>
+            <p>
+              Seleccione como quiere recibir el dinero
+            </p>
+          </div>
+          <Select @change="handleChangeRecibe" :data="typesOperation" placeholder="Como quiero recibirlo" v-model="form.typeReceive" block>
+            <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.alias" />
+          </Select>
+        </div>
+        <div v-if="step == 2" class="mt-6">
+          <div class="con-text">
+            <h5>
+              Paso 1.2
+            </h5>
+            <p>
+              Seleccione como quiere pagar el dinero
+            </p>
+          </div>
+          <Select :data="typesOperation" placeholder="Como quiero pagar" v-model="form.typeReceive" block>
+            <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.alias" />
+          </Select>
+        </div>
+
+        <!-- <div class="">
+          Como quieres pagar el dinero
+
+          Transferencia bancaria
+          Entrega en casa
+          Operación en sucursal
+        </div> -->
+
+        <!-- <template v-if="data">
           <Select :data="data.accounts" placeholder="Cuenta de origen" v-if="data.accounts.length > 0" :danger="!form.source_account_id && send" v-model="form.source_account_id" class="mt-6" block>
             <template v-if="data">
               <Option :key="i" v-for="(option, i) in data.accounts" :value="option.id" :text="option.alias" />
@@ -93,7 +129,7 @@
         </Alert>
         <Button :disabled="!data" :loading="loading" @click="createOperation" class="mt-6" block yellow>
           Iniciar Operación
-        </Button>
+        </Button> -->
       </div>
     </transition>
   </div>
@@ -102,6 +138,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { State, Action } from 'vuex-class'
 import axios from '~/plugins/axios'
+
 @Component
 export default class step1 extends Vue {
   @Prop() open: boolean
@@ -109,6 +146,22 @@ export default class step1 extends Vue {
   data: any = null
   loading: boolean = false
   send: boolean = false
+  step: number = 1
+
+  typesOperation: any = [
+    {
+      id: 1,
+      alias: 'Transferencia bancaria'
+    },
+    {
+      id: 2,
+      alias: 'Entrega en casa'
+    },
+    {
+      id: 3,
+      alias: 'Entrega en una sucursal'
+    }
+  ]
 
   coins: any = [
     {
@@ -141,7 +194,16 @@ export default class step1 extends Vue {
   form: any = {
     destination_account_id: 0,
     source_account_id: 0,
-    source_funds: 0
+    source_funds: 0,
+    typeReceive: 0,
+    typeSend: 0
+  }
+
+  handleChangeRecibe() {
+    console.log(this.form.typeReceive)
+    if (this.form.typeReceive == 2) {
+      (this.$parent as any).openMap()
+    }
   }
 
   get getSend() {
@@ -267,6 +329,12 @@ export default class step1 extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.con-text
+  padding: 10px
+  h5
+    font-size: 1rem
+  p
+    font-size: .9rem
 .step1
   background: -color('gray')
   width: 100%

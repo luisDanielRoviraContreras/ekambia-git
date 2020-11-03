@@ -9,9 +9,14 @@
         <p v-if="text">
           {{ text }}
         </p>
+        <div class="content-input">
+          <c-input yellow class="mt-3" v-if="input" v-model="inputValue" type="text">
+            Nombre
+          </c-input>
+        </div>
         <footer>
-          <Button yellow @click="handleCancel">Cancelar</Button>
-          <Button @click="handleSuccess">Aceptar</Button>
+          <Button yellow @click="handleCancel">{{ textCancel }}</Button>
+          <Button @click="handleSuccess">{{ textSuccess }}</Button>
         </footer>
       </div>
     </div>
@@ -27,10 +32,14 @@ export default class dialogBase extends Vue {
   success: any = null
   cancel: any = null
   bounce: boolean = false
+  textCancel: string = 'Cancelar'
+  textSuccess: string = 'Aceptar'
+  input: boolean = false
+  inputValue: any = ''
 
   handleSuccess (evt) {
     if (this.success) {
-      this.success()
+      this.success(this.inputValue)
     }
     if (this.bounce) {
       this.$bounce({

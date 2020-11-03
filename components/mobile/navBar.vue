@@ -15,7 +15,7 @@
       </svg>
     </button>
     <div class="right">
-      <img src="/logo1.png" alt="">
+      <img src="/ekambia_logo.svg" alt="">
     </div>
   </div>
 </template>

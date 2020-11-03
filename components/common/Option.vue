@@ -1,9 +1,14 @@
 <template>
   <li :class="{ active: valueParent == value, disabled }" @click="handleClick" class="option">
     <i class='bx bx-check'></i>
-    <span>
-      {{ text }}
-    </span>
+    <div class="text">
+      <span>
+        {{ text }}
+      </span>
+      <p v-if="subText">
+        {{ subText }}
+      </p>
+    </div>
   </li>
 </template>
 <script lang="ts">
@@ -12,6 +17,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class optionItem extends Vue {
   @Prop({}) value: any
   @Prop({}) text: any
+  @Prop({}) subText: any
+  @Prop({}) obj: any
   @Prop({}) disabled: any
 
   get valueParent() {
@@ -21,7 +28,8 @@ export default class optionItem extends Vue {
   handleClick() {
     (this.$parent as any).clickItem({
       value: this.value,
-      text: this.text
+      text: this.text,
+      obj: this.obj
     })
   }
 }
@@ -31,12 +39,16 @@ export default class optionItem extends Vue {
   padding: 16px 20px
   font-size: 1rem
   display: flex
-  align-content: center
+  align-items: center
   justify-content: flex-start
   position: relative
   transition: all .2s ease
   border-radius: 15px
   cursor: pointer
+  .text
+    p
+      font-size: .85rem
+      opacity: .7
   &.disabled
     opacity: .4
     pointer-events: none

@@ -184,9 +184,9 @@ export default class OperationsClass extends Vue {
   handleClickOperation(operation) {
     this.setStepData(operation)
     this.$router.push({
-      path: 'steps',
+      path: 'step3',
       query: {
-        step: '3',
+        source: 'operations',
         id: operation.id
       }
     })
@@ -195,9 +195,9 @@ export default class OperationsClass extends Vue {
   handleClickOperationPay(operation) {
     this.setStepData(operation)
     this.$router.push({
-      path: 'steps',
+      path: 'step2',
       query: {
-        step: '2',
+        source: 'operations',
         id: operation.id
       }
     })
@@ -206,9 +206,9 @@ export default class OperationsClass extends Vue {
   handleClickOperationFinish(operation) {
     this.setStepData(operation)
     this.$router.push({
-      path: 'steps',
+      path: 'step4',
       query: {
-        step: '4',
+        source: 'operations',
         id: operation.id
       }
     })

@@ -1,0 +1,89 @@
+<template>
+  <div class="step2">
+    <nav-bar back @click="handleBack" />
+    <template v-if="data">
+      <transfer v-if="data.type_operation_user_id == 1" />
+      <delivery :token="data.qrcode" v-if="data.type_operation_user_id !== 1" />
+    </template>
+  </div>
+</template>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { State, Action } from 'vuex-class'
+import axios from '~/plugins/axios'
+@Component({
+  name: 'steps',
+  // fetch() {
+  //   (this as any).getOperation(this.$route.query.id)
+  // },
+  fetchOnServer: false
+})
+export default class steps extends Vue {
+  type: any = 'transfer'
+  data: any = null
+
+  handleBack() {
+    this.$router.push({
+      path: '/',
+      query: {
+        operations: this.$route.query.source === 'operations' ? 'true' : null
+      }
+    })
+  }
+
+  getOperation() {
+    axios.get(`/operation-show/${this.$route.query.id}`).then(({data}: any) => {
+      console.log(data)
+      this.data = data.info
+    })
+  }
+
+  mounted() {
+    this.getOperation()
+  }
+}
+</script>
+<style lang="sass" scoped>
+
+.page-enter-active, .page-leave-active
+  transition: all .2s ease
+
+.step2.page-enter
+  transform: translate(0,100%) !important
+  opacity: 1 !important
+.step2.page-leave-to
+  transform: translate(0,100%) !important
+  opacity: 1 !important
+
+.step2
+  position: fixed
+  width: 100%
+  height: 100vh
+  background: #fff
+  top: 0px
+  left: 0px
+  z-index: 5000
+  display: flex
+  align-items: flex-start
+  justify-content: flex-start
+  flex-direction: column
+  overflow: auto
+  h2
+    text-align: center
+    font-size: 1.2rem
+  p
+    font-size: .8rem
+    opacity: .7
+    text-align: center
+  .con-steps
+    width: 100%
+    max-width: 600px
+// responsive
+
+@media (min-width: 812px)
+  .step2
+    align-items: center
+    .con-steps
+      width: 100%
+      max-width: 500px
+</style>

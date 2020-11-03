@@ -131,11 +131,12 @@ export default class name extends Vue {
 
   handleInitOperation() {
     this.$router.push({
-      path: '/steps', query: {
-        s: this.form.send,
-        r: this.form.receive,
-        cs: this.form.coinSend,
-        cr: this.form.coinReceive,
+      path: '/step1/step1', query: {
+        send: btoa(this.form.send),
+        receive: btoa(this.form.receive),
+        coinSend: this.form.coinSend,
+        coinReceive: this.form.coinReceive,
+        cp: btoa(this.data.exchange_purchase.price_purchase),
       }
     })
 
@@ -145,7 +146,11 @@ export default class name extends Vue {
 
   @Watch('$route.query.operations')
   handleOperations() {
+    if (this.$route.name !== 'index') {
+      return
+    }
     if (this.$route.query.operations) {
+      console.log('paso')
       const page: any = document.querySelector('.index.page')
       const operations: any = page.querySelector('#operations')
       page.scrollTo(0, operations.scrollHeight)
