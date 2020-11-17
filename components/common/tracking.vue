@@ -267,7 +267,7 @@ export default class GoogleMap extends Vue {
     // this.init()
     if (this.ll) {
       this.geocoder.geocode({'address': this.to}, ([results], status) => {
-        this.calcRoute({ lat: Number(this.lat), lng: Number(this.lng) }, results.geometry.location)
+        this.calcRoute({ lat: Number(this.lat), lng: Number(this.lng) }, results.geometry.location, false)
       })
     }
   }
@@ -299,7 +299,7 @@ export default class GoogleMap extends Vue {
         const lat = ubicacion.coords.latitude
         const lng = ubicacion.coords.longitude
         this.google = gmapApi()
-        this.geocoder = new google.maps.Geocoder()
+        this.geocoder = new this.google.maps.Geocoder()
         this.directionsService = new this.google.maps.DirectionsService();
         this.directionsRenderer = new this.google.maps.DirectionsRenderer
         this.directionsRenderer.setMap((this.$refs.map as any).$mapObject)
@@ -374,7 +374,7 @@ export default class GoogleMap extends Vue {
       origin: start,
       destination: end,
       travelMode: 'DRIVING',
-      unitSystem: google.maps.UnitSystem.METRIC
+      unitSystem: this.google.maps.UnitSystem.METRIC
     };
 
 
@@ -385,12 +385,12 @@ export default class GoogleMap extends Vue {
 
         var icon1 = {
             url: this.transit ? '/start.png' : '/start-b.png',
-            scaledSize: new google.maps.Size(35, 35), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(10, 15) // anchor
+            scaledSize: new this.google.maps.Size(35, 35), // scaled size
+            origin: new this.google.maps.Point(0,0), // origin
+            anchor: new this.google.maps.Point(10, 15) // anchor
         }
 
-        this.marker = new google.maps.Marker({
+        this.marker = new this.google.maps.Marker({
           map: (this.$refs.map as any).$mapObject,
           position: route.start_location,
           visible: true,
@@ -399,12 +399,12 @@ export default class GoogleMap extends Vue {
 
         var icon2 = {
             url: this.transit ? '/house.png' : '/house-b.png',
-            scaledSize: new google.maps.Size(35, 35), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(10, 15) // anchor
+            scaledSize: new this.google.maps.Size(35, 35), // scaled size
+            origin: new this.google.maps.Point(0,0), // origin
+            anchor: new this.google.maps.Point(10, 15) // anchor
         }
 
-        this.marker2 = new google.maps.Marker({
+        this.marker2 = new this.google.maps.Marker({
           map: (this.$refs.map as any).$mapObject,
           position: route.end_location,
           visible: true,
@@ -412,7 +412,7 @@ export default class GoogleMap extends Vue {
         });
 
         if (n) {
-          var infowindow = new google.maps.InfoWindow({
+          var infowindow = new this.google.maps.InfoWindow({
             content: `
               <h4>Dirección de entrega</h4>
               <p>${route.end_address}</p>
