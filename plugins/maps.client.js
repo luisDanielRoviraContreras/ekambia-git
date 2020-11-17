@@ -6,7 +6,7 @@ import * as GmapVue from '~/node_modules/gmap-vue'
 // language: 'es',
 Vue.use(GmapVue, {
   load: {
-    key: 'AIzaSyAWqBUhd1uSQo3OlR03y2gNmJziN7aYPik',
+    key: 'AIzaSyDn3JMFCvCFI3U2YCfTv29BOeyzFlc-xdI',
     libraries: 'places'
   },
   installComponents: true

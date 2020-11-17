@@ -2,7 +2,8 @@
   <div
     :class="{
       absolute,
-      back
+      back,
+      notPadding
     }"
     class="navbar-mobile">
     <button v-if="back" class="back-btn" @click="$emit('click')">
@@ -25,6 +26,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class NavbarMobile extends Vue {
   @Prop({ type: Boolean }) absolute: boolean
   @Prop({ type: Boolean }) back: boolean
+  @Prop({ type: Boolean }) notPadding: boolean
 }
 </script>
 <style lang="sass" scoped>
@@ -41,6 +43,8 @@ export default class NavbarMobile extends Vue {
   z-index: 1000
   min-height: 50px
   padding-left: 12px
+  &.notPadding
+    padding: 0px !important
   &.back
     justify-content: space-between
   .back-btn

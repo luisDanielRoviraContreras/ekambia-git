@@ -1,6 +1,7 @@
 <template>
   <div
     class="transfer">
+    <nav-bar not-padding back @click="$router.push('/')" />
     <div v-if="!transferred" class="con-data">
       <div class="card-texts">
         <div class="texts">
@@ -84,7 +85,7 @@
     </div>
     <div v-else class="boucher">
       <h2>
-        Agregar comprobante de transferencia
+        Agregar comprobante
       </h2>
       <div class="con">
         <input-file :danger="!form.ref && !form.file && send" :disabled="!!form.ref" v-model="form.file">
@@ -153,12 +154,6 @@ export default class transfer extends Vue {
 
   handleSend() {
     this.send = true
-    this.$router.push({
-        path: 'step3',
-        query: {
-          ...this.$route.query
-        }
-      })
     if (!this.form.file && !this.form.ref) {
       return
     }
@@ -175,11 +170,23 @@ export default class transfer extends Vue {
         'Content-Type': 'multipart/form-data'
       }
     }).then(() => {
-      this.loading = false
-      this.$router.push({
-        path: 'step3',
-        query: {
-          ...this.$route.query
+      axios.get(`/operation-show/${this.$route.query.id}`).then(({data}: any) => {
+        console.log(data)
+        this.loading = false
+        if (data.info.type_operation_ekambia_id == 3) {
+          this.$router.push({
+            path: '/step3/delivery',
+            query: {
+              ...this.$route.query
+            }
+          })
+        } else {
+          this.$router.push({
+            path: '/step3/',
+            query: {
+              ...this.$route.query
+            }
+          })
         }
       })
     }).catch((err) => {

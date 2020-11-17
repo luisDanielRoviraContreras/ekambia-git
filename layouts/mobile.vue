@@ -1,5 +1,9 @@
 <template>
   <div class="app">
+    <websocket />
+    <!-- <button @click="handleClick">
+      click
+    </button> -->
     <reload />
     <!-- <guide v-model="guide" /> -->
     <OffLine v-if="$nuxt.isOffline" />
@@ -12,7 +16,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import footerBar from '@/components/mobile/footerBar.vue'
 import navBar from '@/components/mobile/navBar.vue'
-import { State } from 'vuex-class'
+import { State, Action } from 'vuex-class'
+import axios from '~/plugins/axios'
 @Component({
   components: {
     footerBar,
@@ -37,10 +42,18 @@ export default class name extends Vue {
     }, 0)
   }
 
+  handleClick() {
+    axios.post(`statusoperation-update/606`, {
+      status_operation_id: 1
+    }).then(() => {
+      console.log('paso en update')
+    })
+  }
+
   mounted () {
     this.setHeight()
 
-    window.addEventListener('resize', this.setHeight)
+    window.addEventListener('resize', this.setHeight);
   }
 }
 </script>

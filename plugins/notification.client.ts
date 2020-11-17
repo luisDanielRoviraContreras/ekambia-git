@@ -12,6 +12,7 @@ const notification: any = (params: any) => {
   const instance = new notificationConstructor()
   instance.$data.title = params.title
   instance.$data.text = params.text
+  instance.$data.click = params.click
 
   document.body.appendChild(instance.$mount().$el)
 
@@ -21,7 +22,7 @@ const notification: any = (params: any) => {
 
   setTimeout(() => {
     (instance as any).close()
-  }, 4000)
+  }, params.time ? params.time : 4000)
 }
 
 Vue.prototype.$notification = notification

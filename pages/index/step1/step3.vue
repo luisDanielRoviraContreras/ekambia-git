@@ -13,16 +13,16 @@
             <span>
               Tu envías
             </span>
-            <p>
-              {{ getSend }} {{ coinSend[0].name }}
+            <p v-if="data">
+              {{ getSend }} {{ coinSend[0].coin }}
             </p>
           </div>
           <div class="text">
             <span>
               Tu recibes
             </span>
-            <p>
-              {{ getReceive }} {{ coinReceive[0].name }}
+            <p v-if="data">
+              {{ getReceive }} {{ coinReceive[0].coin }}
             </p>
           </div>
         </div>
@@ -105,24 +105,7 @@ export default class transferStep1 extends Vue {
 
   offices: any = []
 
-  coins: any = [
-    {
-      name: 'Dolares',
-      id: 1
-    },
-    {
-      name: 'Guaranies',
-      id: 2
-    },
-    {
-      name: 'Euros',
-      id: 3
-    },
-    {
-      name: 'Pesos',
-      id: 4
-    }
-  ]
+  coins: any = []
 
   handleBack() {
     this.$router.push({
@@ -151,29 +134,48 @@ export default class transferStep1 extends Vue {
       coin_received_id: this.coinReceive[0].id,
       exchange_type: this.getChangePrice,
       source_funds: 0,
-      source_account_id: this.form.step1.destination_account_id,
-      destination_account_id: this.form.step2.destination_account_id,
-      type_operation_user_id: this.form.step1.typeReceive,
-      type_operation_ekambia_id: this.form.step2.typeReceive,
-      office_id_in: this.form.step1.office,
-      office_id_out: this.form.step2.office,
-      direction_in: this.form.step1.direction,
-      name_direction_in: this.form.step1.name_direction ? this.form.step1.name_direction : '',
-      save_direction_in: this.form.step1.save_direction ? 1 : 0,
-      direction_out: this.form.step2.direction,
-      name_direction_out: this.form.step2.name_direction ? this.form.step2.name_direction : '',
-      save_direction_out: this.form.step2.save_direction ? 1 : 0
+      source_account_id: this.form.step2.destination_account_id,
+      destination_account_id: this.form.step1.destination_account_id,
+      type_operation_user_id: this.form.step2.typeReceive,
+      type_operation_ekambia_id: this.form.step1.typeReceive,
+      office_id_in: this.form.step2.office,
+      office_id_out: this.form.step1.office,
+      direction_in: this.form.step2.direction,
+      name_direction_in: this.form.step2.name_direction ? this.form.step1.name_direction : '',
+      save_direction_in: this.form.step2.save_direction ? 1 : 0,
+      direction_out: this.form.step1.direction,
+      name_direction_out: this.form.step1.name_direction ? this.form.step2.name_direction : '',
+      save_direction_out: this.form.step1.save_direction ? 1 : 0
     }
 
     console.log(obj)
 
     axios.post('/operation-store', obj).then((res) => {
-      this.$router.push({
-        path: '/step2',
-        query: {
-          id: res.data.info.operation_id
+      axios.get(`/operation-show/${res.data.info.operation_id}`).then(({data}: any) => {
+        if (data.info.type_operation_user_id == 1) {
+        this.$router.push({
+          path: '/step2/',
+          query: {
+            id: data.info.id
+          }
+        })
+        } else if (data.info.type_operation_user_id == 2) {
+          this.$router.push({
+            path: '/step2/office/',
+            query: {
+              id: data.info.id
+            }
+          })
+        } else if (data.info.type_operation_user_id == 3) {
+          this.$router.push({
+            path: '/step2/delivery/',
+            query: {
+              id: data.info.id
+            }
+          })
         }
       })
+
     }).catch((err) => {
       this.loading = false
       this.$notification({
@@ -204,6 +206,7 @@ export default class transferStep1 extends Vue {
       this.data = {
         ...data.info,
       }
+      this.coins = data.info.coins
     }).catch((err) => {
       this.$notification({
         title: 'Oops! Algo salió mal',

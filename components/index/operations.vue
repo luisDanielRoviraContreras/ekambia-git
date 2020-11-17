@@ -35,7 +35,7 @@
       <div class="parent-info-2 parent-info">
         <template v-if="operations.length !== 0">
           <div
-            v-for="(li, i) in filterOperations(2)"
+            v-for="(li, i) in filterOperations(1)"
             :key="i"
             @click="handleClickOperationPay(li)"
             class="info">
@@ -76,7 +76,7 @@
       <div class="parent-info-1 parent-info">
         <template v-if="operations.length !== 0">
           <div
-            v-for="(li, i) in filterOperations(1)"
+            v-for="(li, i) in filterOperations(2)"
             :key="i"
             @click="handleClickOperation(li)"
             class="info">
@@ -182,31 +182,80 @@ export default class OperationsClass extends Vue {
   @Mutation('steps/SET_DATA') setStepData
 
   handleClickOperation(operation) {
+    console.log(operation)
     this.setStepData(operation)
-    this.$router.push({
-      path: 'step3',
-      query: {
-        source: 'operations',
-        id: operation.id
-      }
-    })
+    if (operation.type_operation_ekambia_id == 1) {
+      this.$router.push({
+        path: '/step3/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    } else if (operation.type_operation_ekambia_id == 3) {
+      this.$router.push({
+        path: '/step3/delivery/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    }
   }
 
   handleClickOperationPay(operation) {
+    console.log(operation)
     this.setStepData(operation)
-    this.$router.push({
-      path: 'step2',
-      query: {
-        source: 'operations',
-        id: operation.id
+    if (operation.type_operation_user_id == 1) {
+      this.$router.push({
+        path: '/step2/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    } else if (operation.type_operation_user_id == 2) {
+      this.$router.push({
+        path: '/step2/office/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    } else if (operation.type_operation_user_id == 3) {
+      if (operation.status_location_delivery_in_id == 2) {
+        this.$router.push({
+          path: '/step2/delivery/',
+          query: {
+            source: 'operations',
+            id: operation.id,
+            transit: 'true'
+          }
+        })
+      } else if (operation.status_location_delivery_in_id == 3) {
+        this.$router.push({
+          path: '/step2/delivery/',
+          query: {
+            id: operation.id,
+            qr: 'true'
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/step2/delivery/',
+          query: {
+            source: 'operations',
+            id: operation.id
+          }
+        })
       }
-    })
+    }
   }
 
   handleClickOperationFinish(operation) {
     this.setStepData(operation)
     this.$router.push({
-      path: 'step4',
+      path: '/step4',
       query: {
         source: 'operations',
         id: operation.id

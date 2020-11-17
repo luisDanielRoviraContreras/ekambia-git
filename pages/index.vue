@@ -3,7 +3,7 @@
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
       <div v-if="data" class="con-img">
-        <img src="home.png" alt="">
+        <img src="/home.png" alt="">
       </div>
       <load v-else class="mb-6" height="150px" width="240px" />
       <div v-if="data" class="con-prices">
@@ -26,8 +26,8 @@
           >
             Yo tengo
           </c-input>
-          <Select child="name" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
-            <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
+          <Select child="coin" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
+            <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
           </Select>
         </div>
         <load v-else />
@@ -45,8 +45,8 @@
           >
             Yo recibo
           </c-input>
-          <Select child="name" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
-            <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.name" />
+          <Select child="coin" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
+            <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
           </Select>
         </div>
         <load v-else />
@@ -89,27 +89,10 @@ export default class name extends Vue {
   form: any = {
     send: '',
     receive: '',
-    coinSend: '1',
-    coinReceive: '2'
+    coinSend: 2,
+    coinReceive: 1
   }
-  coins: any = [
-    {
-      name: 'Dolares',
-      id: 1
-    },
-    {
-      name: 'Guaranies',
-      id: 2
-    },
-    {
-      name: 'Euros',
-      id: 3
-    },
-    {
-      name: 'Pesos',
-      id: 4
-    }
-  ]
+  coins: any = []
 
   @Mutation('SET_GUIDE') setGuide
 
@@ -125,7 +108,9 @@ export default class name extends Vue {
 
   getData() {
     axios.get('/operation-create').then(({ data }) => {
+      console.log(data)
       this.data = data.info
+      this.coins = data.info.coins
     })
   }
 

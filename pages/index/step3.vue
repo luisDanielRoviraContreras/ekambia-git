@@ -1,5 +1,5 @@
 <template>
-  <div class="step2">
+  <div class="step3">
     <nuxt-child />
     <!-- <nav-bar back @click="handleBack" /> -->
     <!-- <template v-if="data">
@@ -19,7 +19,7 @@ import axios from '~/plugins/axios'
   // },
   fetchOnServer: false
 })
-export default class step2 extends Vue {
+export default class step3 extends Vue {
   type: any = 'transfer'
   data: any = null
 
@@ -48,14 +48,14 @@ export default class step2 extends Vue {
 .page-enter-active, .page-leave-active
   transition: all .2s ease
 
-.step2.page-enter
+.step3.page-enter
   transform: translate(0,100%) !important
   opacity: 1 !important
-.step2.page-leave-to
+.step3.page-leave-to
   transform: translate(0,100%) !important
   opacity: 1 !important
 
-.step2
+.step3
   position: fixed
   width: 100%
   height: 100vh
@@ -81,7 +81,7 @@ export default class step2 extends Vue {
 // responsive
 
 @media (min-width: 812px)
-  .step2
+  .step3
     align-items: center
     .con-steps
       width: 100%

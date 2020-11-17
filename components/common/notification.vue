@@ -1,12 +1,10 @@
 <template>
   <transition name="fade-noti">
-    <div @click="isVisible = false" v-if="isVisible" class="notification">
+    <div @click="handleClick" v-if="isVisible" class="notification">
       <h5>
         {{ title }}
       </h5>
-      <p v-if="text">
-        {{ text }}
-      </p>
+      <p v-html="text" v-if="text" />
     </div>
   </transition>
 </template>
@@ -17,6 +15,12 @@ export default class notificationBase extends Vue {
   title: any = 'Oops! Algo salió mal'
   text: any = null
   isVisible: boolean = false
+  click: any = null
+
+  handleClick() {
+    this.isVisible = false
+    this.click()
+  }
 }
 </script>
 <style lang="sass" scoped>

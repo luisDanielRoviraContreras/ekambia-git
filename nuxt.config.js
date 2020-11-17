@@ -23,14 +23,7 @@ export default {
       { rel: 'icon', type: 'image/png', href: '/favicon.png' }
     ]
   },
-  /*
-  ** Global CSS
-  */
   css: ['boxicons/css/boxicons.min.css', '~/style/root.sass'],
-  /*
-  ** Plugins to load before mounting the App
-  ** https://nuxtjs.org/guide/plugins
-  */
   plugins: [
     {src: '@/plugins/touch.client.ts', ssr: false},
     {src: '@/plugins/notification.client.ts', ssr: false},
