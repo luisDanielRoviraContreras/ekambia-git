@@ -8,7 +8,15 @@
         </h2>
       </header>
       <div class="con-qr">
-        <img :src="qr" alt="">
+        <img v-if="!btn" :src="qr" alt="">
+        <div class="con-btn" v-else>
+          <p>
+            Verifica el dinero que el operador te entrega y si todo esta correcto dale al botón para mostrar el código QR
+          </p>
+          <Button @click="btn = false" block yellow >
+            Listo ! ya recibí el dinero
+          </Button>
+        </div>
       </div>
       <footer>
         <p>
@@ -42,6 +50,7 @@ import axios from '~/plugins/axios'
 export default class delivery extends Vue {
   qr: any = ''
   data: any = null
+  btn: any = false
 
   from: any = "Ctra. Navacerrada, s / n, 28400 Collado Villalba, Madrid, España"
 
@@ -72,6 +81,7 @@ export default class delivery extends Vue {
 
   mounted() {
     this.getOperation()
+    this.btn = this.$route.query.btn
   }
 }
 </script>
@@ -101,6 +111,9 @@ export default class delivery extends Vue {
         width: 22px
 </style>
 <style lang="sass" scoped>
+.con-btn
+  p
+    padding: 15px
 .content-delivery
   flex: 1
   display: flex

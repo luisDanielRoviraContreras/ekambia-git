@@ -69,15 +69,7 @@ export default {
       crossorigin: 'use-credentials'
     }
   },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
   axios: {},
-  /*
-  ** Build configuration
-  ** See https://nuxtjs.org/api/configuration-build/
-  */
   build: {
     transpile: [/^gmap-vue($|\/)/]
   },

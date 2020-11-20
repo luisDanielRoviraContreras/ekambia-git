@@ -86,8 +86,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
+import { Action } from 'vuex-class'
 @Component
 export default class transferStep1 extends Vue {
+  @Action('operations/getOperations') getOperations
+
   data: any = null
   send: boolean = false
   loading: boolean = false
@@ -151,6 +154,7 @@ export default class transferStep1 extends Vue {
     console.log(obj)
 
     axios.post('/operation-store', obj).then((res) => {
+      this.getOperations()
       axios.get(`/operation-show/${res.data.info.operation_id}`).then(({data}: any) => {
         if (data.info.type_operation_user_id == 1) {
         this.$router.push({

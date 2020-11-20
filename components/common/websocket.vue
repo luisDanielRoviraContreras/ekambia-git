@@ -30,7 +30,7 @@ export default class name extends Vue {
         console.log('data desde socket')
         console.log(data)
         console.log(status)
-        if (status == 2 && this.$route.name == 'index-step2-delivery') {
+        if (status == 3 && this.$route.name == 'index-step2-delivery') {
           if (data.info.direction_in === data.info.direction_out) {
             this.$router.push({
               path: '/step3/delivery/',
@@ -54,11 +54,10 @@ export default class name extends Vue {
               }
             })
           }
-
         }
 
-        if (status == 3) {
-          console.log('paso por el 3')
+
+        if (status == 4) {
           if (this.$route.name == 'index-step3') {
             this.$router.push({
               path: '/step3/',
@@ -152,7 +151,7 @@ export default class name extends Vue {
               }
             })
           }
-        } else if (statusOperation == 2 && statusDeliveryOut == 2) {
+        } else if (statusOperation == 3 && statusDeliveryOut == 2) {
           if (this.$route.name == 'index-step3-delivery') {
             this.$router.push({
               path: '/step3/delivery/',
@@ -177,13 +176,14 @@ export default class name extends Vue {
               }
             })
           }
-        } else if (statusOperation == 2 && statusDeliveryOut == 3) {
+        } else if (statusOperation == 3 && statusDeliveryOut == 3) {
           if (this.$route.name == 'index-step3-delivery') {
             this.$router.push({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
-                qr: 'true'
+                qr: 'true',
+                btn: 'true'
               }
             })
           } else {

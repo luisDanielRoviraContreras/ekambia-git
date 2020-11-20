@@ -10,24 +10,31 @@
       </h2>
       <i class='bx bxs-chevron-up'></i>
     </header>
-    <div class="con-btns">
+    <div
+      ref="btns" class="con-btns">
       <button
         :class="{ active : scrollLeft < windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(0)"
       >
-        Pagando <span class="badge">{{ filterOperations(2).length }}</span>
+        Enviando <span class="badge">{{ filterOperations(1).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth)"
       >
-        Verificando <span class="badge">{{ filterOperations(1).length }}</span>
+        Verificando <span class="badge">{{ filterOperations(2).length }}</span>
       </button>
       <button
-        :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
+        :class="{ active : scrollLeft < windowInnerWidth * 3 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth * 2)"
       >
-        Finalizada <span class="badge">{{ filterOperations(3).length }}</span>
+        Recibiendo <span class="badge">{{ filterOperations(3).length }}</span>
+      </button>
+      <button
+        :class="{ active : scrollLeft < windowInnerWidth * 4 - 20 && scrollLeft > windowInnerWidth * 3 - windowInnerWidth / 2 }"
+        @click="handleClickBtn(windowInnerWidth * 3)"
+      >
+        Finalizada <span class="badge">{{ filterOperations(4).length }}</span>
       </button>
     </div>
 
@@ -117,6 +124,48 @@
           <div
             v-for="(li, i) in filterOperations(3)"
             :key="i"
+            @click="handleClickOperationReceive(li)"
+            class="info">
+            <div class="data">
+              <span>
+                Fecha
+              </span>
+              <p>
+                {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Enviado
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibido
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
+          </div>
+        </template>
+
+        <template v-else>
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+          <load height="61px" style="margin-bottom: 10px" />
+        </template>
+      </div>
+      <div class="parent-info-4 parent-info">
+        <template v-if="operations.length !== 0">
+          <div
+            v-for="(li, i) in filterOperations(4)"
+            :key="i"
             @click="handleClickOperationFinish(li)"
             class="info">
             <div class="data">
@@ -180,6 +229,27 @@ export default class OperationsClass extends Vue {
   @Action('operations/getOperations') getOperations
 
   @Mutation('steps/SET_DATA') setStepData
+
+  handleClickOperationReceive(operation) {
+    this.setStepData(operation)
+    if (operation.type_operation_ekambia_id == 1) {
+      this.$router.push({
+        path: '/step3/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    } else if (operation.type_operation_ekambia_id == 3) {
+      this.$router.push({
+        path: '/step3/delivery/',
+        query: {
+          source: 'operations',
+          id: operation.id
+        }
+      })
+    }
+  }
 
   handleClickOperation(operation) {
     console.log(operation)
@@ -287,18 +357,32 @@ export default class OperationsClass extends Vue {
 
   handleClickBtn (left: number) {
     const infos: any = this.$refs.infos
+    const btns: any = this.$refs.btns
+    btns.classList.add('scroll')
+    setTimeout(() => {
+      btns.classList.remove('scroll')
+    }, 300);
     infos.scrollTo(left, 0)
   }
 
   mounted () {
-    // this.getOperations()
+    this.windowInnerWidth = window.innerWidth
 
     const infos: any = this.$refs.infos
     infos.addEventListener('scroll', (evt) => {
-      this.scrollLeft = evt.target.scrollLeft
+      this.scrollLeft = evt.target.scrollLeft;
+
+      const btns: any = this.$refs.btns
+
+      if (btns.scrollLeft !== this.scrollLeft / 4) {
+        btns.scrollTo(this.scrollLeft / 8, 0)
+      }
+
+      // if (this.scrollLeft > this.windowInnerWidth * 2 - this.windowInnerWidth / 2 ) {
+      //   (this.$refs.btns as any).scrollTo(this.windowInnerWidth * 2, 0)
+      // }
     })
 
-    this.windowInnerWidth = window.innerWidth
   }
 }
 </script>
@@ -373,21 +457,30 @@ export default class OperationsClass extends Vue {
     display: flex
     align-items: center
     justify-content: space-between
-    background: rgba(0,0,0,.03)
-    border-radius: 18px
-    width: calc(100%  - 30px)
-    margin: 10px 15px
+    width: 100%
+    margin: 10px 0px
     padding: 5px
+    padding-left: 10px
     margin-bottom: 0px
     position: relative
     z-index: 20
+    overflow: auto
+    &.scroll
+      scroll-behavior: smooth
+    &::after
+      content: ''
+      position: relative
+      min-width: 20px
+      height: 5px
     button
-      padding: 12px 20px
+      padding: 12px 22px
       border-radius: 18px
       border: 0px
       background: transparent
       transition: all .25s ease
       position: relative
+      margin-left: 12px
+      background: rgba(0,0,0,.03)
       &.active
         background: -color('black')
         color: -color('bg')

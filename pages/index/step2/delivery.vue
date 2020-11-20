@@ -17,9 +17,9 @@
       </footer>
     </div>
     <div v-else class="content-delivery">
-      <tracking :lng="lng" :lat="lat" :ll="ll" v-if="data" :transit="$route.query.transit" :to="data.direction_in" :from="from">
+      <tracking :lng="lng" :lat="lat" :ll="ll" v-if="data" :transit="$route.query.transit" :to="data.direction_in">
         <div v-if="!$route.query.transit" class="con-text">
-          <h3>Ruta de tu repartidor</h3>
+          <h3>Dirección de entrega</h3>
           <p>
             Tu repartidor todavía no ha salido de la oficina
           </p>
@@ -61,7 +61,7 @@ export default class delivery extends Vue {
   data: any = null
   delivery: any = null
 
-  from: any = "Ctra. Navacerrada, s / n, 28400 Collado Villalba, Madrid, España"
+  from: any = null
 
   ll: any = false
   lng: any = null
@@ -113,8 +113,6 @@ export default class delivery extends Vue {
       this.lat = response.info.lat
       this.lng = response.info.lon
     })
-
-
   }
 
   mounted() {

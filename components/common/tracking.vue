@@ -5,6 +5,9 @@
       Arrastra el cursor o has click sobre el punto de entrega
     </label> -->
     <!-- 7b6dee503e0b4a5 -->
+    <!-- <div class="con-load">
+      load...
+    </div> -->
     <template
       >
       <GmapMap
@@ -240,15 +243,8 @@ export default class GoogleMap extends Vue {
   address2: any = ''
   listAddress: any = []
 
-  start: any = {
-    lat: null,
-    lng: null
-  }
-
-  end: any = {
-    lat: null,
-    lng: null
-  }
+  start: any = null
+  end: any = null
 
   directionsRenderer: any = null
   directionsService: any = null
@@ -257,19 +253,26 @@ export default class GoogleMap extends Vue {
 
   google: any = null
   geocoder: any = null
+  request: any = null
 
   @Watch('lat')
   handleUpdatePosition() {
-    // console.log('paso por update ')
-    // this.directionsRenderer.setMap(null)
-    // this.marker.setMap(null)
-    // this.marker2.setMap(null)
-    // this.init()
-    if (this.ll) {
-      this.geocoder.geocode({'address': this.to}, ([results], status) => {
-        this.calcRoute({ lat: Number(this.lat), lng: Number(this.lng) }, results.geometry.location, false)
-      })
+    const newStart = { lat: Number(this.lat), lng: Number(this.lng) }
+    this.start = newStart
+    this.request = {
+      origin: this.start,
+      destination: this.end,
+      travelMode: 'DRIVING',
+      unitSystem: this.google.maps.UnitSystem.METRIC,
+      provideRouteAlternatives: false
     }
+    this.directionsService.route(this.request, (result, status) => {
+      if (status == 'OK') {
+        var route = result.routes[0].legs[0]
+        this.marker.setPosition(route.start_location)
+        this.directionsRenderer.setDirections(result)
+      }
+    })
   }
 
   @Watch('transit')
@@ -301,21 +304,25 @@ export default class GoogleMap extends Vue {
         this.google = gmapApi()
         this.geocoder = new this.google.maps.Geocoder()
         this.directionsService = new this.google.maps.DirectionsService();
-        this.directionsRenderer = new this.google.maps.DirectionsRenderer
+        this.directionsRenderer = new this.google.maps.DirectionsRenderer({
+          preserveViewport: true,
+          suppressMarkers: true,
+          polylineOptions: {
+            strokeColor: this.transit ? "rgba(255, 218, 26, 1)" : "rgba(0, 0, 0, 1)",
+            strokeWeight: 5,
+            icons:[{ icon: this.google.maps.SymbolPath.FORWARD_CLOSED_ARROW }]
+          },
+        })
         this.directionsRenderer.setMap((this.$refs.map as any).$mapObject)
 
 
-        this.geocoder.geocode({'address': this.from}, ([results1], status) => {
+        this.geocoder.geocode({'address': this.to}, ([results1], status) => {
           this.geocoder.geocode({'address': this.to}, ([results2], status) => {
-            this.calcRoute(results1.geometry.location, results2.geometry.location, true)
+            this.start = results1.geometry.location
+            this.end = results2.geometry.location
+            this.center = results1.geometry.location
+            this.calcRoute(true)
           })
-        })
-
-
-        this.geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-          if (status === 'OK') {
-            this.address = results[0].formatted_address
-          }
         })
       })
     }
@@ -331,111 +338,66 @@ export default class GoogleMap extends Vue {
     };
     // Solicitar
     (navigator as any).geolocation.getCurrentPosition(onUbicacionConcedida, onErrorDeUbicacion, opcionesDeSolicitud);
-
-  }
-
-  // @Watch('parentAddress')
-  handleAdress(val) {
-    if (val) {
-      this.address = val.split('|')[0].trim()
-      this.address2 = val.split('|')[1]
-    }
   }
 
   mounted() {
     this.init()
-    this.handleAdress(this.parentAddress)
   }
 
-  @Watch('position')
-  async setCenterAndMarker() {
-    if (this.position) {
-      const position = { lng: Number(this.position.lng), lat: Number(this.position.lat) }
-      this.center = position
-      this.markers[0].position = position
-    } else {
-      const coordinates: any = await this.getCityCoordinates()
-      if (coordinates) {
-        this.center = coordinates
-      }
-    }
-  }
-
-  calcRoute(start, end, n) {
-    this.directionsRenderer.setOptions({
-      suppressMarkers: true,
-      polylineOptions: {
-        strokeColor: this.transit ? "rgba(255, 218, 26, 1)" : "rgba(0, 0, 0, 1)",
-        strokeWeight: 5,
-        icons:[{ icon: this.google.maps.SymbolPath.FORWARD_CLOSED_ARROW }]
-      },
-    });
-    var request = {
-      origin: start,
-      destination: end,
+  calcRoute(n) {
+    this.request = {
+      origin: this.start,
+      destination: this.end,
       travelMode: 'DRIVING',
-      unitSystem: this.google.maps.UnitSystem.METRIC
+      unitSystem: this.google.maps.UnitSystem.METRIC,
+      provideRouteAlternatives: false
     };
 
-
-
-    this.directionsService.route(request, (result, status) => {
+    this.directionsService.route(this.request, (result, status) => {
       if (status == 'OK') {
+        const map = (this.$refs.map as any).$mapObject
+        const iconBase = {
+          scaledSize: new this.google.maps.Size(35, 35), // scaled size
+          origin: new this.google.maps.Point(0,0), // origin
+          anchor: new this.google.maps.Point(10, 15) // anchor
+        }
         var route = result.routes[0].legs[0]
 
         var icon1 = {
-            url: this.transit ? '/start.png' : '/start-b.png',
-            scaledSize: new this.google.maps.Size(35, 35), // scaled size
-            origin: new this.google.maps.Point(0,0), // origin
-            anchor: new this.google.maps.Point(10, 15) // anchor
+          url: this.transit ? '/start.png' : '/start-b.png',
+          ...iconBase
         }
 
         this.marker = new this.google.maps.Marker({
-          map: (this.$refs.map as any).$mapObject,
+          map: map,
           position: route.start_location,
           visible: true,
           icon: icon1,
-        });
+        })
 
         var icon2 = {
-            url: this.transit ? '/house.png' : '/house-b.png',
-            scaledSize: new this.google.maps.Size(35, 35), // scaled size
-            origin: new this.google.maps.Point(0,0), // origin
-            anchor: new this.google.maps.Point(10, 15) // anchor
+          url: this.transit ? '/house.png' : '/house-b.png',
+          ...iconBase
         }
 
         this.marker2 = new this.google.maps.Marker({
-          map: (this.$refs.map as any).$mapObject,
+          map: map,
           position: route.end_location,
           visible: true,
           icon: icon2,
-        });
+        })
 
-        if (n) {
-          var infowindow = new this.google.maps.InfoWindow({
-            content: `
-              <h4>Dirección de entrega</h4>
-              <p>${route.end_address}</p>
-            `
-          });
+        var infowindow = new this.google.maps.InfoWindow({
+          content: `
+            <h4>Dirección de entrega</h4>
+            <p>${route.end_address}</p>
+          `
+        })
 
-          infowindow.open((this.$refs.map as any).$mapObject,this.marker2);
-        }
-
-
-
+        infowindow.open(map,this.marker2);
         this.directionsRenderer.setDirections(result);
       }
-    });
-
-
-  }
-
-  async getCityCoordinates() {
-    // const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${'caracas'},Venezuela&key=${'AIzaSyCO5hzxurIlhfRdWLwxIWMBSwYCZdEMvZo'}`)
-    // if (data.status === 'OK') {
-    //   return data.results[0].geometry.location
-    // }
+    })
   }
 }
 </script>
@@ -474,6 +436,16 @@ export default class GoogleMap extends Vue {
     font-size: .8rem
 </style>
 <style lang="sass" scoped>
+.con-load
+  position: absolute
+  width: 100%
+  height: 100%
+  z-index: 2000
+  background: -color(bg, .6)
+  display: flex
+  align-items: center
+  justify-content: center
+  backdrop-filter: saturate(180%) blur(10px)
 .con-google-maps
   position: fixed
   z-index: 900
