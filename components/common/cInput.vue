@@ -66,11 +66,13 @@ export default class InputComponent extends Vue {
         if (!!this.$attrs.maxlength) {
           if (evt.target.value.length < max) {
               this.$emit('input', evt.target.value)
+              this.$emit('change-value', evt.target.value)
           } else {
             evt.target.value = evt.target.value.substring(0, max)
           }
         } else {
           this.$emit('input', evt.target.value)
+          this.$emit('change-value', evt.target.value)
         }
       }
     }

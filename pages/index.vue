@@ -6,34 +6,40 @@
         <img src="/home.png" alt="">
       </div>
       <load v-else class="mb-6" height="150px" width="240px" />
-      <div v-if="data" class="con-prices">
+      <div v-if="sale_price" class="con-prices">
         <div class="price-1 price">
-          Compra: <span v-if="data">{{ data.exchange_purchase.price_purchase }}</span>
+          Compra: <span v-if="purchase_price">{{ purchase_price }}</span>
         </div>
         <div class="price-2 price">
-          Venta: <span v-if="data">{{ data.exchange_sale.price_sale }}</span>
+          Venta: <span v-if="sale_price">{{ sale_price }}</span>
         </div>
       </div>
       <load v-else />
       <div class="con-inputs mt-6">
-        <div v-if="data" class="input-select">
+        <div v-if="data && coins" class="input-select">
           <c-input
             ref="send"
             v-model="form.send"
             :inputmode="$device.isIos ? 'numeric' : 'none'"
             identificador="send"
             @focus="inputFocus"
+            @change-value="handleFormSend"
           >
             Yo tengo
           </c-input>
-          <Select child="coin" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
-            <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
+          <Select :readonly="form.coinReceive !== 1" @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
+            <template v-if="form.coinReceive == 1">
+              <Option v-show="option.id !== form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
+            </template>
+            <template v-else>
+              <Option value="1" text="Guaraníes" />
+            </template>
           </Select>
         </div>
         <load v-else />
           <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
         <invert @change="handleChange"/>
-        <div v-if="data" class="input-select readonly">
+        <div v-if="data && coins" class="input-select readonly">
           <c-input
             ref="receive"
             v-model="form.receive"
@@ -45,8 +51,14 @@
           >
             Yo recibo
           </c-input>
-          <Select child="coin" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
-            <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
+            <!-- <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" /> -->
+          <Select :readonly="form.coinReceive == 1" child="coin" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
+            <template v-if="form.coinReceive !== 1">
+              <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
+            </template>
+            <template v-else>
+              <Option value="1" text="Guaraníes" />
+            </template>
           </Select>
         </div>
         <load v-else />
@@ -86,6 +98,8 @@ export default class name extends Vue {
   reverse: boolean = false
   focus: any = null
   data: any = null
+  sale_price: any = null
+  purchase_price: any = null
   form: any = {
     send: '',
     receive: '',
@@ -96,21 +110,35 @@ export default class name extends Vue {
 
   @Mutation('SET_GUIDE') setGuide
 
-  @Watch('form.send')
   handleFormSend(val) {
-    if (!this.reverse) {
-      this.form.receive = (Math.round((val * this.data.exchange_sale.price_sale) * 100) / 100).toFixed(2)
+    if (this.form.coinReceive !== 1) {
+      this.form.receive = (val / this.sale_price).toFixed(3)
+    } else {
+      this.form.receive = (val * this.sale_price).toFixed(3)
     }
-    if (this.reverse && focus) {
-      this.form.receive = (Math.round((val / this.data.exchange_sale.price_sale) * 100) / 100).toFixed(2)
-    }
+  }
+
+  getCoins() {
+    axios.get('/coins').then(({ data }) => {
+      this.coins = data.info
+      this.handleChangeCoin(2)
+    })
+  }
+
+  handleChangeCoin(id) {
+    axios.get(`/coins-show/${id}`).then(({ data }) => {
+      this.purchase_price = data.info.purchase_price
+      this.sale_price = data.info.sale_price
+      if(this.form.send) {
+        this.handleFormSend(this.form.send)
+      }
+    })
   }
 
   getData() {
     axios.get('/operation-create').then(({ data }) => {
-      console.log(data)
       this.data = data.info
-      this.coins = data.info.coins
+      this.getCoins()
     })
   }
 
@@ -121,7 +149,7 @@ export default class name extends Vue {
         receive: btoa(this.form.receive),
         coinSend: this.form.coinSend,
         coinReceive: this.form.coinReceive,
-        cp: btoa(this.data.exchange_purchase.price_purchase),
+        cp: btoa(this.sale_price),
       }
     })
 
@@ -160,7 +188,7 @@ export default class name extends Vue {
 
   mounted () {
     this.getData()
-    this.getFirstOperation()
+    // this.getFirstOperation()
     this.handleOperations()
     this.$bounceClose()
     this.handleScroll()
@@ -186,8 +214,8 @@ export default class name extends Vue {
     const oldForm = JSON.parse(JSON.stringify(this.form))
     this.form.send = `${oldForm.receive}`
     this.form.receive = `${oldForm.send}`
-    this.form.coinSend = `${oldForm.coinReceive}`
-    this.form.coinReceive = `${oldForm.coinSend}`
+    this.form.coinSend = Number(`${oldForm.coinReceive}`)
+    this.form.coinReceive = Number(`${oldForm.coinSend}`)
   }
 
   inputFocus (evt: any) {

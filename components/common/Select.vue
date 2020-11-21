@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ block, danger, sticky, stickyPrev }"
+    :class="{ block, danger, sticky, stickyPrev, readonly }"
     class="select"
   >
       <!-- v-bind="$attrs" -->
@@ -26,7 +26,7 @@
           </div>
         </div>
       </transition>
-    <i class='bx bxs-chevron-down'></i>
+    <i v-if="!readonly" class='bx bxs-chevron-down'></i>
   </div>
 </template>
 <script lang="ts">
@@ -38,6 +38,7 @@ export default class Select extends Vue {
   @Prop({ type: Boolean }) sticky: boolean
   @Prop({ type: Boolean }) stickyPrev: boolean
   @Prop({ type: Boolean }) load: boolean
+  @Prop({ type: Boolean }) readonly: boolean
   @Prop({ type: String }) placeholder: string
   @Prop({ type: String, default: 'alias' }) child: string
   @Prop({ type: String, default: 'id' }) uid: string
@@ -234,6 +235,8 @@ export default class Select extends Vue {
   align-items: center
   justify-content: center
   position: relative
+  &.readonly
+    pointer-events: none
   &.sticky
     input
       border-radius: 24px 0px 0px 24px

@@ -375,7 +375,7 @@ export default class OperationsClass extends Vue {
       const btns: any = this.$refs.btns
 
       if (btns.scrollLeft !== this.scrollLeft / 4) {
-        btns.scrollTo(this.scrollLeft / 8, 0)
+        btns.scrollTo(this.scrollLeft / 5, 0)
       }
 
       // if (this.scrollLeft > this.windowInnerWidth * 2 - this.windowInnerWidth / 2 ) {
@@ -512,5 +512,8 @@ export default class OperationsClass extends Vue {
       font-size: 1.1rem
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (max-width: 812px)
+  .con-btns
+    button
+      min-width: 35%
 </style>

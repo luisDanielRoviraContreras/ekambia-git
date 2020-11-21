@@ -87,7 +87,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 import { Action } from 'vuex-class'
-@Component
+@Component({
+  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+})
 export default class transferStep1 extends Vue {
   @Action('operations/getOperations') getOperations
 
@@ -285,6 +287,7 @@ export default class transferStep1 extends Vue {
   justify-content: center
   flex-direction: column
   height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
   footer
     width: 100%
     padding: 15px
