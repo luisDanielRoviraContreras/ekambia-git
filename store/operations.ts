@@ -2,7 +2,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import axios from '~/plugins/axios'
 
 export const state = () => ({
-  operations: [],
+  operations: null,
 })
 
 export type RootState = ReturnType<typeof state>

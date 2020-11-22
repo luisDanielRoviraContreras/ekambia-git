@@ -47,6 +47,12 @@
         </template>
       </Select>
 
+      <div v-if="!account" class="con-text">
+        <p>
+          Selecciona la cuenta de ekambia a donde quieres transferir para mostrarte los datos bancarios
+        </p>
+      </div>
+
       <h2 v-if="account">
         Datos de cuenta bancaria
       </h2>
@@ -77,9 +83,13 @@
         </li>
       </ul>
 
+      <div v-if="account" class="con-switch">
+        <c-switch v-model="hasTransfer" /> <p>Listo! ya transferí</p>
+      </div>
+
       <footer v-if="account">
-        <Button block yellow @click="transferred = true">
-          Listo ya transferí
+        <Button :disabled="!hasTransfer" block yellow @click="transferred = true">
+          Verificar transferencia
         </Button>
       </footer>
     </div>
@@ -130,6 +140,7 @@ export default class transfer extends Vue {
   send: boolean = false
   loading: boolean = false
   transferred: boolean = false
+  hasTransfer: boolean = false
 
   ekambiaAccounts: any = []
   account: any = null
@@ -212,6 +223,20 @@ export default class transfer extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.con-text
+  p
+    font-size: .8rem
+    padding: 10px
+    opacity: .7
+.con-switch
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  padding: 15px 10px
+  p
+    font-size: .85rem
+    padding: 0px 10px
+    font-weight: bold
 .card-texts
   background: -color('gray-2')
   border-radius: 30px

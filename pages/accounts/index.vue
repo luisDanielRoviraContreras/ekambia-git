@@ -25,6 +25,14 @@
           ownAccount="si"
           :animate="i == 0"
           />
+        <div v-if="accounts.length == 0" class="not-found mt-6">
+          <p>
+            Todavía no tienes ninguna cuenta bancaria
+          </p>
+          <Button @click="handleCreateAccount" class="mt-6" block yellow>
+            Agregar Cuenta
+          </Button>
+        </div>
       </template>
       <template v-else>
         <load class="mt-6" height="118px" />
@@ -86,6 +94,12 @@ export default class accountsBank extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.not-found
+  padding: 20px 0px
+  text-align: center
+  p
+    font-size: .9rem
+    opacity: .6
 .accounts
   width: 100%
   position: relative
@@ -100,7 +114,7 @@ export default class accountsBank extends Vue {
   overflow: hidden
   scroll-snap-type: x mandatory
   scroll-behavior: smooth
-  background: -color(gray)
+  background: -color(bg)
   h3
     width: 100%
     text-align: center

@@ -2,10 +2,10 @@
   <div ref="page" class="index page">
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
-      <div v-if="data" class="con-img">
-        <img src="/home.png" alt="">
+      <div v-if="sale_price" class="con-img">
+        <img src="/home.svg" alt="">
       </div>
-      <load v-else class="mb-6" height="150px" width="240px" />
+      <load v-else class="mb-6" height="155px" width="240px" />
       <div v-if="sale_price" class="con-prices">
         <div class="price-1 price">
           Compra: <span v-if="purchase_price">{{ purchase_price }}</span>
@@ -16,7 +16,7 @@
       </div>
       <load v-else />
       <div class="con-inputs mt-6">
-        <div v-if="data && coins" class="input-select">
+        <div v-if="coins" class="input-select">
           <c-input
             ref="send"
             v-model="form.send"
@@ -39,7 +39,7 @@
         <load v-else />
           <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
         <invert @change="handleChange"/>
-        <div v-if="data && coins" class="input-select readonly">
+        <div v-if="coins" class="input-select readonly">
           <c-input
             ref="receive"
             v-model="form.receive"
@@ -73,7 +73,6 @@
     <transition name="fade-teclado">
       <teclado v-if="focus && $device.isMobile && !$device.isIos" @click="handleTeclado" />
     </transition>
-
   </div>
 </template>
 <script lang="ts">
@@ -98,17 +97,28 @@ export default class name extends Vue {
   reverse: boolean = false
   focus: any = null
   data: any = null
-  sale_price: any = null
-  purchase_price: any = null
+  // sale_price: any = null
+  // purchase_price: any = null
   form: any = {
     send: '',
     receive: '',
     coinSend: 2,
     coinReceive: 1
   }
-  coins: any = []
+  // coins: any = []
+  @State('sale_price') sale_price
+
+  @State('purchase_price') purchase_price
+
+  @State('coins') coins
 
   @Mutation('SET_GUIDE') setGuide
+
+  @Mutation('SET_COINS') setCoins
+
+  @Mutation('SET_PURCHASE') setPurchase
+
+  @Mutation('SET_SALE') setSale
 
   handleFormSend(val) {
     if (this.form.coinReceive !== 1) {
@@ -120,15 +130,16 @@ export default class name extends Vue {
 
   getCoins() {
     axios.get('/coins').then(({ data }) => {
-      this.coins = data.info
+      // this.coins = data.info
+      this.setCoins(data.info)
       this.handleChangeCoin(2)
     })
   }
 
   handleChangeCoin(id) {
     axios.get(`/coins-show/${id}`).then(({ data }) => {
-      this.purchase_price = data.info.purchase_price
-      this.sale_price = data.info.sale_price
+      this.setPurchase(data.info.purchase_price)
+      this.setSale(data.info.sale_price)
       if(this.form.send) {
         this.handleFormSend(this.form.send)
       }
@@ -136,10 +147,10 @@ export default class name extends Vue {
   }
 
   getData() {
-    axios.get('/operation-create').then(({ data }) => {
-      this.data = data.info
-      this.getCoins()
-    })
+    this.getCoins()
+    // axios.get('/operation-create').then(({ data }) => {
+    //   // this.data = data.info
+    // })
   }
 
   handleInitOperation() {
@@ -319,12 +330,12 @@ export default class name extends Vue {
     max-width: 450px
     padding-top: 10px
     .con-img
-      margin-bottom: -20px
+      margin-bottom: -15px
       z-index: 10
       position: relative
-      min-height: 203px
+      min-height: 193px
       img
-        max-width: 240px
+        max-width: 230px
         transition: all .25s ease
 .con-inputs
   position: relative

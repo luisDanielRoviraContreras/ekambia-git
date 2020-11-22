@@ -1,9 +1,11 @@
 <template>
-  <label :for="_uid" class="switch">
+  <label class="switch">
     <input
       :id="_uid"
       type="checkbox"
       name=""
+      :value="value"
+      @input="handleInput"
     >
     <i class="bx bx-check" />
     <span class="circle" />
@@ -11,9 +13,15 @@
   </label>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
-export default class SwitchElement extends Vue {}
+export default class SwitchElement extends Vue {
+  @Prop({}) value: any
+
+  handleInput(evt) {
+    this.$emit('input', !this.value)
+  }
+}
 </script>
 <style lang="sass" scoped>
 .switch
@@ -59,6 +67,9 @@ export default class SwitchElement extends Vue {}
   input
     position: absolute
     opacity: 0
+    z-index: 100
+    width: 100%
+    height: 100%
     &:checked
       ~ .circle
         margin-left: 22px

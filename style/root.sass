@@ -83,16 +83,19 @@ a
   .page-leave-to
     opacity: 0
 
-@media (max-width: 812px), (pointer:none), (pointer:coarse)
-  .page-enter-active, .page-leave-active
-  transition: all .2s ease
-
+@media (max-width: 812px)
+  .page-enter-active
+    transition: all .2s ease-out
+  .page-leave-active
+    transition: all .2s ease-in
   .page-enter
-    transform: translate(-15px) !important
+    transform: translate(30px)
     opacity: 0
   .page-leave-to
-    transform: translate(15px) !important
     opacity: 0
+    // transform: scale(.5)
+    transform: translate(-30px)
+
   *::-webkit-scrollbar
       height: 0px !important
       width: 0px !important
@@ -115,3 +118,21 @@ a
 
 .nuxt-progress
   border-radius: 0px 5px 5px 0px
+
+// .slide-left-enter-active, .slide-left-leave-active
+//   transition: all .3s ease
+// .slide-left-enter
+//   transform: translate(-100%) !important
+//   opacity: 0
+// .slide-left-leave-to
+//   transform: translate(100%) !important
+//   opacity: 0
+
+// .slide-right-enter-active, .slide-right-leave-active
+//   transition: all .3s ease
+// .slide-right-enter
+//   transform: translate(100%) !important
+//   opacity: 1 !important
+// .slide-right-leave-to
+//   transform: translate(100%) !important
+//   opacity: 1 !important

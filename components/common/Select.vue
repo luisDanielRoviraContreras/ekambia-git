@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ block, danger, sticky, stickyPrev, readonly }"
+    :class="{ block, danger, sticky, stickyPrev, readonly, active }"
     class="select"
   >
       <!-- v-bind="$attrs" -->
@@ -142,7 +142,7 @@ export default class Select extends Vue {
 </script>
 <style lang="sass">
 .select-enter-active, .select-leave-active
-  transition: all .2s ease
+  transition: all .2s ease-in
 
 .select-enter, .select-leave-to
   &.isMobile
@@ -235,6 +235,11 @@ export default class Select extends Vue {
   align-items: center
   justify-content: center
   position: relative
+  transition: all .25s ease
+  &.active
+    input
+      border: 2px solid -color(black, 0)
+      background: -color(gray-2)
   &.readonly
     pointer-events: none
   &.sticky

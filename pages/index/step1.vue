@@ -38,17 +38,17 @@ export default class steps extends Vue {
   transition: all .2s ease
 
 .steps-transfer.page-enter
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 .steps-transfer.page-leave-to
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 
 .steps-transfer
   position: fixed
   width: 100%
   height: 100vh
-  background: -color('gray')
+  background: -color('bg')
   top: 0px
   left: 0px
   z-index: 5000

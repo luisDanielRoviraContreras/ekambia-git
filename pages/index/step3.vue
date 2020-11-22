@@ -49,10 +49,10 @@ export default class step3 extends Vue {
   transition: all .2s ease
 
 .step3.page-enter
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 .step3.page-leave-to
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 
 .step3

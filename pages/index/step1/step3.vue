@@ -77,7 +77,7 @@
     </div>
 
     <footer>
-      <Button @click="handleInitOperation" yellow block>
+      <Button :loading="loading" @click="handleInitOperation" yellow block>
         Iniciar operación
       </Button>
     </footer>
@@ -157,6 +157,7 @@ export default class transferStep1 extends Vue {
 
     axios.post('/operation-store', obj).then((res) => {
       this.getOperations()
+
       axios.get(`/operation-show/${res.data.info.operation_id}`).then(({data}: any) => {
         if (data.info.type_operation_user_id == 1) {
         this.$router.push({
@@ -180,6 +181,9 @@ export default class transferStep1 extends Vue {
             }
           })
         }
+        setTimeout(() => {
+          this.loading = false
+        }, 300);
       })
 
     }).catch((err) => {

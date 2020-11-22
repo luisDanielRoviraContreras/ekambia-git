@@ -16,9 +16,9 @@
     <div class="content-login">
       <div class="con-login">
         <div class="con-logo">
-          <img src="/logo2.png" alt="">
+          <img src="/ekambia_logo.svg" alt="">
         </div>
-        <h2 class="mt-3">
+        <h2 class="mt-6">
           Acceder
         </h2>
         <c-input
@@ -203,9 +203,9 @@ export default class login extends Vue {
     flex: 1
     position: relative
     .con-logo
-      min-height: 127px
+      min-height: 38px
       img
-        max-width: 120px
+        max-width: 200px
         display: block
   h2
     font-weight: 600

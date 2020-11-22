@@ -22,10 +22,10 @@ export default class success extends Vue {}
   transition: all .2s ease
 
 .success.page-enter
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 .success.page-leave-to
-  transform: translate(0,100%) !important
+  transform: translate(100%) !important
   opacity: 1 !important
 
 .success

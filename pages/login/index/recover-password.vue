@@ -12,7 +12,7 @@
     </header>
     <div class="con-recover">
       <div class="con-logo">
-        <img src="/logo2.png" alt="">
+        <img src="/ekambia_logo.svg" alt="">
       </div>
 
       <h2 class="mt-6">
@@ -26,7 +26,7 @@
       <c-input
         v-model="form.email"
         type="email"
-        class="mt-6"
+        class="mt-6 mb-6"
         :danger="(!form.email || !emailValid) && send"
         lowercase
       >
@@ -119,9 +119,9 @@ export default class recover extends Vue {
   padding: 20px 30px
   padding-top: 60px
   .con-logo
-      min-height: 127px
+      min-height: 38px
       img
-        max-width: 140px
+        max-width: 200px
         display: block
   .btn-send
     justify-self: flex-end

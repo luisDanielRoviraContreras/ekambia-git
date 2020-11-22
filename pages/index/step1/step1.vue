@@ -97,7 +97,8 @@ export default class transferStep1 extends Vue {
     this.$router.push({
       path: '/accounts/create',
       query: {
-        ...this.$route.query
+        ...this.$route.query,
+        step: '1'
       }
     })
   }
@@ -192,6 +193,11 @@ export default class transferStep1 extends Vue {
     axios.get('/operation-create').then(({ data }) => {
       console.log(data)
       this.data = data.info
+      if (this.$route.query.transferActive) {
+        this.form.typeReceive = 1
+        this.transferVisible = true
+        this.form.typeReceiveText = 'Transferencia'
+      }
     }).catch((err) => {
       this.$notification({
         title: 'Oops! Algo salió mal',

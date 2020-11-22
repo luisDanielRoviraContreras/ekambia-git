@@ -4,7 +4,7 @@
       <nav-bar absolute back @click="$router.push('/')" />
       <tracking from="honorio lozano 8, collado villalba, españa" to="rafael alberti 13, collado villalba, españa">
         <h3>Ruta para ir a la oficina</h3>
-        <Button @click="status=2" class="mt-3" block yellow>
+        <Button @click="status = 2" class="mt-3" block yellow>
           Ya estoy en la oficina
         </Button>
       </tracking>
@@ -13,15 +13,23 @@
       <nav-bar not-padding back @click="$router.push('/')" />
       <header>
         <h2>
-          Código QR de tu operación
+          Código de tu operación
         </h2>
       </header>
       <div class="con-qr">
         <img :src="qr" alt="">
+
+        <divider>
+          O
+        </divider>
+
+        <c-input class="mt-6" v-model="data.qrcode_in">
+          Código de operación
+        </c-input>
       </div>
       <footer>
         <p>
-          Muestra tu código QR al operador al entregar el dinero
+          Muestra tu código QR al operador al recibir el dinero
         </p>
       </footer>
     </div>
@@ -30,29 +38,39 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import QRCode from 'qrcode'
+import axios from '~/plugins/axios'
 @Component
 export default class office extends Vue {
   qr: any = ''
   status: any = 1
+  data: any = null
 
   @Prop({}) token: any
   @Prop({}) title: any
   @Prop({}) text: any
 
+  getOperation() {
+    axios.get(`/operation-show/${this.$route.query.id}`).then(({data}: any) => {
+      this.data = data.info
+      // console.log(data)
+      QRCode.toDataURL(`${data.info.qrcode_in}`, {
+        margin: 2,
+        scale: 10,
+        color: {
+          dark: '#000'
+        }
+      })
+      .then(url => {
+        this.qr = url
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    })
+  }
+
   mounted() {
-    QRCode.toDataURL(`${this.token}`, {
-      margin: 2,
-      scale: 10,
-      color: {
-        dark: '#000'
-      }
-    })
-    .then(url => {
-      this.qr = url
-    })
-    .catch(err => {
-      console.error(err)
-    })
+    this.getOperation()
   }
 }
 </script>
@@ -112,6 +130,7 @@ export default class office extends Vue {
     padding: 20px
     width: 100%
     flex: 1
+    flex-direction: column
     img
       width: 100%
       max-width: 250px

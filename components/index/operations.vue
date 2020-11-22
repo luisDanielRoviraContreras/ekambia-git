@@ -16,36 +16,61 @@
         :class="{ active : scrollLeft < windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(0)"
       >
-        Enviando <span class="badge">{{ filterOperations(1).length }}</span>
+        Enviando <span v-if="filterOperations(1).length > 0" class="badge">{{ filterOperations(1).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth)"
       >
-        Verificando <span class="badge">{{ filterOperations(2).length }}</span>
+        Verificando <span v-if="filterOperations(2).length > 0" class="badge">{{ filterOperations(2).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 3 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth * 2)"
       >
-        Recibiendo <span class="badge">{{ filterOperations(3).length }}</span>
+        Recibiendo <span v-if="filterOperations(3).length > 0" class="badge">{{ filterOperations(3).length }}</span>
       </button>
       <button
         :class="{ active : scrollLeft < windowInnerWidth * 4 - 20 && scrollLeft > windowInnerWidth * 3 - windowInnerWidth / 2 }"
         @click="handleClickBtn(windowInnerWidth * 3)"
       >
-        Finalizada <span class="badge">{{ filterOperations(4).length }}</span>
+        Finalizada <span v-if="filterOperations(4).length > 0" class="badge">{{ filterOperations(4).length }}</span>
       </button>
     </div>
 
+    <!-- <pre>
+      {{ operations }}
+    </pre> -->
+
     <div ref="infos" class="con-infos">
       <div class="parent-info-2 parent-info">
-        <template v-if="operations.length !== 0">
+        <template v-if="operations">
           <div
             v-for="(li, i) in filterOperations(1)"
             :key="i"
             @click="handleClickOperationPay(li)"
             class="info">
+            <div class="data icons">
+              <i v-if="li.type_operation_user_id == 3" class='bx bx-trip'></i>
+              <i v-if="li.type_operation_user_id == 2" class='bx bx-buildings'></i>
+              <i v-if="li.type_operation_user_id == 1" class='bx bx bx-transfer'></i>
+            </div>
+            <div class="data">
+              <span>
+                Enviar
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibir
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
             <div class="data">
               <span>
                 Fecha
@@ -54,22 +79,15 @@
                 {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
               </p>
             </div>
-            <div class="data">
-              <span>
-                Enviado
-              </span>
-              <p>
-                {{ li.send }}
-              </p>
+            <div class="data arrow">
+              <i class='bx bxs-chevron-right'></i>
             </div>
-            <div class="data">
-              <span>
-                Recibido
-              </span>
-              <p>
-                {{ li.received }}
-              </p>
-            </div>
+          </div>
+
+          <div class="not-found" v-if="filterOperations(1).length == 0">
+            <p>
+              No hay operaciones
+            </p>
           </div>
         </template>
 
@@ -81,12 +99,33 @@
         </template>
       </div>
       <div class="parent-info-1 parent-info">
-        <template v-if="operations.length !== 0">
+        <template v-if="operations">
           <div
             v-for="(li, i) in filterOperations(2)"
             :key="i"
             @click="handleClickOperation(li)"
             class="info">
+            <div class="data icons">
+              <i v-if="li.type_operation_user_id == 3" class='bx bx-trip'></i>
+              <i v-if="li.type_operation_user_id == 2" class='bx bx-buildings'></i>
+              <i v-if="li.type_operation_user_id == 1" class='bx bx bx-transfer'></i>
+            </div>
+            <div class="data">
+              <span>
+                Enviar
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibir
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
             <div class="data">
               <span>
                 Fecha
@@ -95,22 +134,14 @@
                 {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
               </p>
             </div>
-            <div class="data">
-              <span>
-                Enviado
-              </span>
-              <p>
-                {{ li.send }}
-              </p>
+            <div class="data arrow">
+              <i class='bx bxs-chevron-right'></i>
             </div>
-            <div class="data">
-              <span>
-                Recibido
-              </span>
-              <p>
-                {{ li.received }}
-              </p>
-            </div>
+          </div>
+          <div class="not-found" v-if="filterOperations(2).length == 0">
+            <p>
+              No hay operaciones
+            </p>
           </div>
         </template>
         <template v-else>
@@ -120,12 +151,33 @@
         </template>
       </div>
       <div class="parent-info-3 parent-info">
-        <template v-if="operations.length !== 0">
+        <template v-if="operations">
           <div
             v-for="(li, i) in filterOperations(3)"
             :key="i"
             @click="handleClickOperationReceive(li)"
             class="info">
+            <div class="data icons">
+              <i v-if="li.type_operation_ekambia_id == 3" class='bx bx-trip'></i>
+              <i v-if="li.type_operation_ekambia_id == 2" class='bx bx-buildings'></i>
+              <i v-if="li.type_operation_ekambia_id == 1" class='bx bx bx-transfer'></i>
+            </div>
+            <div class="data">
+              <span>
+                Enviar
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibir
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
             <div class="data">
               <span>
                 Fecha
@@ -134,22 +186,15 @@
                 {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
               </p>
             </div>
-            <div class="data">
-              <span>
-                Enviado
-              </span>
-              <p>
-                {{ li.send }}
-              </p>
+            <div class="data arrow">
+              <i class='bx bxs-chevron-right'></i>
             </div>
-            <div class="data">
-              <span>
-                Recibido
-              </span>
-              <p>
-                {{ li.received }}
-              </p>
-            </div>
+          </div>
+
+          <div class="not-found" v-if="filterOperations(3).length == 0">
+            <p>
+              No hay operaciones
+            </p>
           </div>
         </template>
 
@@ -162,12 +207,31 @@
         </template>
       </div>
       <div class="parent-info-4 parent-info">
-        <template v-if="operations.length !== 0">
+        <template v-if="operations">
           <div
             v-for="(li, i) in filterOperations(4)"
             :key="i"
             @click="handleClickOperationFinish(li)"
             class="info">
+            <div class="data icons">
+              <i class='bx bx-check' ></i>
+            </div>
+            <div class="data">
+              <span>
+                Enviar
+              </span>
+              <p>
+                {{ li.send }}
+              </p>
+            </div>
+            <div class="data">
+              <span>
+                Recibir
+              </span>
+              <p>
+                {{ li.received }}
+              </p>
+            </div>
             <div class="data">
               <span>
                 Fecha
@@ -176,27 +240,19 @@
                 {{ `${li.datex.split('-')[2]}-${li.datex.split('-')[1]}-${li.datex.split('-')[0]}` }}
               </p>
             </div>
-            <div class="data">
-              <span>
-                Enviado
-              </span>
-              <p>
-                {{ li.send }}
-              </p>
+            <div class="data arrow">
+              <i class='bx bxs-chevron-right'></i>
             </div>
-            <div class="data">
-              <span>
-                Recibido
-              </span>
-              <p>
-                {{ li.received }}
-              </p>
-            </div>
+          </div>
+
+          <div class="not-found" v-if="filterOperations(4).length == 0">
+            <p>
+              No hay operaciones
+            </p>
           </div>
         </template>
 
         <template v-else>
-          <load height="61px" style="margin-bottom: 10px" />
           <load height="61px" style="margin-bottom: 10px" />
           <load height="61px" style="margin-bottom: 10px" />
           <load height="61px" style="margin-bottom: 10px" />
@@ -334,7 +390,8 @@ export default class OperationsClass extends Vue {
   }
 
   filterOperations(id) {
-    return this.operations.filter((item) => {
+    const operations = this.operations || []
+    return operations.filter((item) => {
       return item.status_operation_id == id
     })
   }
@@ -387,6 +444,12 @@ export default class OperationsClass extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.not-found
+  width: 100%
+  text-align: center
+  p
+    font-size: .9rem
+    padding: 15px
 .operations
   position: relative
   width: 100%
@@ -409,7 +472,7 @@ export default class OperationsClass extends Vue {
     scroll-snap-type: x mandatory
     scroll-behavior: smooth
     .parent-info
-      padding: 20px
+      padding: 15px
       padding-bottom: 90px
       overflow: auto
       max-height: calc(80vh - 150px)
@@ -422,9 +485,8 @@ export default class OperationsClass extends Vue {
       background: -color('bg')
       border-radius: 20px
       margin-bottom: 10px
-      padding: 0px 5px
       .data
-        padding: 14px 15px
+        padding: 14px 10px
         font-size: .8rem
         display: flex
         align-items: flex-start
@@ -432,6 +494,23 @@ export default class OperationsClass extends Vue {
         flex-direction: column
         position: relative
         width: 33%
+        &.icons
+          min-width: 40px
+          width: 40px
+          padding: 0px
+          display: flex
+          align-items: center
+          justify-content: center
+          i
+            font-size: 1.2rem
+        &.arrow
+          width: 40px
+          display: flex
+          align-items: center
+          justify-content: center
+          opacity: .6
+          i
+            font-size: 1.1rem
         &:first-child
           &:after
             content: ''
@@ -440,7 +519,7 @@ export default class OperationsClass extends Vue {
             width: 2px
             height: 25px
             background: -color('black', .05)
-        &:last-child
+        &:nth-child(3),&:nth-child(4)
           &:after
             content: ''
             position: absolute
@@ -460,8 +539,9 @@ export default class OperationsClass extends Vue {
     width: 100%
     margin: 10px 0px
     padding: 5px
-    padding-left: 10px
+    padding-left: 15px
     margin-bottom: 0px
+    margin-top: 0px
     position: relative
     z-index: 20
     overflow: auto
@@ -470,7 +550,7 @@ export default class OperationsClass extends Vue {
     &::after
       content: ''
       position: relative
-      min-width: 20px
+      min-width: 2px
       height: 5px
     button
       padding: 12px 22px
@@ -479,7 +559,7 @@ export default class OperationsClass extends Vue {
       background: transparent
       transition: all .25s ease
       position: relative
-      margin-left: 12px
+      margin-right: 12px
       background: rgba(0,0,0,.03)
       &.active
         background: -color('black')

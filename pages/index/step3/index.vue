@@ -44,7 +44,7 @@
             </path>
           </g>
         </svg> -->
-        <img src="planeta.png" alt="">
+        <img src="/planeta.png" alt="">
       </div>
     </div>
     <p v-if="this.$route.query.animate">
@@ -151,6 +151,9 @@ export default class vefificated extends Vue {
   flex: 1
   &.animate
     .con-circle
+      img
+        transform: scale(.2)
+        opacity: 0
       .circle
         width: 550px
         height: 550px
@@ -253,8 +256,10 @@ export default class vefificated extends Vue {
           width: 30px
         img
           width: 45px
+
     img
       width: 140px
+      transition: all .5s ease
     .circle
       border-radius: 50%
       // border: 2px dashed -color('black', .3)

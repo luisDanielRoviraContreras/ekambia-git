@@ -15,7 +15,7 @@
 
       <template v-if="data && transferVisible2">
         <template v-if="data.accounts.length > 0">
-          <Select @change="handleChangeTransfer" :data="data.accounts" placeholder="Cuenta de destino" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
+          <Select @change="handleChangeTransfer" :data="data.accounts" placeholder="Cuenta de origen" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
             <template v-if="data">
               <Option :key="i" v-for="(option, i) in data.accounts" :value="option.id" :text="option.alias" />
             </template>
@@ -106,7 +106,8 @@ export default class transferStep2 extends Vue {
     this.$router.push({
       path: '/accounts/create',
       query: {
-        ...this.$route.query
+        ...this.$route.query,
+        step: '2'
       }
     })
   }
@@ -176,7 +177,7 @@ export default class transferStep2 extends Vue {
       const step1obj = JSON.parse(step1)
       if (step1obj.direction) {
         this.$dialog({
-          title: 'Quieres usar la misma dirección de recibida?',
+          title: 'Quieres usar la misma dirección de recibida?, para la entrega',
           success: () => {
             this.handleClickMap(step1obj.direction, null, false)
             this.handleNextStep()
@@ -186,6 +187,17 @@ export default class transferStep2 extends Vue {
     }
     if (val == 2) {
       this.sucursalVisible2 = true
+      const step1 = atob((this.$route.query as any).step1)
+      const step1obj = JSON.parse(step1)
+      if (step1obj.office) {
+        this.$dialog({
+          title: 'Quieres usar la misma sucursal de recibida? para la entrega',
+          success: () => {
+            this.form.office = step1obj.office
+            this.form.officeText = step1obj.officeText
+          }
+        })
+      }
     }
 
     this.form = {
@@ -213,6 +225,11 @@ export default class transferStep2 extends Vue {
     axios.get('/operation-create').then(({ data }) => {
       console.log(data)
       this.data = data.info
+      if (this.$route.query.transferActive) {
+        this.form.typeReceive = 1
+        this.transferVisible2 = true
+        this.form.typeReceiveText = 'Transferencia'
+      }
     }).catch((err) => {
       this.$notification({
         title: 'Oops! Algo salió mal',

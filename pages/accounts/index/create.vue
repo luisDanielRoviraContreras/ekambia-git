@@ -126,9 +126,10 @@ export default class create extends Vue {
           textSuccess: 'Volver',
           success: () => {
             this.$router.push({
-              path: `/steps/step${(this.$route.query.step as any) == 2 ? 2 : 1}`,
+              path: `/step1/step${(this.$route.query.step as any) == 2 ? 2 : 1}`,
               query: {
-                ...this.$route.query
+                ...this.$route.query,
+                transferActive: 'true'
               }
             })
           },
@@ -203,7 +204,6 @@ export default class create extends Vue {
 <style lang="sass" scoped>
 .page-enter-active, .page-leave-active
   transition: all .2s ease
-
 .create.page-enter
   transform: translate(100%) !important
   opacity: 1 !important
