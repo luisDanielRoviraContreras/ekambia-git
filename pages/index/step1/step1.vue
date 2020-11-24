@@ -55,7 +55,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
-@Component
+@Component({
+  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+})
 export default class transferStep1 extends Vue {
   data: any = null
   send: boolean = false
@@ -230,6 +232,7 @@ export default class transferStep1 extends Vue {
   justify-content: center
   flex-direction: column
   height: 100vh
+  height: calc(var(--vh, 1vh) * 100)
   footer
     width: 100%
     padding: 15px

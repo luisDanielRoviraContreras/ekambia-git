@@ -1,5 +1,11 @@
 <template>
   <div class="office">
+    <div class="checking" v-if="$route.query.checking">
+      <h3>Verificando Transferencia</h3>
+      <p>
+        Al verificar la transferencia ya podrás dirigirte a nuestra oficina para recibir el dinero
+      </p>
+    </div>
     <div v-show="stepx == 1" class="content-delivery con-map">
       <nav-bar absolute back @click="$router.push('/')" />
       <tracking from="honorio lozano 8, collado villalba, españa" to="rafael alberti 13, collado villalba, españa">
@@ -65,8 +71,8 @@ export default class office extends Vue {
   @Action('operations/getOperations') getOperations
 
   changeState() {
-    axios.post(`/step-in-update/${this.$route.query.id}`, {
-      step_in_id: 2
+    axios.post(`/step-out-update/${this.$route.query.id}`, {
+      step_out_id: 2
     }).then(({data}: any) => {
       this.stepx = 2
       this.getOperations()
@@ -93,7 +99,19 @@ export default class office extends Vue {
 }
 </script>
 <style lang="sass">
-
+.checking
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  z-index: 4000
+  background: -color(bg)
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  padding: 20px
 .office
   .con-map
     .navbar-mobile

@@ -304,6 +304,25 @@ export default class OperationsClass extends Vue {
           id: operation.id
         }
       })
+    } else if (operation.type_operation_ekambia_id == 2) {
+      if (operation.step_out_id == 2) {
+        this.$router.push({
+          path: '/step3/office/',
+          query: {
+            source: 'operations',
+            id: operation.id,
+            step: '2'
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/step3/office/',
+          query: {
+            source: 'operations',
+            id: operation.id
+          }
+        })
+      }
     }
   }
 
@@ -326,6 +345,15 @@ export default class OperationsClass extends Vue {
           id: operation.id
         }
       })
+    } else if (operation.type_operation_ekambia_id == 2) {
+      this.$router.push({
+        path: '/step3/office/',
+        query: {
+          source: 'operations',
+          id: operation.id,
+          checking: `${operation.status_operation_id == 2 && operation.type_operation_user_id == 1}`
+        }
+      })
     }
   }
 
@@ -341,13 +369,24 @@ export default class OperationsClass extends Vue {
         }
       })
     } else if (operation.type_operation_user_id == 2) {
-      this.$router.push({
-        path: '/step2/office/',
-        query: {
-          source: 'operations',
-          id: operation.id
-        }
-      })
+      if (operation.step_in_id == 2) {
+        this.$router.push({
+          path: '/step2/office/',
+          query: {
+            source: 'operations',
+            id: operation.id,
+            step: '2'
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/step2/office/',
+          query: {
+            source: 'operations',
+            id: operation.id
+          }
+        })
+      }
     } else if (operation.type_operation_user_id == 3) {
       if (operation.status_location_delivery_in_id == 2) {
         this.$router.push({

@@ -4,16 +4,13 @@
     <nav-bar not-padding back @click="$router.push('/')" />
     <div v-if="!transferred" class="con-data">
       <div class="card-texts">
-        <div class="texts">
+        <div v-if="data" class="texts">
           <div class="text">
             <span>
               Tu envías
             </span>
             <p v-if="data">
               {{ data.send }} {{ data.coin_send.coin }}
-            </p>
-            <p v-else>
-              ...
             </p>
           </div>
           <div class="text">
@@ -23,21 +20,17 @@
             <p v-if="data">
               {{ data.received }} {{ data.coin_received.coin }}
             </p>
-            <p v-else>
-              ...
-            </p>
           </div>
         </div>
+        <load v-else block height="67px" />
         <div class="textw">
           <span>
             Tipo de cambio utilizado
           </span>
-          <p>
-            12.123
+          <p v-if="data">
+            {{ data.exchange_type }}
           </p>
-          <!-- <p>
-            0.00
-          </p> -->
+          <load v-else width="60px" height="20px" />
         </div>
       </div>
 
@@ -191,6 +184,14 @@ export default class transfer extends Vue {
               ...this.$route.query
             }
           })
+        } else if (data.info.type_operation_ekambia_id == 2) {
+          this.$router.push({
+            path: '/step3/office',
+            query: {
+              ...this.$route.query,
+              checking: `${data.info.status_operation_id == 2 && data.info.type_operation_user_id == 1}`
+            }
+          })
         } else {
           this.$router.push({
             path: '/step3/',
@@ -252,10 +253,18 @@ export default class transfer extends Vue {
       width: 50%
       text-align: center
       padding: 15px 10px
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
   .textw
     width: 100%
     text-align: center
     padding: 10px
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
   span
     opacity: .5
     font-size: .8rem

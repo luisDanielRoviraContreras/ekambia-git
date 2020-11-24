@@ -30,6 +30,35 @@ export default class name extends Vue {
         console.log('data desde socket')
         console.log(data)
         console.log(status)
+        if (status == 3 && this.$route.name == 'index-step3-office') {
+          if (data.info.type_operation_user_id == 1) {
+            this.$router.push({
+              path: '/step3/office/',
+              query: {
+                id: response.id,
+              }
+            })
+          }
+        }
+
+        if (status == 3 && this.$route.name == 'index-step2-office') {
+          if (data.info.type_operation_ekambia_id == 3) {
+            this.$router.push({
+              path: '/step3/delivery/',
+              query: {
+                id: response.id,
+              }
+            })
+          } else if (data.info.type_operation_ekambia_id == 1) {
+            this.$router.push({
+              path: '/step3/',
+              query: {
+                id: response.id,
+              }
+            })
+          }
+        }
+
         if (status == 3 && this.$route.name == 'index-step2-delivery') {
           if (data.info.direction_in === data.info.direction_out) {
             this.$router.push({
@@ -85,6 +114,16 @@ export default class name extends Vue {
             })
           }
           if (this.$route.name == 'index-step3-delivery') {
+            this.$router.push({
+              path: '/step4'
+            })
+          }
+          if (this.$route.name == 'index-step2-office' && data.info.type_operation_ekambia_id == 2) {
+            this.$router.push({
+              path: '/step4'
+            })
+          }
+          if (this.$route.name == 'index-step3-office' && data.info.type_operation_ekambia_id == 2) {
             this.$router.push({
               path: '/step4'
             })
