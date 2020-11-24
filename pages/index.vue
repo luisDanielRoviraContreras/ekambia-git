@@ -17,6 +17,7 @@
       <load v-else />
       <div class="con-inputs mt-6">
         <div v-if="coins" class="input-select">
+            <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
           <c-input
             ref="send"
             v-model="form.send"
@@ -255,13 +256,14 @@ export default class name extends Vue {
   handleTeclado (val: any) {
     console.log(val)
     if (val !== 'back') {
-      this.form[this.focus] += `${val}`
+      this.form.send += `${val}`
     } else {
-      this.form[this.focus] = this.form[this.focus].slice(0, -1)
+      this.form.send = this.form.send.slice(0, -1)
     }
     if (this.focus) {
-      (this.$refs[this.focus] as any).$el.querySelector(`.${this.focus}`).focus()
+      (this.$refs.send as any).$el.querySelector(`.${this.focus}`).focus()
     }
+    this.handleFormSend(this.form.send)
   }
 
   handleClick (el: any) {
