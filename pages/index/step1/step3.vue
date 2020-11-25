@@ -146,10 +146,10 @@ export default class transferStep1 extends Vue {
       office_id_in: this.form.step2.office,
       office_id_out: this.form.step1.office,
       direction_in: this.form.step2.direction,
-      name_direction_in: this.form.step2.name_direction ? this.form.step1.name_direction : '',
+      name_direction_in: this.form.step2.name_direction ? this.form.step2.name_direction : '',
       save_direction_in: this.form.step2.save_direction ? 1 : 0,
       direction_out: this.form.step1.direction,
-      name_direction_out: this.form.step1.name_direction ? this.form.step2.name_direction : '',
+      name_direction_out: this.form.step1.name_direction ? this.form.step1.name_direction : '',
       save_direction_out: this.form.step1.save_direction ? 1 : 0
     }
 

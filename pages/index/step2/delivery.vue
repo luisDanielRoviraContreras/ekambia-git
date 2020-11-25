@@ -51,7 +51,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import QRCode from 'qrcode'
 import axios from '~/plugins/axios'
 import Echo from 'laravel-echo'
@@ -71,13 +71,19 @@ export default class delivery extends Vue {
   @Prop({}) title: any
   @Prop({}) text: any
 
+  @Watch('ll')
+  handleLl() {
+    axios.get(`user-show/${this.data.responsible_in_id}`).then((delivery: any) => {
+      this.delivery = delivery.data.info
+    })
+  }
+
   getOperation() {
     axios.get(`/operation-show/${this.$route.query.id}`).then(({data}: any) => {
       this.data = data.info
       console.log(data)
 
       axios.get(`user-show/${data.info.responsible_in_id}`).then((delivery: any) => {
-        console.log(delivery)
         this.delivery = delivery.data.info
       })
 

@@ -293,7 +293,8 @@ export default class OperationsClass extends Vue {
         path: '/step3/',
         query: {
           source: 'operations',
-          id: operation.id
+          id: operation.id,
+          verified: 'true'
         }
       })
     } else if (operation.type_operation_ekambia_id == 3) {
@@ -342,7 +343,8 @@ export default class OperationsClass extends Vue {
         path: '/step3/delivery/',
         query: {
           source: 'operations',
-          id: operation.id
+          id: operation.id,
+          checking: `${operation.status_operation_id == 2}`
         }
       })
     } else if (operation.type_operation_ekambia_id == 2) {

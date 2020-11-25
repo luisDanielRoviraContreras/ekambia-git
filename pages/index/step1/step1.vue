@@ -132,9 +132,19 @@ export default class transferStep1 extends Vue {
             title: 'Cual es el nombre de esta nueva dirección?',
             input: true,
             success: (val) => {
-              this.form.name_direction = val
-              this.form.save_direction = true
-              this.handleNextStep()
+              axios.post('/direction-store', {
+                name: val,
+                direction: this.form.direction
+              }).then(({ data }) => {
+                this.form.name_direction = val
+                this.form.save_direction = true
+                this.handleNextStep()
+              }).catch((err) => {
+                this.$notification({
+                  title: 'Oops! Algo salió mal',
+                  text: err.response.data.message.toString()
+                })
+              })
             }
           })
         },

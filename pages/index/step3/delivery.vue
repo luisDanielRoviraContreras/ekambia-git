@@ -1,6 +1,12 @@
 <template>
   <div class="delivery">
     <nav-bar absolute back @click="$router.push('/')" />
+    <div class="checking" v-if="$route.query.checking">
+      <h3>Verificando Transferencia</h3>
+      <p>
+        Al verificar la transferencia ya podrás dirigirte a nuestra oficina para recibir el dinero
+      </p>
+    </div>
     <div v-if="$route.query.qr" class="content-delivery">
       <header>
         <h2>
@@ -86,6 +92,19 @@ export default class delivery extends Vue {
 }
 </script>
 <style lang="sass">
+.checking
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  z-index: 4000
+  background: -color(bg)
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  padding: 20px
 .delivery
   .navbar-mobile
     padding-right: 10px

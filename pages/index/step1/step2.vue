@@ -197,6 +197,7 @@ export default class transferStep2 extends Vue {
           success: () => {
             this.form.office = step1obj.office
             this.form.officeText = step1obj.officeText
+            this.handleNextStep()
           }
         })
       }

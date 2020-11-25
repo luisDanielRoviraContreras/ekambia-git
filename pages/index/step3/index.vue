@@ -2,7 +2,8 @@
   <div
     class="vefificated"
     :class="{
-      animate: this.$route.query.animate
+      animate: this.$route.query.animate,
+      verified: this.$route.query.verified && !this.$route.query.animate,
     }"
   >
     <nav-bar back @click="$router.push('/')" />
@@ -10,10 +11,18 @@
       <div class="con-circle">
         <div class="con-send con-icon">
           <div class="icon">
-            <img src="/logo1.svg" alt="">
+            <img v-if="!this.$route.query.verified" src="/logo1.svg" alt="">
+            <i v-if="this.$route.query.verified" class='bx bx-check'></i>
           </div>
           <span v-if="data">
-            {{ data.send }} {{ data.coin_send.coin }}
+            <template >
+              {{ data.send }} {{ data.coin_send.coin }}
+            </template>
+            <template v-if="this.$route.query.verified && !this.$route.query.animate">
+              <b>
+                Verificada
+              </b>
+            </template>
           </span>
         </div>
         <div class="con-receive con-icon">
@@ -28,6 +37,11 @@
           </div>
           <span v-if="data">
             {{ data.received }} {{ data.coin_received.coin }}
+            <template v-if="this.$route.query.verified && !this.$route.query.animate">
+              <b>
+                Transfiriendo...
+              </b>
+            </template>
           </span>
         </div>
         <div class="circle">
@@ -44,11 +58,15 @@
             </path>
           </g>
         </svg> -->
-        <img src="/planeta.png" alt="">
+        <img v-if="this.$route.query.verified" src="/planeta2.png" alt="">
+        <img v-else src="/planeta.png" alt="">
       </div>
     </div>
     <p v-if="this.$route.query.animate">
-      Operación verificada con éxito, transferencia efectuada a su cuenta
+      <b>Operación verificada</b> con éxito, <b>transferencia efectuada</b> a su cuenta
+    </p>
+    <p v-else-if="this.$route.query.verified">
+      <b>Operación verificada</b> con éxito, transfiriendo a su cuenta bancaria
     </p>
     <p v-else>
       Se esta verificando la transacción espere un momento...
@@ -149,6 +167,10 @@ export default class vefificated extends Vue {
   justify-content: center
   flex-direction: column
   flex: 1
+  &.verified
+    .con-send
+      .icon
+        transform: scale(1.1)
   &.animate
     .con-circle
       img
@@ -219,6 +241,8 @@ export default class vefificated extends Vue {
       display: flex
       align-items: center
       justify-content: center
+      b
+        font-size: .7rem
       i
         font-size: 2.8rem
       &.con-send
@@ -252,6 +276,7 @@ export default class vefificated extends Vue {
         box-shadow: 0px 10px 20px 0px -color('color', .4)
         z-index: 110
         position: relative
+
         svg
           width: 30px
         img

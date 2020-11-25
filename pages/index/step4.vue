@@ -15,7 +15,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component
-export default class success extends Vue {}
+export default class success extends Vue {
+}
 </script>
 <style lang="sass" scoped>
 .page-enter-active, .page-leave-active

@@ -28,7 +28,7 @@
           >
             Yo tengo
           </c-input>
-          <Select :readonly="form.coinReceive !== 1" @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda que tienes" block v-model="form.coinSend" :danger="!form.coinSend && send">
+          <Select :readonly="form.coinReceive !== 1" @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinSend" :danger="!form.coinSend && send">
             <template v-if="form.coinReceive == 1">
               <Option v-show="option.id !== form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
             </template>
@@ -53,7 +53,7 @@
             Yo recibo
           </c-input>
             <!-- <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" /> -->
-          <Select :readonly="form.coinReceive == 1" child="coin" :data="coins" placeholder="Moneda que recibes" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
+          <Select :readonly="form.coinReceive == 1" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
             <template v-if="form.coinReceive !== 1">
               <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
             </template>

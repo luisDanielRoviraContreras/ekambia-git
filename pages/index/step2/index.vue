@@ -181,7 +181,8 @@ export default class transfer extends Vue {
           this.$router.push({
             path: '/step3/delivery',
             query: {
-              ...this.$route.query
+              ...this.$route.query,
+              checking: `${data.info.status_operation_id == 2 && data.info.type_operation_user_id == 1}`
             }
           })
         } else if (data.info.type_operation_ekambia_id == 2) {
