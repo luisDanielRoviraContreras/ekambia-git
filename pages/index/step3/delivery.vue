@@ -8,9 +8,9 @@
       </p>
     </div>
     <div v-if="$route.query.qr" class="content-delivery">
-      <header>
+      <header v-if="!btn">
         <h2>
-          {{ title }}
+          Código QR
         </h2>
       </header>
       <div class="con-qr">
@@ -20,13 +20,13 @@
             Verifica el dinero que el operador te entrega y si todo esta correcto dale al botón para mostrar el código QR
           </p>
           <Button @click="btn = false" block yellow >
-            Listo ! ya recibí el dinero
+            Listo ! Mostrar código QR
           </Button>
         </div>
       </div>
-      <footer>
-        <p>
-          {{ text }}
+      <footer v-if="!btn">
+        <p v-if="data">
+          Muestra este código a tu operador al recibir <b>{{ data.received }} {{ data.coin_received.coin }}</b>
         </p>
       </footer>
     </div>
@@ -139,6 +139,11 @@ export default class delivery extends Vue {
   align-items: center
   justify-content: center
   flex-direction: column
+  padding-top: 60px
+  h2
+    text-align: center
+  p
+    text-align: center
 .delivery
   width: 100%
   height: auto

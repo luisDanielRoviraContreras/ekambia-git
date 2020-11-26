@@ -4,11 +4,11 @@
 
     <div class="content-step">
       <h3 class="mt-6">
-        Seleccione como quiere pagar
+        Seleccione cómo quiere entregar
       </h3>
 
       <template v-if="data && typesOperation">
-        <Select child="name" class="mt-6" @change="handleChangeRecibe" :data="typesOperation" placeholder="Como pagar" v-model="form.typeReceive" block>
+        <Select child="name" class="mt-6" @change="handleChangeRecibe" :data="typesOperation" placeholder="Cómo entregar" v-model="form.typeReceive" block>
           <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
         </Select>
       </template>
@@ -139,7 +139,7 @@ export default class transferStep2 extends Vue {
         title: 'Quieres guardar esta dirección?',
         success: () => {
           this.$dialog({
-            title: 'Cual es el nombre de esta nueva dirección?',
+            title: '¿Cuál es el nombre de esta nueva dirección?',
             input: true,
             success: (val) => {
               this.form.name_direction = val

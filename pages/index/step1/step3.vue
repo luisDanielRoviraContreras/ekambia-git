@@ -11,7 +11,7 @@
         <div class="texts">
           <div class="text">
             <span>
-              Tu envías
+              Tú envías
             </span>
             <p v-if="data">
               {{ getSend }} {{ coinSend[0].coin }}
@@ -19,7 +19,7 @@
           </div>
           <div class="text">
             <span>
-              Tu recibes
+              Tú recibes
             </span>
             <p v-if="data">
               {{ getReceive }} {{ coinReceive[0].coin }}

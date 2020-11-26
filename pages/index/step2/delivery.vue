@@ -4,7 +4,7 @@
     <div v-if="$route.query.qr" class="content-delivery">
       <header>
         <h2>
-          {{ title }}
+          Código QR
         </h2>
       </header>
       <div class="con-qr">
@@ -12,7 +12,7 @@
       </div>
       <footer>
         <p>
-          {{ text }}
+          Muestra este código a tu operador al entregarle <b>{{ data.send }} {{ data.coin_send.coin }}</b>
         </p>
       </footer>
     </div>
@@ -203,6 +203,11 @@ export default class delivery extends Vue {
   align-items: center
   justify-content: center
   flex-direction: column
+  padding-top: 60px
+  h2
+    text-align: center
+  p
+    text-align: center
 .delivery
   width: 100%
   height: auto

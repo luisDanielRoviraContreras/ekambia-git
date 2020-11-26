@@ -91,36 +91,34 @@
         Agregar comprobante
       </h2>
       <div class="con">
-        <input-file :danger="!form.ref && !form.file && send" :disabled="!!form.ref" v-model="form.file">
-          Comprobante transferencia bancaria
-
-          <template #text>
-            Tome o suba <br> imagen de comprobante
-          </template>
-        </input-file>
-        <Alert :open="!form.ref && !form.file && send">
-          Este campo es requerido
-        </Alert>
-        <divider>
-          O
-        </divider>
         <c-input
           v-model="form.ref"
           class="mt-6"
           type="number"
           gray
-          :disabled="!!form.file"
-          :danger="!form.ref && !form.file && send"
+          :danger="!form.ref && send"
           maxlength="20"
         >
-          Nro. de referencia
+          Nro. de referencia (Obligatorio)
         </c-input>
-        <Alert :open="!form.ref && !form.file && send">
+        <Alert :open="!form.ref && send">
           Este campo es requerido
         </Alert>
+
+        <input-file v-model="form.file">
+          Comprobante transferencia (Opcional)
+
+          <template #text>
+            Tome o suba <br> imagen de comprobante
+          </template>
+        </input-file>
+
         <Button :loading="loading" @click="handleSend" class="mt-6" block yellow>
           Verificar
         </Button>
+        <p>
+          Con esta información vamos a verificar que la transferencia fue efectuada exitosamente en nuestra cuenta bancaria
+        </p>
       </div>
     </div>
   </div>
@@ -158,7 +156,7 @@ export default class transfer extends Vue {
 
   handleSend() {
     this.send = true
-    if (!this.form.file && !this.form.ref) {
+    if (!this.form.ref) {
       return
     }
     this.loading = true
@@ -225,6 +223,13 @@ export default class transfer extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.boucher
+  p
+    font-size: .8rem
+    padding: 10px
+    margin-top: 15px
+    opacity: .7
+    text-align: center
 .con-text
   p
     font-size: .8rem

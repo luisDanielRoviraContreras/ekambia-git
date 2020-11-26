@@ -4,11 +4,11 @@
 
     <div class="content-step">
       <h3 class="mt-6">
-        Seleccione como quiere recibir el dinero
+        Seleccione cómo quiere recibir el dinero
       </h3>
 
       <template v-if="data && typesOperation">
-        <Select child="name" class="mt-6" @change="handleChangeRecibe" :data="typesOperation" placeholder="Como quiero recibirlo" v-model="form.typeReceive" block>
+        <Select child="name" class="mt-6" @change="handleChangeRecibe" :data="typesOperation" placeholder="Cómo quiero recibirlo" v-model="form.typeReceive" block>
           <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
         </Select>
       </template>
@@ -129,22 +129,25 @@ export default class transferStep1 extends Vue {
         title: 'Quieres guardar esta dirección?',
         success: () => {
           this.$dialog({
-            title: 'Cual es el nombre de esta nueva dirección?',
+            title: '¿Cuál es el nombre de esta nueva dirección?',
             input: true,
             success: (val) => {
-              axios.post('/direction-store', {
-                name: val,
-                direction: this.form.direction
-              }).then(({ data }) => {
-                this.form.name_direction = val
-                this.form.save_direction = true
-                this.handleNextStep()
-              }).catch((err) => {
-                this.$notification({
-                  title: 'Oops! Algo salió mal',
-                  text: err.response.data.message.toString()
-                })
-              })
+              this.form.name_direction = val
+              this.form.save_direction = true
+              this.handleNextStep()
+              // axios.post('/direction-store', {
+              //   name: val,
+              //   direction: this.form.direction
+              // }).then(({ data }) => {
+              //   this.form.name_direction = val
+              //   this.form.save_direction = true
+              //   this.handleNextStep()
+              // }).catch((err) => {
+              //   this.$notification({
+              //     title: 'Oops! Algo salió mal',
+              //     text: err.response.data.message.toString()
+              //   })
+              // })
             }
           })
         },

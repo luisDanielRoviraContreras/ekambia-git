@@ -89,7 +89,7 @@ export default class name extends Vue {
                 btn: 'true'
               }
             })
-          } else if (this.$route.name == 'index-step2-delivery' && data.info.type_operation_ekambia_id == 1) {
+          } else if (data.info.type_operation_ekambia_id == 1) {
             this.$router.push({
               path: '/step3/',
               query: {
@@ -97,7 +97,7 @@ export default class name extends Vue {
                 verified: 'true'
               }
             })
-          } else if (this.$route.name == 'index-step2-delivery' && data.info.type_operation_ekambia_id == 2) {
+          } else if (data.info.type_operation_ekambia_id == 2) {
             this.$router.push({
               path: '/step3/office/',
               query: {
@@ -107,6 +107,13 @@ export default class name extends Vue {
           } else if (data.info.type_operation_ekambia_id == 1) {
             this.$router.push({
               path: '/step3/',
+              query: {
+                id: response.id,
+              }
+            })
+          } else if (data.info.type_operation_ekambia_id == 3) {
+            this.$router.push({
+              path: '/step3/delivery',
               query: {
                 id: response.id,
               }
