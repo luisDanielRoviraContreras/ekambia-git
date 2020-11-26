@@ -187,7 +187,7 @@ export default class Select extends Vue {
       transition: all .25s ease
       box-shadow: 0px 10px 30px 0px rgba(0,0,0,.04)
       .option
-        padding: 10px
+        padding: 19px 10px
         padding-left: 35px
     ul
       max-height: 300px

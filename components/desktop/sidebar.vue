@@ -15,7 +15,12 @@
         </svg>
         Inicio
       </nuxt-link>
-      <nuxt-link tag="li" to="/operations">
+      <li @click="$router.push({
+      path: '/',
+      query: {
+        operations: 'true'
+      }
+    })" :class="{'nuxt-link-active': this.$route.name === 'index' && this.$route.query.operations}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.156 25.518">
           <g id="Grupo_2850" data-name="Grupo 2850" transform="translate(-237.844 -816.256)">
             <path id="Combined-Shape" d="M34,18h6a2,2,0,0,1,0,4H34a2,2,0,0,1,0-4Zm-4,8H40a2,2,0,0,1,0,4H30a2,2,0,0,1,0-4Zm0,8H40a2,2,0,0,1,0,4H30a2,2,0,0,1,0-4Z" transform="translate(232 803.774)" fill-rule="evenodd" opacity="0.3"/>
@@ -24,8 +29,8 @@
             </g>
           </g>
         </svg>
-          Operaciones
-        </nuxt-link>
+        Operaciones
+      </li>
       <nuxt-link tag="li" to="/accounts">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 25">
           <g id="Grupo_2254" data-name="Grupo 2254" transform="translate(-196 -819)">

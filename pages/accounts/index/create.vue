@@ -240,6 +240,10 @@ export default class create extends Vue {
     display: flex
     align-items: flex-start
     justify-content: center
+    footer
+      justify-content: space-between
+      .button
+        width: calc(50% - 5px)
     .con-create-account
       max-width: 500px
       width: 100%

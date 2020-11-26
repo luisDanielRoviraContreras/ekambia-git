@@ -1,5 +1,6 @@
 <template>
   <div class="default-app">
+    <websocket />
     <desktop-nav />
     <sidebar />
     <Nuxt keep-alive :keep-alive-props="{ exclude: ['index'] }" />

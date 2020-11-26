@@ -288,5 +288,8 @@ export default class name extends Vue {
     align-items: center
     justify-content: flex-start
     flex-direction: column
+    .con-infos
+      width: 100%
+      max-width: 550px
 
 </style>

@@ -300,4 +300,12 @@ export default class transfer extends Vue {
     text-align: center
     padding: 10px 0px
     margin-top: 10px
+
+@media (min-width: 812px)
+  .con-data
+    max-width: 500px
+    margin: 0px auto
+  .boucher
+    max-width: 500px
+    margin: 0px auto
 </style>

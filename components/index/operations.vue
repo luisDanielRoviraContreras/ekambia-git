@@ -92,10 +92,10 @@
         </template>
 
         <template v-else>
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
         </template>
       </div>
       <div class="parent-info-1 parent-info">
@@ -145,9 +145,9 @@
           </div>
         </template>
         <template v-else>
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
         </template>
       </div>
       <div class="parent-info-3 parent-info">
@@ -199,11 +199,11 @@
         </template>
 
         <template v-else>
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
         </template>
       </div>
       <div class="parent-info-4 parent-info">
@@ -253,10 +253,10 @@
         </template>
 
         <template v-else>
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
-          <load height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
+          <load block height="61px" style="margin-bottom: 10px" />
         </template>
       </div>
     </div>
@@ -328,7 +328,6 @@ export default class OperationsClass extends Vue {
   }
 
   handleClickOperation(operation) {
-    console.log(operation)
     this.setStepData(operation)
     if (operation.type_operation_ekambia_id == 1) {
       this.$router.push({
@@ -360,7 +359,6 @@ export default class OperationsClass extends Vue {
   }
 
   handleClickOperationPay(operation) {
-    console.log(operation)
     this.setStepData(operation)
     if (operation.type_operation_user_id == 1) {
       this.$router.push({
@@ -454,6 +452,7 @@ export default class OperationsClass extends Vue {
   }
 
   handleClickBtn (left: number) {
+    this.windowInnerWidth = (this.$refs.infos as any).offsetWidth
     const infos: any = this.$refs.infos
     const btns: any = this.$refs.btns
     btns.classList.add('scroll')
@@ -464,7 +463,9 @@ export default class OperationsClass extends Vue {
   }
 
   mounted () {
-    this.windowInnerWidth = window.innerWidth
+    setTimeout(() => {
+      this.windowInnerWidth = (this.$refs.infos as any).offsetWidth
+    }, 300);
 
     const infos: any = this.$refs.infos
     infos.addEventListener('scroll', (evt) => {
@@ -526,6 +527,10 @@ export default class OperationsClass extends Vue {
       background: -color('bg')
       border-radius: 20px
       margin-bottom: 10px
+      cursor: pointer
+      transition: all .25s ease
+      &:hover
+        background: -color(gray)
       .data
         padding: 14px 10px
         font-size: .8rem
@@ -637,4 +642,26 @@ export default class OperationsClass extends Vue {
   .con-btns
     button
       min-width: 35%
+@media (min-width: 812px)
+  .operations
+    padding-bottom: 0px
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    header
+      width: 100%
+    .con-infos
+      max-width: 850px
+      width: 100%
+      height: calc(80vh - 114px)
+      .parent-info
+        padding-bottom: 20px
+        width: 100%
+    .con-btns
+      max-width: 850px
+      margin: 0px auto
+      button
+        width: 25%
+        cursor: pointer
 </style>

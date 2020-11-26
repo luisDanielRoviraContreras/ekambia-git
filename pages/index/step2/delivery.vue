@@ -10,7 +10,7 @@
       <div class="con-qr">
         <img :src="qr" alt="">
       </div>
-      <footer>
+      <footer v-if="data">
         <p>
           Muestra este código a tu operador al entregarle <b>{{ data.send }} {{ data.coin_send.coin }}</b>
         </p>

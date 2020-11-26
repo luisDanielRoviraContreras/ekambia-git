@@ -132,6 +132,7 @@ export default class vefificated extends Vue {
   opacity: 0
   transition: all .5s ease
   visibility: hidden
+  max-width: 500px
   &.active
     visibility: visible
     opacity: 1

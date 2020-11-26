@@ -70,7 +70,7 @@
     </div>
 
     <nuxt-child />
-    <operations v-if="$device.isMobile" :scroll-top="scrollTop" ref="operations" @click="handleClick" />
+    <operations :scroll-top="scrollTop" ref="operations" @click="handleClick" />
     <transition name="fade-teclado">
       <teclado v-if="focus && $device.isMobile && !$device.isIos" @click="handleTeclado" />
     </transition>
@@ -175,7 +175,6 @@ export default class name extends Vue {
       return
     }
     if (this.$route.query.operations) {
-      console.log('paso')
       const page: any = document.querySelector('.index.page')
       const operations: any = page.querySelector('#operations')
       page.scrollTo(0, operations.scrollHeight)
@@ -208,6 +207,7 @@ export default class name extends Vue {
 
   handleScroll() {
     const el: any = this.$el
+
     el.addEventListener('scroll', () => {
       if (el.scrollTop === 0) {
         this.$router.push('/')
@@ -254,7 +254,6 @@ export default class name extends Vue {
   }
 
   handleTeclado (val: any) {
-    console.log(val)
     if (val !== 'back') {
       this.form.send += `${val}`
     } else {
@@ -321,6 +320,7 @@ export default class name extends Vue {
     width: 100%
     padding: 20px 20px
     position: relative
+    height: calc(100vh - 175px)
     height: calc(var(--vh, 1vh) * 100 - 175px)
     scroll-snap-align: center
     background: #fff
@@ -385,8 +385,8 @@ export default class name extends Vue {
         display: none
 @media (min-width: 812px)
   .index
-    display: flex
-    align-items: center
-    justify-content: center
-    flex-direction: column
+    scroll-snap-type: none
+    .con-change
+      margin: auto
+      min-height: calc(100vh - 62px)
 </style>

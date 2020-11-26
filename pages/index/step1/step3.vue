@@ -1,6 +1,6 @@
 <template>
-  <div class="transfer-step1">
-    <nav-bar back @click="handleBack" />
+  <div class="transfer-step1 transfer-step">
+    <nav-bar :absolute="$device.isDesktop" back @click="handleBack" />
 
     <div class="content-step">
       <h2 class="mt-6">

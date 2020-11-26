@@ -2,7 +2,6 @@
   <div ref="accounts" class="accounts page">
     <nav-bar v-if="$device.isMobile" absolute />
     <button
-      v-if="$device.isMobile"
       @click="handleCreateAccount"
       class="btn-plus">
       <i class='bx bx-plus' ></i>
@@ -165,11 +164,26 @@ export default class accountsBank extends Vue {
     display: flex
     align-items: flex-start
     justify-content: center
+    background: -color(gray)
+    .button
+      max-width: 500px
+      margin: 0px auto
+      margin-top: 30px
+    .btn-plus
+      bottom: 20px
     .con-accounts
       min-width: auto
-      max-width: 550px
       padding: 20px 60px
       padding-bottom: 20px
+      display: flex
+      align-items: flex-start
+      flex-wrap: wrap
+      justify-content: flex-start
+      background: -color(gray)
+      max-width: 1000px
+      .account-card
+        width: calc(50% - 40px)
+        margin: 20px
     .con-create-account
       position: absolute
       left: 0px

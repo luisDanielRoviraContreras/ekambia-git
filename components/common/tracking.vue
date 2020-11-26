@@ -466,5 +466,9 @@ export default class GoogleMap extends Vue {
     display: none !important
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .con-google-maps
+    flex-direction: row
+    .con-text
+      max-width: 500px
 </style>

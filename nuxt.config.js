@@ -38,7 +38,6 @@ export default {
     '@nuxtjs/tailwindcss'
   ],
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',

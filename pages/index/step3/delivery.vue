@@ -171,5 +171,12 @@ export default class delivery extends Vue {
       border-radius: 40px
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .checking
+    p
+      max-width: 500px
+  .con-btn
+    max-width: 500px
+    p
+      margin-top: 0px
 </style>

@@ -4,14 +4,174 @@
     <GmapMap
       :center="center"
       :options="{
-        zoomControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false,
-        disableDefaultUi: false
-      }"
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          disableDefaultUi: false,
+          styles: [
+            {
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#f5f5f5'
+                }
+              ]
+            },
+            {
+              'elementType': 'labels.icon',
+              'stylers': [
+                {
+                  'visibility': 'off'
+                }
+              ]
+            },
+            {
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#616161'
+                }
+              ]
+            },
+            {
+              'elementType': 'labels.text.stroke',
+              'stylers': [
+                {
+                  'color': '#f5f5f5'
+                }
+              ]
+            },
+            {
+              'featureType': 'administrative.land_parcel',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#bdbdbd'
+                }
+              ]
+            },
+            {
+              'featureType': 'poi',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#eeeeee'
+                }
+              ]
+            },
+            {
+              'featureType': 'poi',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#757575'
+                }
+              ]
+            },
+            {
+              'featureType': 'poi.park',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#e5e5e5'
+                }
+              ]
+            },
+            {
+              'featureType': 'poi.park',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#9e9e9e'
+                }
+              ]
+            },
+            {
+              'featureType': 'road',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#ffffff'
+                }
+              ]
+            },
+            {
+              'featureType': 'road.arterial',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#757575'
+                }
+              ]
+            },
+            {
+              'featureType': 'road.highway',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#dadada'
+                }
+              ]
+            },
+            {
+              'featureType': 'road.highway',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#616161'
+                }
+              ]
+            },
+            {
+              'featureType': 'road.local',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#9e9e9e'
+                }
+              ]
+            },
+            {
+              'featureType': 'transit.line',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#e5e5e5'
+                }
+              ]
+            },
+            {
+              'featureType': 'transit.station',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#eeeeee'
+                }
+              ]
+            },
+            {
+              'featureType': 'water',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#c9c9c9'
+                }
+              ]
+            },
+            {
+              'featureType': 'water',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#9e9e9e'
+                }
+              ]
+            }
+          ]
+        }"
       :zoom="15"
       map-type-id="roadmap"
       style="width: 100%; height: 100%"
@@ -313,5 +473,19 @@ export default class GoogleMap extends Vue {
     display: none !important
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .con-google-maps
+    flex-direction: row
+  .con-info
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    max-width: 500px
+    .con-directions
+      width: 100%
+      max-width: 500px
+    .con-adress
+      width: 100%
+      max-width: 500px
 </style>
