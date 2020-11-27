@@ -6,7 +6,7 @@
       verified: this.$route.query.verified && !this.$route.query.animate,
     }"
   >
-    <nav-bar back @click="$router.push('/')" />
+    <nav-bar back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div ref="con" class="con">
       <div class="con-circle">
         <div class="con-send con-icon">
@@ -73,7 +73,7 @@
     </p>
 
     <div :class="{active: this.$route.query.animate}" class="con-btn-success">
-      <Button @click="$router.push('/')" block yellow>
+      <Button @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" block yellow>
         Aceptar
       </Button>
     </div>

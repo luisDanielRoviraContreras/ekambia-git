@@ -61,7 +61,7 @@
         </ul>
         <ul>
           <li>
-            <b>Pagar</b>: {{ form.step2.typeReceiveText }}
+            <b>Entregar</b>: {{ form.step2.typeReceiveText }}
           </li>
           <li v-if="form.step2.typeReceive == 1">
             <b>Cuenta bancaria</b>: {{ form.step2.destination_account_id__text }}

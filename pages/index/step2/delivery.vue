@@ -1,6 +1,6 @@
 <template>
   <div class="delivery">
-    <nav-bar absolute back @click="$router.push('/')" />
+    <nav-bar absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div v-if="$route.query.qr" class="content-delivery">
       <header>
         <h2>

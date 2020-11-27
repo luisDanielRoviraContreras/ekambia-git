@@ -257,6 +257,8 @@ export default class Select extends Vue {
       color: rgba(255,54,95, 1) !important
       border-radius: 24px 24px 0px 0px
       border: 2px solid rgba(255,54,95, .2) !important
+      &::placeholder
+        color: rgba(255,54,95, 1) !important
     i
       color: rgba(255,54,95, 1) !important
   &.block

@@ -1,6 +1,6 @@
 <template>
   <div class="transfer-step1 transfer-step">
-    <nav-bar :absolute="$device.isDesktop" back @click="$router.push('/')" />
+    <nav-bar :absolute="$device.isDesktop" back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
 
     <div class="content-step">
       <h3 class="mt-6">

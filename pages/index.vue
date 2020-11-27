@@ -211,7 +211,7 @@ export default class name extends Vue {
     el.addEventListener('scroll', () => {
       if (el.scrollTop === 0) {
         this.$router.push('/')
-      } else if (el.scrollTop + window.innerHeight / 5 >= el.scrollHeight - (this.$refs.operations as any).$el.scrollHeight) {
+      } else if (el.scrollTop + window.innerHeight >= el.scrollHeight) {
         this.$router.push({
           path: '/',
           query: {
@@ -338,7 +338,6 @@ export default class name extends Vue {
       min-height: 193px
       img
         max-width: 230px
-        transition: all .25s ease
 .con-inputs
   position: relative
   width: 100%
