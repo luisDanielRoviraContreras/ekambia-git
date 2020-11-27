@@ -38,7 +38,7 @@
             <path id="Path" d="M21.389,0H.611A.618.618,0,0,0,0,.625v1.25A.618.618,0,0,0,.611,2.5H21.389A.618.618,0,0,0,22,1.875V.625A.618.618,0,0,0,21.389,0Z" transform="translate(196 841.5)" opacity="0.3"/>
           </g>
         </svg>
-        Accounts</nuxt-link>
+        Cuentas</nuxt-link>
       <nuxt-link tag="li" to="/user">
         <svg id="iuser" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.998 23">
           <g id="Grupo_2255" data-name="Grupo 2255" transform="translate(-326.001 -821)">

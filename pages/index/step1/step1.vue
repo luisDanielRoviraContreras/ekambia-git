@@ -126,7 +126,9 @@ export default class transferStep1 extends Vue {
 
     if (isNew) {
       this.$dialog({
-        title: 'Quieres guardar esta dirección?',
+        title: '¿Quieres guardar esta dirección?',
+        successText: 'Sí',
+        cancelText: 'No',
         success: () => {
           this.$dialog({
             title: '¿Cuál es el nombre de esta nueva dirección?',
@@ -135,19 +137,6 @@ export default class transferStep1 extends Vue {
               this.form.name_direction = val
               this.form.save_direction = true
               this.handleNextStep()
-              // axios.post('/direction-store', {
-              //   name: val,
-              //   direction: this.form.direction
-              // }).then(({ data }) => {
-              //   this.form.name_direction = val
-              //   this.form.save_direction = true
-              //   this.handleNextStep()
-              // }).catch((err) => {
-              //   this.$notification({
-              //     title: 'Oops! Algo salió mal',
-              //     text: err.response.data.message.toString()
-              //   })
-              // })
             }
           })
         },

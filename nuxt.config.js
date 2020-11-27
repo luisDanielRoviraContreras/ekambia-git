@@ -15,7 +15,7 @@ export default {
     title: 'Ekambia',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1,user-scalable=no' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1,user-scalable=no, viewport-fit=cover' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
@@ -48,14 +48,22 @@ export default {
   },
 
   pwa: {
+    meta: {
+      mobileAppIOS: true,
+      appleStatusBarStyle: 'black-translucent',
+      nativeUI: true
+    },
+    icon: {
+      source: '/static/icon-app.png'
+    },
     manifest: {
       name: 'Ekambia',
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
-      description: 'Ekambia',
+      theme_color: '#fedc00',
+      background_color: '#fedc00',
+      description: 'Con Ekambia cambiar dinero nunca fue tan fácil',
       lang: 'es',
       display: 'standalone',
-      crossorigin: 'use-credentials'
+      crossorigin: 'use-credentials',
     }
   },
   axios: {},

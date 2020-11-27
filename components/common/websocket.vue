@@ -134,8 +134,8 @@ export default class name extends Vue {
             })
           } else if (data.info.type_operation_ekambia_id == 1) {
             this.$notification({
-              title: 'Operación Verificada',
-              text: `Su operación de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> a sido verificada y se efectuó la transferencia a su cuenta`,
+              title: 'Transferencia Verificada',
+              text: `Operación Finalizada. Su operación de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ha sido verificada y se le ha efectuado la transferencia a la cuenta receptora.`,
               time: 7000,
               click: () => {
                 this.$router.push({

@@ -380,8 +380,7 @@ export default class name extends Vue {
 @media (max-height: 700px)
   .con-change
     .con-img
-      img
-        display: none
+      display: none
 @media (min-width: 812px)
   .index
     scroll-snap-type: none

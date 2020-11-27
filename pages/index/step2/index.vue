@@ -42,7 +42,7 @@
 
       <div v-if="!account" class="con-text">
         <p>
-          Selecciona la cuenta de ekambia a donde quieres transferir para mostrarte los datos bancarios
+          Selecciona la cuenta de ekambia a la que deseas transferir para mostrarte los datos bancarios
         </p>
       </div>
 
@@ -167,6 +167,8 @@ export default class transfer extends Vue {
     if (this.form.ref) {
       formData.append('num_reference', this.form.ref)
     }
+    console.log(this.form)
+    console.log(formData)
     axios.post(`/operation-voucherupdate/${this.$route.query.id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'

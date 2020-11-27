@@ -179,7 +179,7 @@ export default class transferStep2 extends Vue {
       const step1obj = JSON.parse(step1)
       if (step1obj.direction) {
         this.$dialog({
-          title: 'Quieres usar la misma dirección de recibida?, para la entrega',
+          title: '¿Usar la misma dirección asignada para recibir?',
           success: () => {
             this.handleClickMap(step1obj.direction, null, false)
             this.handleNextStep()
@@ -193,7 +193,7 @@ export default class transferStep2 extends Vue {
       const step1obj = JSON.parse(step1)
       if (step1obj.office) {
         this.$dialog({
-          title: 'Quieres usar la misma sucursal de recibida? para la entrega',
+          title: '¿Usar la misma oficina seleccionada para recibir?',
           success: () => {
             this.form.office = step1obj.office
             this.form.officeText = step1obj.officeText

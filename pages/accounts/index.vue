@@ -21,7 +21,7 @@
           :lastNumber="account.account_number"
           :currency="account.coin.coin"
           :account="account"
-          ownAccount="si"
+          ownAccount="sí"
           :animate="i == 0"
           />
         <div v-if="accounts.length == 0" class="not-found mt-6">
