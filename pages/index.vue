@@ -22,6 +22,7 @@
             ref="send"
             v-model="form.send"
             :inputmode="$device.isIos ? 'numeric' : 'none'"
+            type="number"
             identificador="send"
             @focus="inputFocus"
             @change-value="handleFormSend"
@@ -295,6 +296,8 @@ export default class name extends Vue {
       input
         border: 2px solid rgba(226, 231, 236, .5)
   .con-input
+    position: relative
+    z-index: 10
     .bg
       // border-radius: 24px 0px 0px 24px !important
       // border-right: 0px !important
@@ -302,7 +305,7 @@ export default class name extends Vue {
     max-width: 140px
     position: absolute !important
     right: 0px
-    z-index: 10
+    z-index: 15
     i
       right: 15px !important
     input

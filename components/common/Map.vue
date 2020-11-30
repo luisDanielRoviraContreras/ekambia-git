@@ -24,7 +24,7 @@
               'elementType': 'labels.icon',
               'stylers': [
                 {
-                  'visibility': 'off'
+                  'visibility': 'off',
                 }
               ]
             },
@@ -182,10 +182,10 @@
         :key="index"
         :position="m.position"
         :clickable="true"
-
         :draggable="true"
         @click="center=m.position, positionx = center"
         @dragend="dragend"
+        :icon="{ url: '/pin.png'}"
       />
     </GmapMap>
 

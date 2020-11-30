@@ -187,7 +187,7 @@ export default class createAccount extends Vue {
   display: flex
   flex-direction: column
   .button
-    max-width: 400px
+    max-width: 450px
   h2
     font-weight: 500
     text-align: center
@@ -199,7 +199,7 @@ export default class createAccount extends Vue {
   // flex-direction: column
   flex: 1
   width: 100%
-  max-width: 460px
+  max-width: 450px
   // max-height: calc(100vh - 110px)
   // overflow: auto
   // padding-bottom: 50px

@@ -8,11 +8,11 @@
       </h2>
       <header>
         <p>
-          Agrega tu número de teléfono. Le enviaremos un código de verificación de 4 dígitos.
+          Agrega tu número de teléfono con el prefijo de tu país  <b>Ejemplo: (+59512345678)</b>. Le enviaremos un código de verificación de 4 dígitos.
         </p>
       </header>
 
-      <c-input :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
+      <c-input type="number" :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
         Número de teléfono
       </c-input>
       <Alert :open="!validateNumber && send">

@@ -5,6 +5,9 @@
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd"
   >
+    <header>
+      <img src="/ekambia_logo.svg" alt="">
+    </header>
     <div
       ref="slides"
       class="con-illustrations"
@@ -13,7 +16,7 @@
       <div
         class="illus-1 illus"
       >
-        <img src="/Ilustration_01.svg" alt="">
+        <img src="/illus/01.svg" alt="">
 
         <div class="text-1 text">
           <h2>Cotiza tu operación</h2>
@@ -23,7 +26,7 @@
         </div>
       </div>
       <div class="illus-2 illus">
-        <img src="/Ilustration_02.svg" alt="">
+        <img src="/illus/03.svg" alt="">
 
         <div class="text-2 text">
           <h2>Ahorra con cada intercambio</h2>
@@ -33,12 +36,22 @@
         </div>
       </div>
       <div class="illus-3 illus">
-        <img src="/Ilustration_03.svg" alt="">
+        <img src="/illus/02.svg" alt="">
 
         <div class="text-3 text">
           <h2>Simple y poderoso</h2>
           <p>
             Simplicidad para ti, déjanos lo complejo a nosotros.
+          </p>
+        </div>
+      </div>
+      <div class="illus-4 illus">
+        <img src="/illus/04.svg" alt="">
+
+        <div class="text-3 text">
+          <h2>Donde tu decidas</h2>
+          <p>
+            No necesitas ir a la oficina a recoger o entregar el dinero, ahora te lo llevamos hasta tu casa
           </p>
         </div>
       </div>
@@ -76,7 +89,8 @@
         class="steps-btns">
         <span :class="{ active: scrollLeft < windowInnerWidth - windowInnerWidth / 2 }" />
         <span :class="{ active : scrollLeft < windowInnerWidth * 2 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth - windowInnerWidth / 2 }" />
-        <span :class="{ active : scrollLeft < windowInnerWidth * 3 - 20 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }" />
+        <span :class="{ active : scrollLeft < windowInnerWidth * 3 - windowInnerWidth / 2 && scrollLeft > windowInnerWidth * 2 - windowInnerWidth / 2 }" />
+        <span :class="{ active : scrollLeft < windowInnerWidth * 4 - 20 && scrollLeft > windowInnerWidth * 3 - windowInnerWidth / 2 }" />
       </div>
 
       <footer>
@@ -217,6 +231,18 @@ export default class New extends Vue {
   justify-content: center
   flex-direction: column
   overflow: hidden
+  header
+    padding: 10px
+    position: absolute
+    top: 0px
+    left: 0px
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    z-index: 200
+    img
+      width: 150px
   .circle
     width: 0px
     height: 0px
@@ -249,6 +275,11 @@ export default class New extends Vue {
       justify-content: center
       flex-direction: column
       z-index: 20
+      &.illus-4
+        overflow: hidden
+        img
+          min-width: 520px
+          transform: translate(100px)
       img
         width: calc(100% - 80px)
         pointer-events: none

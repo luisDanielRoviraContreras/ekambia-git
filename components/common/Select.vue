@@ -99,7 +99,7 @@ export default class Select extends Vue {
     setTimeout(() => {
       this.active = false
       this.click = false
-    }, 200)
+    }, this.$device.isDesktop ? 0 : 200)
   }
 
 
@@ -184,11 +184,13 @@ export default class Select extends Vue {
       z-index: 20
       padding: 10px
       transform-origin: top
-      transition: all .25s ease
+      transition: all .15s ease
       box-shadow: 0px 10px 30px 0px rgba(0,0,0,.04)
       .option
         padding: 19px 10px
         padding-left: 35px
+        i
+          transition: all 0s ease
     ul
       max-height: 300px
       overflow: auto

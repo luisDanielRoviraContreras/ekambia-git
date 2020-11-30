@@ -55,6 +55,7 @@ export default class NavbarMobile extends Vue {
     display: flex
     align-items: center
     justify-content: center
+    cursor: pointer
     i
       font-size: 1.8rem
     svg

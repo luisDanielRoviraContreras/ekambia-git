@@ -87,6 +87,15 @@ export default class InputComponent extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+/* Firefox */
+input[type=number]
+  -moz-appearance: textfield
+
 .con-input
   position: relative
   width: 100%
@@ -183,6 +192,7 @@ export default class InputComponent extends Vue {
     line-height: 1rem
     border-radius: 5px
     font-size: 16px
+    pointer-events: none
     &:first-letter
       text-transform: uppercase
   .bg
