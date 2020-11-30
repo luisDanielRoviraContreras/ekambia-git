@@ -12,7 +12,7 @@
         </p>
       </header>
 
-      <c-input type="number" :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
+      <c-input :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
         Número de teléfono
       </c-input>
       <Alert :open="!validateNumber && send">

@@ -22,7 +22,7 @@
             ref="send"
             v-model="form.send"
             :inputmode="$device.isIos ? 'numeric' : 'none'"
-            type="number"
+            :type="$device.isDesktop ? 'number' : null"
             identificador="send"
             @focus="inputFocus"
             @change-value="handleFormSend"
