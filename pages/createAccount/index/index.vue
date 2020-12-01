@@ -1,7 +1,7 @@
 <template>
   <div class="step0">
     <h3>
-      ¿Cómo deseas usar Ekambia?
+      ¿Cómo deseas usar <img src="/ekambia_logo.svg" alt=""> ?
     </h3>
     <div @click="$router.push('/createAccount/step1')" class="con-img-btn mt-6">
       <img src="/personal.svg" alt="">
@@ -53,6 +53,9 @@ export default class step0 extends Vue {}
       min-height: 227px
   h3
     text-align: center
+    img
+      width: 105px
+      transform: translate(0,4px)
 // responsive
 
 @media (min-width: 812px), (pointer:cursor)

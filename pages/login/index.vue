@@ -158,7 +158,6 @@ export default class login extends Vue {
 
   handleRef() {
     this.$cookies.set('ref', this.$route.query.ref)
-    console.log(this.$route.query.ref)
   }
 
   mounted () {
@@ -217,6 +216,10 @@ export default class login extends Vue {
     margin-top: 20px
 // responsive
 
+@media (max-width: 812px)
+  .login
+    .con-slide
+      display: none
 @media (min-width: 812px)
    .login
     flex-direction: row

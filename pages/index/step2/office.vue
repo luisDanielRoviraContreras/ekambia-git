@@ -2,7 +2,7 @@
   <div class="office">
     <div v-show="stepx == 1" class="content-delivery con-map">
       <nav-bar absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
-      <tracking from="honorio lozano 8, collado villalba, españa" to="rafael alberti 13, collado villalba, españa">
+      <tracking office to="rafael alberti 13, collado villalba, españa">
         <h3>Ruta para ir a la oficina</h3>
         <Button @click="changeState" class="mt-3" block yellow>
           Ya estoy en la oficina

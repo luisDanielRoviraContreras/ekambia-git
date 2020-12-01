@@ -76,7 +76,7 @@ export default class createAccount extends Vue {
 
   get validateNumber() {
     // eslint-disable-next-line no-useless-escape
-    const regex = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌​)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌​|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})\s*(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+)\s*)?$/i
+    const regex = /^\+(?:[0-9] ?){6,14}[0-9]$/i
     return regex.test(this.form.tel.trim())
   }
 
@@ -87,10 +87,6 @@ export default class createAccount extends Vue {
   get hasCode() {
     return (!this.form.n1 || !this.form.n2 || !this.form.n3 || !this.form.n4)
   }
-
-  // get send () {
-  //   return (this.$parent as any).send
-  // }
 
   handleSaveTel() {
     axios.post('/useraddtel', {

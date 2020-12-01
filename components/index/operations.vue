@@ -518,6 +518,7 @@ export default class OperationsClass extends Vue {
       padding-bottom: 90px
       overflow: auto
       max-height: calc(80vh - 150px)
+      min-height: calc(80vh - 150px)
       min-width: 100%
       scroll-snap-align: center
     .info

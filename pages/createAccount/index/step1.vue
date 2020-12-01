@@ -1,7 +1,7 @@
 <template>
   <div class="con-create con-create-scroll">
     <div class="con-form">
-      <h2 class="mt-6">
+      <h2>
         Crear tu cuenta
       </h2>
 
@@ -12,7 +12,7 @@
         :danger="(!form.email || !emailValid) && send"
         lowercase
       >
-        Email
+        E-mail
       </c-input>
       <Alert v-if="form.email" :open="!emailValid && send">
         Correo electrónico inválido
@@ -32,7 +32,7 @@
           class="ml-3"
           :danger="!form.dni && send"
         >
-          Nro. de documento
+          {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Pasaporte' }}
         </c-input>
       </div>
       <Alert :open="!form.dni && send">
@@ -43,7 +43,7 @@
         class="mt-6"
         :danger="!form.firstName && send"
       >
-        Nombres
+        Nombre
       </c-input>
       <Alert :open="!form.firstName && send">
         Este campo es requerido
@@ -53,7 +53,7 @@
         class="mt-6"
         :danger="!form.lastName && send"
       >
-        Apellidos
+        Apellido
       </c-input>
       <Alert :open="!form.lastName && send">
         Este campo es requerido
@@ -73,17 +73,41 @@
         La fecha de nacimiento es invalida (tienes que ser mayor de 18 años)
       </Alert>
 
+      <!-- (!form.password && send) || form.password && passwordConfirm ? (passwordConfirm !== form.password) || !validatePassword : false -->
+
       <c-input
         v-model="form.password"
         class="mt-6"
         inputmode="password"
         type="password"
-        :danger="!form.password && send"
+        :danger="(!validatePassword && send) || send && (passwordConfirm !== form.password)"
       >
         Contraseña
       </c-input>
       <Alert :open="!form.password && send">
         Este campo es requerido
+      </Alert>
+      <Alert :open="passwordConfirm !== form.password && validatePassword">
+        Las contraseñas no coinciden
+      </Alert>
+      <Alert :open="form.password && send ? !validatePassword : false ">
+        La contraseña debe contener al menos: <br>
+        • 1 Mayúscula <br> • 1 Minúscula <br> • 1 Símbolo especial <br> • 1 Número
+      </Alert>
+      <c-input
+        v-model="passwordConfirm"
+        class="mt-6"
+        inputmode="password"
+        type="password"
+        :danger="(!passwordConfirm && send) || send && passwordConfirm !== form.password"
+      >
+        Confirmación de Contraseña
+      </c-input>
+      <Alert :open="!passwordConfirm && send">
+        Este campo es requerido
+      </Alert>
+      <Alert :open="passwordConfirm && send ? passwordConfirm !== form.password : false">
+        Las contraseñas no coinciden
       </Alert>
       <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
         Siguiente
@@ -98,6 +122,7 @@ import axios from '~/plugins/axios'
 export default class createAccount extends Vue {
   send: boolean = false
   loading: boolean = false
+  passwordConfirm: any = null
   form: any = {
     email: '',
     password: '',
@@ -112,24 +137,39 @@ export default class createAccount extends Vue {
   typeDocuments: any = [
     {
       id: 1,
-      alias: 'DNI'
+      alias: 'C. I.'
     },
     {
       id: 2,
       alias: 'PAS'
-    },
-    {
-      id: 3,
-      alias: 'NIE'
     }
   ]
+
+  get validatePassword() {
+    var regularExpression = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    return regularExpression.test(this.form.password.trim())
+  }
+
   handleSend() {
     this.send = true
 
-    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.dni || !this.form.firstName || !this.form.lastName) {
-      console.log('paso')
+    if (!this.validatePassword) {
       return
     }
+
+    if (this.passwordConfirm !== this.form.password) {
+      return
+    }
+
+    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.dni || !this.form.firstName || !this.form.lastName) {
+      return
+    }
+
+    if (this.form.date.split('-')[0] > 2002) {
+      return
+    }
+
+
 
     this.loading = true
 

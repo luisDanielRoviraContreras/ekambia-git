@@ -227,6 +227,8 @@ export default class GoogleMap extends Vue {
 
   @Prop() lng: any
 
+  @Prop({ type: Boolean }) office: any
+
   center: any = {
     lat: 0,
     lng: 0
@@ -362,21 +364,22 @@ export default class GoogleMap extends Vue {
           anchor: new this.google.maps.Point(10, 15) // anchor
         }
         var route = result.routes[0].legs[0]
+        if (!this.office) {
+          var icon1 = {
+            url: this.transit ? '/start.png' : '/start-b.png',
+            ...iconBase
+          }
 
-        var icon1 = {
-          url: this.transit ? '/start.png' : '/start-b.png',
-          ...iconBase
+          this.marker = new this.google.maps.Marker({
+            map: map,
+            position: route.start_location,
+            visible: true,
+            icon: icon1,
+          })
         }
 
-        this.marker = new this.google.maps.Marker({
-          map: map,
-          position: route.start_location,
-          visible: true,
-          icon: icon1,
-        })
-
         var icon2 = {
-          url: this.transit ? '/house.png' : '/house-b.png',
+          url: this.office ? '/start.png' : this.transit ? '/house.png' : '/house-b.png',
           ...iconBase
         }
 
@@ -389,7 +392,7 @@ export default class GoogleMap extends Vue {
 
         var infowindow = new this.google.maps.InfoWindow({
           content: `
-            <h4>Dirección de entrega</h4>
+            <h4>${this.office ? 'Dirección de la Oficina' : 'Dirección de entrega'}</h4>
             <p>${route.end_address}</p>
           `
         })
