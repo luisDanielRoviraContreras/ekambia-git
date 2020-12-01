@@ -2,7 +2,7 @@
   <div class="con-create con-create-scroll">
     <div class="con-form">
       <h2>
-        Crear cuenta personal
+        Crear cuenta empresarial
       </h2>
 
       <c-input
@@ -20,21 +20,13 @@
       <Alert :open="!form.email && send">
         Este campo es requerido
       </Alert>
-      <div
-        class="con-select-input mt-6"
+      <c-input
+        v-model="form.dni"
+        class="mt-6"
+        :danger="!form.dni && send"
       >
-        <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
-          <Option :key="i" v-for="(item, i) in typeDocuments" :value="item.id" :text="item.alias" />
-        </Select>
-        <c-input
-          sticky-prev
-          v-model="form.dni"
-          class="ml-3"
-          :danger="!form.dni && send"
-        >
-          {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Pasaporte' }}
-        </c-input>
-      </div>
+        RUC
+      </c-input>
       <Alert :open="!form.dni && send">
         Este campo es requerido
       </Alert>
@@ -43,7 +35,7 @@
         class="mt-6"
         :danger="!form.firstName && send"
       >
-        Nombre
+        Nombre o Razón Social
       </c-input>
       <Alert :open="!form.firstName && send">
         Este campo es requerido
@@ -53,7 +45,17 @@
         class="mt-6"
         :danger="!form.lastName && send"
       >
-        Apellido
+        Nombre del representante
+      </c-input>
+      <Alert :open="!form.lastName && send">
+        Este campo es requerido
+      </Alert>
+      <c-input
+        v-model="form.lastName"
+        class="mt-6"
+        :danger="!form.lastName && send"
+      >
+        Apellido del representante
       </c-input>
       <Alert :open="!form.lastName && send">
         Este campo es requerido

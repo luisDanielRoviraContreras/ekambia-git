@@ -12,10 +12,10 @@
     <divider>
       O
     </divider>
-    <div @click="$router.push('/createAccount/step1')" class="con-img-btn empresa mt-6">
+    <div @click="$router.push('/createAccount/step1b')" class="con-img-btn empresa mt-6">
       <img src="/empresa.png" alt="">
       <Button block>
-        Empresa
+        Empresarial
       </Button>
     </div>
   </div>
