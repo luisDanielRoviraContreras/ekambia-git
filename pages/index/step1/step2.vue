@@ -228,7 +228,7 @@ export default class transferStep2 extends Vue {
     axios.get('/operation-create').then(({ data }) => {
       console.log(data)
       this.data = data.info
-      if (this.$route.query.transferActive) {
+      if (this.$route.query.transferActive2) {
         this.form.typeReceive = 1
         this.transferVisible2 = true
         this.form.typeReceiveText = 'Transferencia'

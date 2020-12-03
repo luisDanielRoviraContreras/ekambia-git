@@ -19,7 +19,9 @@ export default class notificationBase extends Vue {
 
   handleClick() {
     this.isVisible = false
-    this.click()
+    if (this.click) {
+      this.click()
+    }
   }
 }
 </script>

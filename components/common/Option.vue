@@ -1,7 +1,7 @@
 <template>
   <li :class="{ active: valueParent == value, disabled }" @click="handleClick" class="option">
     <i class='bx bx-check'></i>
-    <div class="text">
+    <div :class="{ subText }" class="text">
       <span>
         {{ text }}
       </span>
@@ -46,6 +46,10 @@ export default class optionItem extends Vue {
   border-radius: 15px
   cursor: pointer
   .text
+    &.subText
+      span
+        font-weight: bold
+        opacity: .8
     p
       font-size: .85rem
       opacity: .7

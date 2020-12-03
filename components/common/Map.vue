@@ -197,11 +197,11 @@
         Arrastra o haz click sobre el punto de entrega
       </div>
 
-      <divider v-if="!address">
+      <divider v-show="directions.length > 0" v-if="!address">
         O
       </divider>
 
-      <div class="con-directions">
+      <div v-if="directions.length > 0" class="con-directions">
         <Select uid="direction" child="name" @change="handleClickDirection" :data="directions" v-model="address" placeholder="Seleccione una de tus direcciones" class="mt-6" block>
           <template v-if="directions">
             <Option :key="i" v-for="(option, i) in directions" :value="option.direction" :text="option.name" :sub-text="option.direction" :obj="option" />

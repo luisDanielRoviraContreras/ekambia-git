@@ -129,7 +129,7 @@ export default class create extends Vue {
               path: `/step1/step${(this.$route.query.step as any) == 2 ? 2 : 1}`,
               query: {
                 ...this.$route.query,
-                transferActive: 'true'
+                [(this.$route.query.step as any) == 2 ? 'transferActive2' : 'transferActive']: 'true'
               }
             })
           },
