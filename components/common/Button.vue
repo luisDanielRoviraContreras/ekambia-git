@@ -57,7 +57,7 @@ export default class btn extends Vue {
         height: 32px
         border-radius: 50%
         position: absolute
-        border: 3px dashed #fff
+        border: 3px dashed rgba(255,255,255,1)
         border-top: 3px solid transparent
         border-left: 3px solid transparent
         animation: load1 1s linear infinite
@@ -67,9 +67,9 @@ export default class btn extends Vue {
         height: 32px
         border-radius: 50%
         position: absolute
-        border: 3px solid #fff
-        border-top: 3px solid transparent
-        border-left: 3px solid transparent
+        border: 3px solid rgba(255,255,255,1)
+        border-top: 3px solid rgba(255,255,255,0)
+        border-left: 3px solid rgba(255,255,255,0)
         animation: load2 1s ease infinite
   &.yellow
     background: -color('color')
