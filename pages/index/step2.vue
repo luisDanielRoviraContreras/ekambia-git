@@ -68,6 +68,7 @@ export default class step2 extends Vue {
   justify-content: flex-start
   flex-direction: column
   overflow: auto
+  height: calc(var(--vh, 1vh) * 100)
   h2
     text-align: center
     font-size: 1.2rem

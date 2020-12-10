@@ -28,7 +28,7 @@ export default class createAccount extends Vue {
 
   handleClickBack() {
     this.$dialog({
-      title: 'Estas seguro de volver al login?',
+      title: '¿Estas seguro de volver al login?',
       text: 'Si vuelves al login no se guardaran tus datos.',
       success: () => {
         this.$router.push('/login/')

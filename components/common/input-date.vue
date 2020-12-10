@@ -16,7 +16,8 @@
         label="Día"
         center
         block
-        @change="handleChange"
+        items-center
+        @change="handleChange(1)"
       >
         <!-- <option hidden selected value=""> Día </option> -->
         <Option
@@ -27,12 +28,14 @@
         />
       </Select>
       <Select
+        ref="meses"
         v-model="date.month"
         label="Mes"
         center
         value="Enero"
+        @change="handleChange(2)"
         block
-        @change="handleChange"
+        items-center
         placeholder="Mes"
       >
         <!-- <option hidden selected value=""> Mes </option> -->
@@ -45,11 +48,13 @@
         </Option>
       </Select>
       <Select
+        ref="ano"
         v-model="date.year"
         label="Año"
         center
         value="2010"
         block
+        items-center
         @change="handleChange"
         placeholder="Año"
       >
@@ -94,7 +99,7 @@ import Select from '@/components/common/Select.vue'
   }
 })
 export default class InputDate extends Vue {
-  months: object = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  months: object = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
   passwordVisible: boolean = false
   @Prop({}) value: any
   @Prop({ type: Boolean }) center!: boolean
@@ -130,8 +135,14 @@ export default class InputDate extends Vue {
     return `${this.date.year}-${this.date.month}-${this.date.day}`
   }
 
-  handleChange () {
+  handleChange (type: any) {
     // const value = evt.target.value
+    if (type == 1) {
+      (this.$refs.meses as any).$el.querySelector('input').focus()
+    }
+    if (type == 2) {
+      (this.$refs.ano as any).$el.querySelector('input').focus()
+    }
     console.log('paso')
     this.$nextTick(() => {
       this.$emit('input', this.getValue)

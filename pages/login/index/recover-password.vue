@@ -116,7 +116,7 @@ export default class recover extends Vue {
   align-items: center
   justify-content: center
   flex-direction: column
-  padding: 20px 30px
+  padding: 15px 15px
   padding-top: 60px
   .con-logo
       min-height: 38px

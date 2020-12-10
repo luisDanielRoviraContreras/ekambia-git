@@ -24,7 +24,7 @@
         class="con-select-input mt-6"
       >
         <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
-          <Option :key="i" v-for="(item, i) in typeDocuments" :value="item.id" :text="item.alias" />
+          <Option :key="i" v-for="(item, i) in typeDocuments" :value="item.id" :text="item.alias" :sub-text="item.sub" />
         </Select>
         <c-input
           sticky-prev
@@ -32,7 +32,7 @@
           class="ml-3"
           :danger="!form.dni && send"
         >
-          {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Pasaporte' }}
+          {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Nro. Pasaporte' }}
         </c-input>
       </div>
       <Alert :open="!form.dni && send">
@@ -137,11 +137,13 @@ export default class createAccount extends Vue {
   typeDocuments: any = [
     {
       id: 1,
-      alias: 'C. I.'
+      alias: 'C. I.',
+      sub: 'Cédula de Identidad'
     },
     {
       id: 2,
-      alias: 'PAS'
+      alias: 'PAS',
+      sub: 'Pasaporte'
     }
   ]
 

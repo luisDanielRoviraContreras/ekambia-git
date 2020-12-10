@@ -34,7 +34,7 @@ export default class step0 extends Vue {}
   padding-bottom: 50px
   width: 100%
   position: relative
-  padding: 0px 30px
+  padding: 0px 20px
   .con-img-btn
     width: 100%
     display: flex

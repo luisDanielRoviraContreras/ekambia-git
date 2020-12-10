@@ -1,5 +1,5 @@
 <template>
-  <div ref="accounts" class="accounts page">
+  <div ref="accounts" :class="{ slide: $route.name == 'accounts-index-create' }" class="accounts page">
     <nav-bar v-if="$device.isMobile" absolute />
     <button
       @click="handleCreateAccount"
@@ -114,6 +114,9 @@ export default class accountsBank extends Vue {
   scroll-snap-type: x mandatory
   scroll-behavior: smooth
   background: -color(bg)
+  &.slide
+    .con-accounts
+      transform: translate(-30px)
   h3
     width: 100%
     text-align: center
@@ -155,6 +158,7 @@ export default class accountsBank extends Vue {
     overflow-x: hidden
     padding-bottom: 140px
     padding-top: 70px
+    transition: all .25s ease-out
 
 // responsive
 

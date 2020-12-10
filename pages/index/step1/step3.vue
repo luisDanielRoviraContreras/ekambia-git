@@ -303,7 +303,7 @@ export default class transferStep1 extends Vue {
   justify-content: flex-start
   flex-direction: column
   flex: 1
-  padding: 15px
+  // padding: 15px
   h2
     font-size: 1rem
     text-align: center

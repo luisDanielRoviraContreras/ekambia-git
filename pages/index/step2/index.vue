@@ -95,7 +95,6 @@
           v-model="form.ref"
           class="mt-6"
           type="number"
-          gray
           :danger="!form.ref && send"
           maxlength="20"
         >

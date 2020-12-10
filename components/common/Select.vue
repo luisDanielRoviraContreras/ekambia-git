@@ -12,7 +12,7 @@
         @enter="enter"
         @leave="leave"
       >
-        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop }" class="con-items">
+        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop, itemsCenter }" class="con-items">
           <div class="shadow" @click="handleClickShadow"></div>
           <div class="items">
             <header>
@@ -39,6 +39,7 @@ export default class Select extends Vue {
   @Prop({ type: Boolean }) stickyPrev: boolean
   @Prop({ type: Boolean }) load: boolean
   @Prop({ type: Boolean }) readonly: boolean
+  @Prop({ type: Boolean }) itemsCenter: boolean
   @Prop({ type: String }) placeholder: string
   @Prop({ type: String, default: 'alias' }) child: string
   @Prop({ type: String, default: 'id' }) uid: string
@@ -160,6 +161,11 @@ export default class Select extends Vue {
       opacity: 0
 
 .con-items
+  &.itemsCenter
+    .items
+      .option
+        text-align: center
+        justify-content: center
   &.isDesktop
     position: absolute
     z-index: 6000

@@ -57,6 +57,7 @@ export default class steps extends Vue {
   justify-content: flex-start
   flex-direction: column
   overflow: auto
+  height: calc(var(--vh, 1vh) * 100)
   .con-steps
     width: 100%
     max-width: 600px

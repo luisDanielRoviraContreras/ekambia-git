@@ -189,8 +189,7 @@ export default class login extends Vue {
     flex-direction: column
     height: 100vh
     height: calc(var(--vh, 1vh) * 100)
-    padding: 20px
-    padding-bottom: calc(env(safe-area-inset-bottom) + 30px)
+    padding: 15px 10px
     overflow: hidden
   .con-login
     display: flex

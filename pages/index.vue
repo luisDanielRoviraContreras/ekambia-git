@@ -1,5 +1,5 @@
 <template>
-  <div ref="page" class="index page">
+  <div ref="page" :class="{ slide: $route.name !== 'index' }" class="index page">
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
       <div v-if="sale_price" class="con-img">
@@ -204,9 +204,9 @@ export default class name extends Vue {
     const el: any = this.$el
 
     el.addEventListener('scroll', () => {
-      if (el.scrollTop === 0) {
+      if (el.scrollTop === 0 && this.$route.name == 'index') {
         this.$router.push('/')
-      } else if (el.scrollTop + window.innerHeight >= el.scrollHeight) {
+      } else if (el.scrollTop + window.innerHeight >= el.scrollHeight && this.$route.name == 'index') {
         this.$router.push({
           path: '/',
           query: {
@@ -313,6 +313,11 @@ export default class name extends Vue {
   height: calc(var(--vh, 1vh) * 100)
   scroll-behavior: smooth
   width: 100%
+  &.slide
+    .operations
+      transform: translate(-30px)
+    .con-change
+      transform: translate(-30px)
   .con-change
     width: 100%
     padding: 20px 20px
@@ -328,6 +333,7 @@ export default class name extends Vue {
     box-sizing: border-box
     max-width: 450px
     padding-top: 10px
+    transition: all .25s ease-out
     .con-img
       margin-bottom: -15px
       z-index: 10

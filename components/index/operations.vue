@@ -502,6 +502,7 @@ export default class OperationsClass extends Vue {
   border-radius: 30px 30px 0px 0px
   padding-bottom: 75px
   min-height: 500px
+  transition: all .25s ease-out
   &.open
     header
       i
