@@ -5,7 +5,6 @@ export default {
   router: {
     middleware: ['mobile']
   },
-
   loading: {
     height: '5px',
     color: '#ffda1a'
@@ -70,9 +69,7 @@ export default {
   build: {
     transpile: [/^gmap-vue($|\/)/]
   },
-
   transpile: [/^vue2-google-maps($|\/)/, /^gmap-vue($|\/)/],
-
   env: {
     // API: 'http://3.16.43.49/api/'
     API: 'https://ekambia.lusaxweb.pro/api/'

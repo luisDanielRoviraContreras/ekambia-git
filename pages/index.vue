@@ -36,7 +36,6 @@
           </Select>
         </div>
         <load v-else />
-          <!-- :inputmode="$device.isIos ? 'numeric' : 'none'" -->
         <invert @change="handleChange"/>
         <div v-if="coins" class="input-select readonly">
           <c-input
@@ -50,7 +49,6 @@
           >
             Yo recibo
           </c-input>
-            <!-- <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" /> -->
           <Select @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
             <template>
               <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
@@ -126,7 +124,6 @@ export default class name extends Vue {
 
   getCoins() {
     axios.get('/coins').then(({ data }) => {
-      // this.coins = data.info
       this.setCoins(data.info)
       this.handleChangeCoin(2)
     })
@@ -144,9 +141,6 @@ export default class name extends Vue {
 
   getData() {
     this.getCoins()
-    // axios.get('/operation-create').then(({ data }) => {
-    //   // this.data = data.info
-    // })
   }
 
   handleInitOperation() {
