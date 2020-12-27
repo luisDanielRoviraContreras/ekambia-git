@@ -2,16 +2,64 @@
   <div class="login scroll">
     <div v-if="$device.isDesktop" class="con-slide">
       <div class="con-images">
-        <div class="con-image">
-          <img src="/Ilustration_01.svg" alt="">
-          <h2>
-            Cotiza tu operación
-          </h2>
-          <p>
-            Utiliza la calculadora para verificar el tipo de cambio en tiempo real
-          </p>
-        </div>
+        <transition name="fade">
+          <div v-show="active == 1" class="con-image">
+            <img :src="`/illus/01.svg`" alt="">
+            <h2 >
+              Cotiza tu operación
+            </h2>
+            <p>
+              Utiliza la calculadora para verificar el tipo de cambio en tiempo real
+            </p>
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-show="active == 2" class="con-image">
+            <img :src="`/illus/02.svg`" alt="">
+            <h2>
+              Ahorra con cada intercambio
+            </h2>
+            <p>
+              Vamos a darte una de las mejores tasas de cambio, así podrás ahorrar con cada intercambio.
+            </p>
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-show="active == 3" class="con-image">
+            <img :src="`/illus/03.svg`" alt="">
+            <h2>
+              Simple y poderoso
+            </h2>
+            <p>
+              Simplicidad para ti, déjanos lo complejo a nosotros.
+            </p>
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-show="active == 4" class="con-image">
+            <img  :src="`/illus/04.svg`" alt="">
+            <h2>
+              Donde tu decidas
+            </h2>
+            <p>
+              No necesitas ir a la oficina a recoger o entregar el dinero, ahora te lo llevamos hasta tu casa
+            </p>
+          </div>
+        </transition>
       </div>
+
+      <footer class="footer">
+        <ul>
+          <li :class="{active: active == 1}" @click="handleClick(1)">
+          </li>
+          <li :class="{active: active == 2}" @click="handleClick(2)">
+          </li>
+          <li :class="{active: active == 3}" @click="handleClick(3)">
+          </li>
+          <li :class="{active: active == 4}" @click="handleClick(4)">
+          </li>
+        </ul>
+      </footer>
     </div>
     <div class="content-login">
       <div class="con-login">
@@ -90,8 +138,16 @@ export default class login extends Vue {
     numberEmail: '',
     password: ''
   }
+  active: number = 1
+  interval: any = null
 
   @State(state => state.bounce) bounce
+
+  handleClick(n) {
+    this.active = n
+    clearInterval(this.interval)
+    this.initInterval()
+  }
 
 
   handleSend (evt: any) {
@@ -160,7 +216,18 @@ export default class login extends Vue {
     this.$cookies.set('ref', this.$route.query.ref)
   }
 
+  initInterval() {
+    this.interval = setInterval(() => {
+      if (this.active == 3) {
+        this.active = 1
+      } else {
+        this.active += 1
+      }
+    }, 5000)
+  }
+
   mounted () {
+    this.initInterval()
     this.$bounceClose()
     if (this.$route.query.ref) {
       this.handleRef()
@@ -169,6 +236,35 @@ export default class login extends Vue {
 }
 </script>
 <style lang="sass" scoped>
+.fade-enter-active, .fade-leave-active
+  transition: all .25s ease
+
+.fade-leave-to
+  opacity: 0
+  transform: translate(80px)
+.fade-enter
+  opacity: 0
+  transform: translate(-80px)
+
+.footer
+  position: absolute
+  bottom: 0px
+  z-index: 500
+  ul
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-bottom: 20px
+    li
+      width: 40px
+      height: 5px
+      margin: 10px
+      border-radius: 10px
+      background: #000
+      cursor: pointer
+      opacity: .1
+      &.active
+        opacity: 1
 .login
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
@@ -233,11 +329,17 @@ export default class login extends Vue {
         width: 100%
         max-width: 450px
         z-index: 100
+        display: flex
+        align-items: center
+        justify-content: center
         .con-image
           display: flex
           align-items: center
           justify-content: center
           flex-direction: column
+          position: absolute
+          width: 420px
+          backface-visibility: visible
           h2
             padding: 20px
             font-weight: 700

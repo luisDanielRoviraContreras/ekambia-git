@@ -16,7 +16,8 @@
       </svg>
     </button>
     <div class="right">
-      <img src="/ekambia_logo.svg" alt="">
+      <img v-if="!steps" src="/ekambia_logo.svg" alt="">
+      <steps numbers v-else :value="step" :items="3" />
     </div>
   </div>
 </template>
@@ -27,6 +28,8 @@ export default class NavbarMobile extends Vue {
   @Prop({ type: Boolean }) absolute: boolean
   @Prop({ type: Boolean }) back: boolean
   @Prop({ type: Boolean }) notPadding: boolean
+  @Prop({ type: Boolean }) steps: boolean
+  @Prop({ }) step: any
 }
 </script>
 <style lang="sass" scoped>

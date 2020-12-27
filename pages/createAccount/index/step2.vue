@@ -161,6 +161,8 @@ export default class createAccount extends Vue {
   mounted() {
     this.$bounceClose()
 
+    // this.form.tel = this.$route.query.t
+
     if (this.$route.query.check) {
       setTimeout(() => {
         this.$notification({

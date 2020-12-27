@@ -63,9 +63,9 @@
           <li>
             <b>Entregar</b>: {{ form.step2.typeReceiveText }}
           </li>
-          <li v-if="form.step2.typeReceive == 1">
+          <!-- <li v-if="form.step2.typeReceive == 1">
             <b>Cuenta bancaria</b>: {{ form.step2.destination_account_id__text }}
-          </li>
+          </li> -->
           <li v-if="form.step2.typeReceive == 3">
             <b>Dirección</b>: {{ form.step2.direction }}
           </li>
@@ -114,7 +114,7 @@ export default class transferStep1 extends Vue {
 
   handleBack() {
     this.$router.push({
-      path: '/step1/step2',
+      path: '/step1/step1',
       query: {
         ...this.$route.query
       }
@@ -139,7 +139,7 @@ export default class transferStep1 extends Vue {
       coin_received_id: this.coinReceive[0].id,
       exchange_type: this.getChangePrice,
       source_funds: 0,
-      source_account_id: this.form.step2.destination_account_id,
+      source_account_id: 0,
       destination_account_id: this.form.step1.destination_account_id,
       type_operation_user_id: this.form.step2.typeReceive,
       type_operation_ekambia_id: this.form.step1.typeReceive,

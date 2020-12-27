@@ -6,7 +6,7 @@
       verified: this.$route.query.verified && !this.$route.query.animate,
     }"
   >
-    <nav-bar back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+    <nav-bar step="3" steps back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div ref="con" class="con">
       <div class="con-circle">
         <div class="con-send con-icon">

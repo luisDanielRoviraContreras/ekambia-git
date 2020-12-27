@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de tus Operaciones</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+      <h2>Gracias por cambiar con nosotros {{ $name }}</h2>
+    </header>
+    <div class="content">
+      <p>
+          Esta es una información relativa a tu Operación realizada en nuestro Sistema
+          el día {{ $datex }}, donde recibes {{ $received }} {{ $coin_received }} y envias {{ $send }}  {{ $coin_send }}.
+           Te mantendremos informado.
+      </p>
+    </div>
+    <footer>
+      <h3>Contactados</h3>
+      <a href="">+595 1222 34253</a>
+      <a href="">cantact@ekambia.com</a>
+    </footer>
+</body>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
+  header {
+    padding: 30px 10px;
+    width: 100%;
+    background: rgb(255 218 26);
+    text-align: center;
+  }
+  .content {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  a {
+    padding: 20px;
+  }
+</style>
+</html>

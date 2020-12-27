@@ -2,10 +2,10 @@
   <div ref="page" :class="{ slide: $route.name !== 'index' }" class="index page">
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
-      <div v-if="sale_price" class="con-img">
+      <!-- <div v-if="sale_price" class="con-img">
         <img src="/home.svg" alt="">
       </div>
-      <load v-else class="mb-6" height="155px" width="240px" />
+      <load v-else class="mb-6" height="155px" width="240px" /> -->
       <div v-if="sale_price" class="con-prices">
         <div class="price-1 price">
           Compra: <span v-if="purchase_price">{{ purchase_price }}</span>
@@ -57,9 +57,13 @@
         </div>
         <load v-else />
       </div>
+
+
       <Button :disabled="form.send <= 0" @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
       </Button>
+
+      <limits />
     </div>
 
     <nuxt-child />

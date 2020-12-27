@@ -1,8 +1,40 @@
 <template>
   <div class="transfer-step1 transfer-step">
-    <nav-bar :absolute="$device.isDesktop" back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+    <nav-bar step="1" steps :absolute="$device.isDesktop" back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
 
     <div class="content-step">
+      <div class="card-texts">
+        <div v-if="data" class="texts">
+          <div class="text">
+            <span>
+              Tú envías
+            </span>
+            <p v-if="data">
+              {{ getSend }} {{ coinSend[0].coin }}
+            </p>
+          </div>
+          <div class="text">
+            <span>
+              Tú recibes
+            </span>
+            <p v-if="data">
+              {{ getReceive }} {{ coinReceive[0].coin }}
+            </p>
+          </div>
+        </div>
+        <load v-else block height="67px" />
+        <div class="textw">
+          <span>
+            Tipo de cambio utilizado
+          </span>
+          <p v-if="data">
+            <!-- {{ data.exchange_purchase.price_purchase }} -->
+            {{ getChangePrice }}
+          </p>
+          <load v-else width="60px" height="20px" />
+        </div>
+      </div>
+
       <h3 class="mt-6">
         Seleccione cómo quiere recibir el dinero
       </h3>
@@ -12,6 +44,8 @@
           <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
         </Select>
       </template>
+
+      <load v-else block height="60px" class="mt-6" />
 
       <template v-if="data && transferVisible">
         <template v-if="data.accounts.length > 0">
@@ -41,24 +75,57 @@
           Este campo es requerido
         </Alert>
       </template>
+
+      <h3 class="mt-6">
+        Seleccione cómo quiere entregar
+      </h3>
+
+      <template v-if="data && typesOperation">
+        <Select child="name" class="mt-6" @change="handleChangeSend" :data="typesOperation" placeholder="Cómo entregar" v-model="formSend.typeReceive" block>
+          <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
+        </Select>
+      </template>
+
+      <load v-else block height="60px" class="mt-6" />
+
+      <template v-if="data && sucursalVisible2">
+        <Select child="name" @change="handleChangeOffice2" :data="data.office" placeholder="Seleccione una sucursal" :danger="!formSend.office && send" class="mt-6" v-model="formSend.office" block>
+          <template v-if="data.office">
+            <Option :key="i" v-for="(option, i) in data.office" :value="option.id" :text="option.name" />
+          </template>
+        </Select>
+        <Alert :open="!formSend.office && send">
+          Este campo es requerido
+        </Alert>
+      </template>
     </div>
 
+
     <footer>
-      <Button :disabled="isDisabled" @click="handleNextStep" yellow block>
-        Siguiente
+      <Button :loading="loading" :disabled="isDisabled" @click="handleInitOperation" yellow block>
+        Iniciar operación
       </Button>
     </footer>
 
     <Map :directions="data.directions" :parent-address="form.direction" @click="handleClickMap" @close="mapVisible = false, form.typeReceive = 0" v-if="mapVisible && data" />
+    <Map :directions="data.directions"  :parent-address="formSend.direction" @click="handleClickMap" @close="mapVisible2 = false, formSend.typeReceive = 0" v-if="mapVisible2 && data" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
+import { Action } from 'vuex-class'
 @Component({
   layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
 })
 export default class transferStep1 extends Vue {
+  getSend: any = null
+  getReceive: any = null
+  getChangePrice: any = null
+  coins: any = []
+
+  loading: boolean = false
+
   data: any = null
   send: boolean = false
   form: any = {
@@ -72,14 +139,104 @@ export default class transferStep1 extends Vue {
     name_direction: null,
     save_direction: false
   }
+  formSend: any = {
+    typeReceive: 0,
+    typeReceiveText: '',
+    office: 0,
+    officeText: '',
+    destination_account_id: 0,
+    destination_account_id__text: '',
+    direction: null,
+    name_direction: null,
+    save_direction: false
+  }
 
   mapVisible: boolean = false
+  mapVisible2: boolean = false
   transferVisible: boolean = false
+  transferVisible2: boolean = false
   sucursalVisible: boolean = false
+  sucursalVisible2: boolean = false
 
   typesOperation: any = []
 
   offices: any = []
+
+  @Action('operations/getOperations') getOperations
+
+  handleInitOperation() {
+    this.send = true
+    this.loading = true
+
+    const obj = {
+      send: this.getSend,
+      received: this.getReceive,
+      coin_send_id: this.coinSend[0].id,
+      coin_received_id: this.coinReceive[0].id,
+      exchange_type: this.getChangePrice,
+      source_funds: 0,
+      source_account_id: 0,
+      destination_account_id: this.form.destination_account_id,
+      type_operation_user_id: this.formSend.typeReceive,
+      type_operation_ekambia_id: this.form.typeReceive,
+      office_id_in: this.formSend.office,
+      office_id_out: this.form.office,
+      direction_in: this.formSend.direction,
+      name_direction_in: this.formSend.name_direction ? this.formSend.name_direction : '',
+      save_direction_in: this.formSend.save_direction ? 1 : 0,
+      direction_out: this.form.direction,
+      name_direction_out: this.form.name_direction ? this.form.name_direction : '',
+      save_direction_out: this.form.save_direction ? 1 : 0
+    }
+
+    console.log(obj)
+
+    axios.post('/operation-store', obj).then((res) => {
+      this.getOperations()
+
+      axios.get(`/operation-show/${res.data.info.operation_id}`).then(({data}: any) => {
+        if (data.info.type_operation_user_id == 1) {
+        this.$router.push({
+          path: '/step2/',
+          query: {
+            id: data.info.id
+          }
+        })
+        } else if (data.info.type_operation_user_id == 2) {
+          this.$router.push({
+            path: '/step2/office/',
+            query: {
+              id: data.info.id
+            }
+          })
+        } else if (data.info.type_operation_user_id == 3) {
+          this.$router.push({
+            path: '/step2/delivery/',
+            query: {
+              id: data.info.id
+            }
+          })
+        }
+        setTimeout(() => {
+          this.loading = false
+        }, 300);
+      })
+
+    }).catch((err) => {
+      this.loading = false
+      this.$notification({
+        title: 'Oops! Algo salió mal',
+        text: err.response.data.message.toString()
+      })
+    })
+  }
+
+  get coinSend() {
+    return this.coins.filter(coin => coin.id == this.$route.query.coinSend)
+  }
+  get coinReceive() {
+    return this.coins.filter(coin => coin.id == this.$route.query.coinReceive)
+  }
 
   get isDisabled() {
     let disabled: boolean = true
@@ -106,16 +263,22 @@ export default class transferStep1 extends Vue {
   }
 
   handleNextStep() {
-    this.$router.push({
-      path: '/step1/step2',
-      query: {
-        ...this.$route.query,
-        step1: btoa(JSON.stringify(this.form)),
-        mapVisible: `${this.mapVisible}`,
-        transferVisible: `${this.transferVisible}`,
-        sucursalVisible: `${this.sucursalVisible}`
-      }
-    })
+    this.mapVisible = false
+    this.mapVisible2 = false
+    // this.$router.push({
+    //   path: '/step1/step3',
+    //   query: {
+    //     ...this.$route.query,
+    //     step1: btoa(JSON.stringify(this.form)),
+    //     step2: btoa(JSON.stringify(this.formSend)),
+    //     mapVisible: `${this.mapVisible}`,
+    //     transferVisible: `${this.transferVisible}`,
+    //     sucursalVisible: `${this.sucursalVisible}`,
+    //     mapVisible2: `${this.mapVisible2}`,
+    //     transferVisible2: `${this.transferVisible2}`,
+    //     sucursalVisible2: `${this.sucursalVisible2}`
+    //   }
+    // })
   }
 
   handleClickMap(direction, direction2, isNew) {
@@ -157,6 +320,14 @@ export default class transferStep1 extends Vue {
     this.form.destination_account_id__text = text
   }
 
+  handleChangeOffice2(val, text) {
+    this.formSend.officeText = text
+  }
+
+  handleChangeTransfer2(val, text) {
+    this.formSend.destination_account_id__text = text
+  }
+
   handleChangeRecibe(val, text) {
     this.form.typeReceiveText = text
     this.mapVisible = false
@@ -185,6 +356,34 @@ export default class transferStep1 extends Vue {
     }
   }
 
+  handleChangeSend(val, text) {
+    this.formSend.typeReceiveText = text
+    this.mapVisible2 = false
+    this.transferVisible2 = false
+    this.sucursalVisible2 = false
+      if (val == 1) {
+        this.transferVisible2 = true
+      }
+    if (val == 3) {
+      this.mapVisible2 = true
+    }
+    if (val == 2) {
+      this.sucursalVisible2 = true
+    }
+
+    this.formSend = {
+      typeReceive: val,
+      typeReceiveText: text,
+      office: 0,
+      officeText: '',
+      destination_account_id: 0,
+      destination_account_id__text: '',
+      direction: null,
+      name_direction: null,
+      save_direction: false
+    }
+  }
+
   getData() {
     axios.get('/typeoperation').then(({ data }) => {
       this.typesOperation = data.info
@@ -197,6 +396,7 @@ export default class transferStep1 extends Vue {
     axios.get('/operation-create').then(({ data }) => {
       console.log(data)
       this.data = data.info
+      this.coins = data.info.coins
       if (this.$route.query.transferActive) {
         this.form.typeReceive = 1
         this.transferVisible = true
@@ -213,28 +413,68 @@ export default class transferStep1 extends Vue {
   setValues() {
     if (this.$route.query.step1) {
       const step1 = atob((this.$route.query as any).step1)
+      const step2 = atob((this.$route.query as any).step2)
       this.form = JSON.parse(step1)
+      this.formSend = JSON.parse(step2)
       this.sucursalVisible = this.$route.query.sucursalVisible == 'true'
       this.transferVisible = this.$route.query.transferVisible == 'true'
       this.mapVisible = this.$route.query.mapVisible == 'true'
+      this.sucursalVisible2 = this.$route.query.sucursalVisible2 == 'true'
+      this.transferVisible2 = this.$route.query.transferVisible2 == 'true'
+      this.mapVisible2 = this.$route.query.mapVisible2 == 'true'
     }
   }
 
   mounted() {
     this.getData()
     this.setValues()
+
+    this.getSend = atob((this.$route.query as any).send)
+    this.getReceive = atob((this.$route.query as any).receive)
+    this.getChangePrice = atob((this.$route.query as any).cp)
   }
 }
 </script>
 <style lang="sass" scoped>
+.card-texts
+  background: -color('gray-2')
+  border-radius: 30px
+  width: 100%
+  .texts
+    background: #fff
+    border-radius: 30px
+    display: flex
+    align-items: center
+    justify-content: center
+    .text
+      width: 50%
+      text-align: center
+      padding: 15px 10px
+  .textw
+    width: 100%
+    text-align: center
+    padding: 10px
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+  span
+    opacity: .5
+    font-size: .8rem
+    font-weight: bold
+  p
+    font-size: .9rem
+    font-weight: bold
+
 .transfer-step1
   width: 100%
   display: flex
   align-items: flex-start
-  justify-content: center
+  justify-content: flex-start
   flex-direction: column
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
+  overflow: auto
   footer
     width: 100%
     padding: 15px
@@ -245,8 +485,11 @@ export default class transferStep1 extends Vue {
   align-items: center
   justify-content: flex-start
   flex-direction: column
-  flex: 1
   padding: 15px
+  height: auto
+  flex: 1
+  &.flex
+    flex: 1
   h3
     font-size: 1rem
     text-align: center

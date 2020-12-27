@@ -11,7 +11,7 @@
       </button>
       <!-- <nuxt-link to="/login/">
       </nuxt-link> -->
-      <steps v-if="$route.name !== 'createAccount-index'" :value="getNumberValue" :items="3" />
+      <steps v-if="$route.name !== 'createAccount-index'" :value="getNumberValue" :items="2" />
     </header>
     <nuxt-child />
   </div>

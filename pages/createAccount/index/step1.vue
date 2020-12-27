@@ -6,6 +6,24 @@
       </h2>
 
       <c-input
+        v-model="form.firstName"
+        class="mt-6"
+        :danger="!form.firstName && send"
+      >
+        Nombre
+      </c-input>
+      <Alert :open="!form.firstName && send">
+        Este campo es requerido
+      </Alert>
+
+      <!-- <c-input :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
+        Número de teléfono
+      </c-input>
+      <Alert :open="!validateNumber && send">
+        El número de teléfono es invalido
+      </Alert> -->
+
+      <c-input
         v-model="form.email"
         class="mt-6"
         inputmode="email"
@@ -20,7 +38,7 @@
       <Alert :open="!form.email && send">
         Este campo es requerido
       </Alert>
-      <div
+      <!-- <div
         class="con-select-input mt-6"
       >
         <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
@@ -34,21 +52,12 @@
         >
           {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Nro. Pasaporte' }}
         </c-input>
-      </div>
-      <Alert :open="!form.dni && send">
+      </div> -->
+      <!-- <Alert :open="!form.dni && send">
         Este campo es requerido
-      </Alert>
-      <c-input
-        v-model="form.firstName"
-        class="mt-6"
-        :danger="!form.firstName && send"
-      >
-        Nombre
-      </c-input>
-      <Alert :open="!form.firstName && send">
-        Este campo es requerido
-      </Alert>
-      <c-input
+      </Alert> -->
+
+      <!-- <c-input
         v-model="form.lastName"
         class="mt-6"
         :danger="!form.lastName && send"
@@ -57,8 +66,8 @@
       </c-input>
       <Alert :open="!form.lastName && send">
         Este campo es requerido
-      </Alert>
-      <InputDate
+      </Alert> -->
+      <!-- <InputDate
         v-model="form.date"
         class="mt-3"
         :danger="(form.date.split('-').includes('') || form.date.split('-')[0] > 2002) && send"
@@ -71,7 +80,7 @@
       </Alert>
       <Alert :open="form.date.split('-')[0] > 2002 && send">
         La fecha de nacimiento es invalida (tienes que ser mayor de 18 años)
-      </Alert>
+      </Alert> -->
 
       <!-- (!form.password && send) || form.password && passwordConfirm ? (passwordConfirm !== form.password) || !validatePassword : false -->
 
@@ -126,26 +135,16 @@ export default class createAccount extends Vue {
   form: any = {
     email: '',
     password: '',
-    dni: '',
-    date: '',
-    dniType: 1,
+    tel: '',
     profileId: 1,
     firstName: '',
-    lastName: ''
   }
 
-  typeDocuments: any = [
-    {
-      id: 1,
-      alias: 'C. I.',
-      sub: 'Cédula de Identidad'
-    },
-    {
-      id: 2,
-      alias: 'PAS',
-      sub: 'Pasaporte'
-    }
-  ]
+  get validateNumber() {
+    // eslint-disable-next-line no-useless-escape
+    const regex = /^\+(?:[0-9] ?){6,14}[0-9]$/i
+    return regex.test(this.form.tel.trim())
+  }
 
   get validatePassword() {
     var regularExpression = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -163,13 +162,13 @@ export default class createAccount extends Vue {
       return
     }
 
-    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.dni || !this.form.firstName || !this.form.lastName) {
+    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.firstName) {
       return
     }
 
-    if (this.form.date.split('-')[0] > 2002) {
-      return
-    }
+    // if (this.form.date.split('-')[0] > 2002) {
+    //   return
+    // }
 
 
 
@@ -179,15 +178,11 @@ export default class createAccount extends Vue {
   }
 
   serverSend() {
-    axios.post('/register', {
+    axios.post('/register-simple', {
       email: this.form.email.toLowerCase(),
       password: this.form.password,
       profile_id: this.form.profileId,
       firstName: this.form.firstName,
-      lastName: this.form.lastName,
-      document_type_id: this.form.dniType,
-      dni: this.form.dni,
-      date_of_birth: this.form.date,
       referred: this.$cookies.get('ref')
     }).then(({data}) => {
       const token = data.info.token
@@ -196,7 +191,12 @@ export default class createAccount extends Vue {
         title: 'Usuario registrado',
         text: 'Complete los siguientes pasos para poder hacer operaciones en Ekambia'
       })
-      this.$router.push('/createAccount/step2')
+      this.$router.push({
+        path: '/createAccount/step2',
+        query: {
+          t: this.form.tel
+        }
+      })
       this.loading = false
     }).catch((err) => {
       this.loading = false
@@ -228,8 +228,13 @@ export default class createAccount extends Vue {
 .con-create
   display: flex
   flex-direction: column
+  .con-form
+    display: flex
+    flex-direction: column
   .button
     max-width: 450px
+    align-self: flex-end
+    margin-top: auto
   h2
     font-weight: 500
     text-align: center

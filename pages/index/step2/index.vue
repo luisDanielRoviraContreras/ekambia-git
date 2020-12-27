@@ -1,7 +1,7 @@
 <template>
   <div
     class="transfer">
-    <nav-bar not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+    <nav-bar step="2" steps not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div v-if="!transferred" class="con-data">
       <div class="card-texts">
         <div v-if="data" class="texts">

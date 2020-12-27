@@ -1,6 +1,6 @@
 <template>
   <div class="delivery">
-    <nav-bar absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+    <nav-bar step="2" steps absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div v-if="$route.query.qr" class="content-delivery">
       <header>
         <h2>
@@ -177,12 +177,12 @@ export default class delivery extends Vue {
     padding-right: 10px
     z-index: 10000
     .right
-      background: #fff
+      // background: #fff
       height: 45px
       padding: 0px 10px
       margin-top: 10px
       border-radius: 10px
-      box-shadow: 0px 5px 25px 0px rgba(0,0,0,.05)
+      // box-shadow: 0px 5px 25px 0px rgba(0,0,0,.05)
       img
         height: 20px
 

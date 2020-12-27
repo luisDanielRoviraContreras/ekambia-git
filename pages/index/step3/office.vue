@@ -7,7 +7,7 @@
       </p>
     </div>
     <div v-show="stepx == 1" class="content-delivery con-map">
-      <nav-bar absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+      <nav-bar step="3" steps absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
       <tracking from="honorio lozano 8, collado villalba, españa" to="rafael alberti 13, collado villalba, españa">
         <h3>Ruta para ir a la oficina</h3>
         <Button @click="changeState" class="mt-3" block yellow>
@@ -16,7 +16,7 @@
       </tracking>
     </div>
     <div v-show="stepx == 2" class="content-delivery">
-      <nav-bar not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
+      <nav-bar step="3" steps not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
       <header>
         <h2>
           Código de tu operación
@@ -118,12 +118,12 @@ export default class office extends Vue {
       padding-right: 10px
       z-index: 10000
       .right
-        background: #fff
+        // background: #fff
         height: 45px
         padding: 0px 10px
         margin-top: 10px
         border-radius: 10px
-        box-shadow: 0px 5px 25px 0px rgba(0,0,0,.05)
+        // box-shadow: 0px 5px 25px 0px rgba(0,0,0,.05)
         img
           height: 20px
 
