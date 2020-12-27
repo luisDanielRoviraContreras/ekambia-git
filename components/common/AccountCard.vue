@@ -255,6 +255,7 @@ export default class cardAccount extends Vue {
     padding: 10px
     z-index: 2
     position: relative
+    border: 2px solid -color(gray-2)
     .con-icon
       width: 50px
       height: 50px

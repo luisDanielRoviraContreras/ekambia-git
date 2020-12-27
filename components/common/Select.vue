@@ -26,7 +26,12 @@
           </div>
         </div>
       </transition>
-    <i v-if="!readonly" class='bx bxs-chevron-down'></i>
+    <svg v-if="!readonly" xmlns="http://www.w3.org/2000/svg" width="16.828" height="9.414" viewBox="0 0 16.828 9.414">
+      <g id="Arrow_-_Down_2" data-name="Arrow - Down 2" transform="translate(1.414 1.414)">
+        <path id="Stroke_1" data-name="Stroke 1" d="M14,0,7,7,0,0" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      </g>
+    </svg>
+    <!-- <i v-if="!readonly" class='bx bxs-chevron-down'></i> -->
   </div>
 </template>
 <script lang="ts">
@@ -251,6 +256,8 @@ export default class Select extends Vue {
     input
       border: 2px solid -color(black, 0)
       background: -color(gray-2)
+    svg
+      transform: rotate(180deg)
   &.readonly
     pointer-events: none
   &.sticky
@@ -267,17 +274,18 @@ export default class Select extends Vue {
       border: 2px solid rgba(255,54,95, .2) !important
       &::placeholder
         color: rgba(255,54,95, 1) !important
-    i
-      color: rgba(255,54,95, 1) !important
+    svg
+      fill: rgba(255,54,95, 1) !important
   &.block
     width: 100%
     input
       width: 100%
-  i
+  svg
     position: absolute
     right: 20px
     pointer-events: none
-    font-size: 1.2rem
+    width: 16px
+    transition: all .25s ease
   input
     border: 2px solid -color('black', .1)
     border-radius: 24px

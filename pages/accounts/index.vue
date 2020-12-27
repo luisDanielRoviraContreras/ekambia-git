@@ -1,12 +1,12 @@
 <template>
-  <div ref="accounts" :class="{ slide: $route.name == 'accounts-index-create' }" class="accounts page">
+  <div ref="accounts" :class="{ slide: $route.name == 'accounts-index-create', shadow: scrollTop > 70 }" class="accounts page">
     <nav-bar v-if="$device.isMobile" absolute />
     <button
       @click="handleCreateAccount"
       class="btn-plus">
       <i class='bx bx-plus' ></i>
     </button>
-    <div class="con-accounts">
+    <div ref="con" class="con-accounts">
       <h3>
         Mis cuentas
       </h3>
@@ -61,6 +61,7 @@ import axios from '~/plugins/axios'
 })
 export default class accountsBank extends Vue {
   create: boolean = false
+  scrollTop: number = 0
 
   @State(state => state.accounts.accounts) accounts
   @Action('accounts/getAccounts') getAccounts
@@ -89,6 +90,11 @@ export default class accountsBank extends Vue {
     setTimeout(() => {
       this.$cookies.set('anima', true)
     }, 3000);
+
+    (this.$refs.con as any).addEventListener('scroll', (evt: any) => {
+      console.dir(evt)
+      this.scrollTop = evt.target.scrollTop
+    })
   }
 }
 </script>
@@ -114,6 +120,10 @@ export default class accountsBank extends Vue {
   scroll-snap-type: x mandatory
   scroll-behavior: smooth
   background: -color(bg)
+  &.shadow
+    /deep/
+      .navbar-mobile
+        box-shadow: 0px 20px 20px -10px rgba(0,0,0,.04)
   &.slide
     .con-accounts
       transform: translate(-30px)
@@ -151,7 +161,7 @@ export default class accountsBank extends Vue {
     height: 100%
     min-width: 100%
     scroll-snap-align: center
-    padding: 20px
+    padding: 15px
     flex: 1
     position: relative
     overflow: auto

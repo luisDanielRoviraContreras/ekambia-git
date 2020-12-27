@@ -26,6 +26,7 @@
             identificador="send"
             @focus="inputFocus"
             @change-value="handleFormSend"
+            money
           >
             Yo tengo
           </c-input>
@@ -371,8 +372,8 @@ export default class name extends Vue {
        content: ''
        position: absolute
        left: 0px
-       width: 2px
-       background: -color('black', .1)
+       width: 1px
+       background: #fff
        height: 26px
 .change
   flex-wrap: wrap

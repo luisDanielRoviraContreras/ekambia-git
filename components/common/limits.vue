@@ -2,7 +2,7 @@
   <div class="limits">
     <header>
       <h3>
-        Limites
+        límites
       </h3>
     </header>
     <div class="con-limits">
@@ -50,9 +50,10 @@ export default class limits extends Vue {
   padding-top: 20px
   header
     h3
-      text-align: center
+      text-align: left
       width: 100%
       font-size: 1rem
+      padding-left: 5px
       // font-weight: normal
   .limit
     padding: 8px 0px

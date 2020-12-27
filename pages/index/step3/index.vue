@@ -69,7 +69,7 @@
       <b>Operación verificada</b> con éxito, transfiriendo a su cuenta bancaria
     </p>
     <p v-else>
-      Se esta verificando la transacción espere un momento...
+      Se esta verificando la transacción espere un momento<points />
     </p>
 
     <div :class="{active: this.$route.query.animate}" class="con-btn-success">
@@ -299,7 +299,8 @@ export default class vefificated extends Vue {
       transition: all 1s ease
   p
     opacity: .7
-    font-size: .8rem
+    font-size: .85rem
+    font-weight: bold
     padding: 30px 25px
 
 @keyframes rotate

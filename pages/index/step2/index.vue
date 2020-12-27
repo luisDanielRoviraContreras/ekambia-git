@@ -256,6 +256,7 @@ export default class transfer extends Vue {
     display: flex
     align-items: center
     justify-content: center
+    border: 2px solid -color('gray-2')
     .text
       width: 50%
       text-align: center

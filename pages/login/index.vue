@@ -171,22 +171,11 @@ export default class login extends Vue {
       const token = data.info.token
       this.$cookies.set('token', token)
 
-      if (data.info.status_user_id == '1') {
+      if (data.info.verified_tel == 0) {
         setTimeout(() => {
           this.$nextTick(() => {
             this.$router.push({
               path: '/createAccount/step2',
-              query: {
-                check: 'true'
-              }
-            })
-          })
-        }, 300)
-      } else if (data.info.status_user_id == '2') {
-        setTimeout(() => {
-          this.$nextTick(() => {
-            this.$router.push({
-              path: '/createAccount/step3',
               query: {
                 check: 'true'
               }

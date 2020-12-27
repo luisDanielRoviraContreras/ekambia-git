@@ -97,7 +97,7 @@ export default class createAccount extends Vue {
         text: 'Verificación de número celular exitosa'
       })
       this.loading = false
-      this.$router.push('/createAccount/step3')
+      this.$router.push('/createAccount/step4')
     })
   }
 

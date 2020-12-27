@@ -13,6 +13,7 @@
     class="con-input"
   >
     <input
+      v-if="!money"
       v-bind="attrs"
       :class="[identificador]"
       :value="value"
@@ -20,6 +21,16 @@
       @blur="focus = false"
       v-on="listeners"
     >
+    <money v-else v-model="val" v-bind="moneyData"></money>
+    <!-- <input
+      v-else
+      v-bind="attrs"
+      :class="[identificador]"
+      @focus="focus = true, $emit('focus', $event)"
+      @blur="focus = false"
+      v-money="moneyData"
+      v-model.lazy="val"
+    > -->
     <span ref="placeholder" class="placeholder">
       <slot />
     </span>
@@ -35,9 +46,11 @@
   </label>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import {Money} from 'v-money'
 @Component({
-  inheritAttrs: false
+  inheritAttrs: false,
+  components: {Money},
 })
 export default class InputComponent extends Vue {
   @Prop({}) identificador: any
@@ -49,9 +62,27 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean }) stickyPrev: boolean
   @Prop({ type: Boolean }) lowercase: boolean
   @Prop({ type: Boolean }) yellow: boolean
+  @Prop({ type: Boolean }) money: boolean
+
+  val: any = ''
 
   focus: boolean = false
   forceInputText: boolean = false
+
+  moneyData: any = {
+    decimal: ',',
+    thousands: '.',
+    prefix: '',
+    suffix: '',
+    precision: 2,
+    masked: false /* doesn't work with directive */
+  }
+
+  @Watch('val')
+  handleVal(value: any) {
+    this.$emit('input', value)
+    this.$emit('change-value', value)
+  }
 
   handleClickHidePassword () {
     this.forceInputText = !this.forceInputText
@@ -61,7 +92,11 @@ export default class InputComponent extends Vue {
   get listeners () {
     return {
       ...this.$listeners,
+      change: (evt: any) => {
+        console.log(evt)
+      },
       input: (evt: any) => {
+
         const max = Number(this.$attrs.maxlength)
         if (!!this.$attrs.maxlength) {
           if (evt.target.value.length < max) {

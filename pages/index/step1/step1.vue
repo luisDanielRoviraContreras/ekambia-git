@@ -40,7 +40,7 @@
       </h3>
 
       <template v-if="data && typesOperation">
-        <Select child="name" class="mt-6" @change="handleChangeRecibe" :data="typesOperation" placeholder="Cómo quiero recibirlo" v-model="form.typeReceive" block>
+        <Select child="name" class="mt-3" @change="handleChangeRecibe" :data="typesOperation" placeholder="Cómo quiero recibirlo" v-model="form.typeReceive" block>
           <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
         </Select>
       </template>
@@ -81,7 +81,7 @@
       </h3>
 
       <template v-if="data && typesOperation">
-        <Select child="name" class="mt-6" @change="handleChangeSend" :data="typesOperation" placeholder="Cómo entregar" v-model="formSend.typeReceive" block>
+        <Select child="name" class="mt-3" @change="handleChangeSend" :data="typesOperation" placeholder="Cómo entregar" v-model="formSend.typeReceive" block>
           <Option :key="i" v-for="(option, i) in typesOperation" :value="option.id" :text="option.name" />
         </Select>
       </template>
@@ -446,10 +446,11 @@ export default class transferStep1 extends Vue {
     display: flex
     align-items: center
     justify-content: center
+    border: 2px solid -color('gray-2')
     .text
       width: 50%
       text-align: center
-      padding: 15px 10px
+      padding: 15px 5px
   .textw
     width: 100%
     text-align: center

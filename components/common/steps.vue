@@ -38,23 +38,25 @@ export default class steps extends Vue {
     display: flex
     align-items: center
     justify-content: center
-    margin-left: 22px
-    border: 2px solid -color('color')
+    margin-left: 18px
+    border: 2px solid #000
     transition: all .25s ease
     &.numbers
-      width: 38px
-      height: 38px
-      font-weight: bold
-      border: 2px solid -color(black)
+      width: 38px !important
+      height: 32px !important
+      font-weight: bold !important
+      border: 2px solid #000 !important
+      border-radius: 15px !important
       &.check
         background: transparent !important
       &:not(:last-child):after
-        background: -color(black)
+        background: #000 !important
       &:before
-        background: -color(black)
-        width: 38px
-        height: 38px
-        box-shadow: 0px 4px 20px 0px -color('black', .2)
+        background: #000 !important
+        width: 38px !important
+        height: 32px !important
+        box-shadow: 0px 4px 20px 0px rgba(0,0,0,.2) !important
+        border-radius: 15px !important
     &.check
       background: -color('color', .4)
     &.active
@@ -68,8 +70,8 @@ export default class steps extends Vue {
     &:not(:last-child):after
       content: ''
       right: 0px
-      background: -color('color')
-      width: 24px
+      background: #000
+      width: 20px
       height: 2px
       position: absolute
       display: block
@@ -79,12 +81,12 @@ export default class steps extends Vue {
       width: 22px
       height: 22px
       position: absolute
-      background: -color('color')
+      background: #000
       border-radius: 50%
       opacity: 0
       transition: all .25s ease
       transform: scale(.2)
-      box-shadow: 0px 4px 15px 0px -color('color', .45)
+      box-shadow: 0px 4px 15px 0px rgba(0,0,0,.4)
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

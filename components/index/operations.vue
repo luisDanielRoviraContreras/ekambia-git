@@ -609,6 +609,8 @@ export default class OperationsClass extends Vue {
       position: relative
       margin-right: 12px
       background: rgba(0,0,0,.03)
+      font-weight: 600
+      font-size: .85rem
       &.active
         background: -color('black')
         color: -color('bg')
@@ -634,7 +636,7 @@ export default class OperationsClass extends Vue {
     padding: 20px 30px
     h2
       font-size: 1rem
-      font-weight: normal
+      // font-weight: normal
     i
       transition: all .25s ease
       font-size: 1.1rem

@@ -46,6 +46,8 @@ export default class NavbarMobile extends Vue {
   z-index: 1000
   min-height: 50px
   padding-left: 12px
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,.05)
+  transition: all .25s ease
   &.notPadding
     padding: 0px !important
   &.back
@@ -78,7 +80,7 @@ export default class NavbarMobile extends Vue {
     align-items: center
     justify-self: center
     img
-      height: 24px
+      height: 28px
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)
