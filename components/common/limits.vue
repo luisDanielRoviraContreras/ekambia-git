@@ -2,7 +2,7 @@
   <div class="limits">
     <header>
       <h3>
-        límites
+        Límites
       </h3>
     </header>
     <div class="con-limits">
@@ -66,9 +66,11 @@ export default class limits extends Vue {
       h4
         font-weight: normal
         font-size: .8rem
+        font-weight: 600
       span
         font-weight: normal
         font-size: .8rem
+        font-weight: 600
     .progress
       width: 100%
       background: -color(gray-2)

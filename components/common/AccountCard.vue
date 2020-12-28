@@ -174,7 +174,7 @@ export default class cardAccount extends Vue {
   }
 
   mounted() {
-    if (this.animate && !this.$cookies.get('anima')) {
+    if (this.animate && !this.$cookies.get('anima') && this.$device.isMobile) {
       this.anima = true
     }
   }

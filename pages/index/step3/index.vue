@@ -8,6 +8,7 @@
   >
     <nav-bar step="3" steps back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div ref="con" class="con">
+      <steps v-if="$device.isDesktop" class="mb-6" numbers :value="3" :items="3" />
       <div class="con-circle">
         <div class="con-send con-icon">
           <div class="icon">

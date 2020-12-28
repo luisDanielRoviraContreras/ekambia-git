@@ -78,6 +78,11 @@ export default class InputComponent extends Vue {
     masked: false /* doesn't work with directive */
   }
 
+  @Watch('value')
+  handleValue() {
+    this.val = this.value
+  }
+
   @Watch('val')
   handleVal(value: any) {
     this.$emit('input', value)

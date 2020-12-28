@@ -92,7 +92,6 @@ export default class accountsBank extends Vue {
     }, 3000);
 
     (this.$refs.con as any).addEventListener('scroll', (evt: any) => {
-      console.dir(evt)
       this.scrollTop = evt.target.scrollTop
     })
   }

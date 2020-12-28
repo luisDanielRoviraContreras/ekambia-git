@@ -2,6 +2,10 @@
   <div ref="page" :class="{ slide: $route.name !== 'index' }" class="index page">
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
+
+      <h2 v-if="$device.isDesktop" class="mb-6">
+        Cambiar dinero
+      </h2>
       <!-- <div v-if="sale_price" class="con-img">
         <img src="/home.svg" alt="">
       </div>
@@ -30,7 +34,7 @@
           >
             Yo tengo
           </c-input>
-          <Select @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinSend" :danger="!form.coinSend && send">
+          <Select esquina @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinSend" :danger="!form.coinSend && send">
             <template>
               <Option :disabled="option.id == form.coinReceive" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
             </template>
@@ -50,7 +54,7 @@
           >
             Yo recibo
           </c-input>
-          <Select @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
+          <Select esquina @change="handleChangeCoin" child="coin" :data="coins" placeholder="Moneda" block v-model="form.coinReceive" :danger="!form.coinReceive && send">
             <template>
               <Option :disabled="option.id == form.coinSend" :key="i" v-for="(option, i) in coins" :value="option.id" :text="option.coin" />
             </template>
@@ -99,12 +103,14 @@ export default class name extends Vue {
   // sale_price: any = null
   // purchase_price: any = null
   form: any = {
-    send: '',
-    receive: '',
+    send: 0,
+    receive: 0,
     coinSend: 2,
     coinReceive: 1
   }
   // coins: any = []
+  @State('status_user_id') status_user_id
+
   @State('sale_price') sale_price
 
   @State('purchase_price') purchase_price
@@ -149,18 +155,31 @@ export default class name extends Vue {
   }
 
   handleInitOperation() {
-    this.$router.push({
-      path: '/step1/step1', query: {
-        send: btoa(this.form.send),
-        receive: btoa(this.form.receive),
-        coinSend: this.form.coinSend,
-        coinReceive: this.form.coinReceive,
-        cp: btoa(this.sale_price),
-      }
-    })
+    console.log(this.status_user_id)
+    if (this.status_user_id == 1) {
+      this.$router.push({
+        path: '/verified', query: {
+          send: btoa(this.form.send),
+          receive: btoa(this.form.receive),
+          coinSend: this.form.coinSend,
+          coinReceive: this.form.coinReceive,
+          cp: btoa(this.sale_price),
+        }
+      })
+    } else {
+      this.$router.push({
+        path: '/step1/step1', query: {
+          send: btoa(this.form.send),
+          receive: btoa(this.form.receive),
+          coinSend: this.form.coinSend,
+          coinReceive: this.form.coinReceive,
+          cp: btoa(this.sale_price),
+        }
+      })
 
-    this.form.send = ''
-    this.form.receive = ''
+      this.form.send = ''
+      this.form.receive = ''
+    }
   }
 
   @Watch('$route.query.operations')
@@ -197,6 +216,9 @@ export default class name extends Vue {
     this.handleOperations()
     this.$bounceClose()
     this.handleScroll()
+    if (this.$device.isDesktop) {
+      (this.$refs.send as any).$el.focus()
+    }
   }
 
   handleScroll() {
@@ -284,6 +306,7 @@ export default class name extends Vue {
   width: 100%
   max-width: 100%
   position: relative
+
   &.readonly
     .select
       input
@@ -291,11 +314,8 @@ export default class name extends Vue {
   .con-input
     position: relative
     z-index: 10
-    .bg
-      // border-radius: 24px 0px 0px 24px !important
-      // border-right: 0px !important
   .select
-    max-width: 140px
+    max-width: 150px
     position: absolute !important
     right: 0px
     z-index: 15
@@ -304,6 +324,7 @@ export default class name extends Vue {
     input
       border-radius: 0px 24px 24px 0px !important
       border: 2px solid transparent !important
+      width: 100%
 .index
   height: 100vh
   overflow: auto

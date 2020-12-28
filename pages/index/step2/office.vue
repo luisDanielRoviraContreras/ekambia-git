@@ -3,6 +3,7 @@
     <div v-show="stepx == 1" class="content-delivery con-map">
       <nav-bar step="2" steps absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
       <tracking office to="rafael alberti 13, collado villalba, españa">
+        <steps v-if="$device.isDesktop" class="mb-6" numbers :value="2" :items="3" />
         <h3>Ruta para ir a la oficina</h3>
         <Button @click="changeState" class="mt-3" block yellow>
           Ya estoy en la oficina
@@ -12,6 +13,7 @@
     <div v-show="stepx == 2" class="content-delivery">
       <nav-bar step="2" steps not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
       <header>
+        <steps v-if="$device.isDesktop" class="mb-6" numbers :value="2" :items="3" />
         <h2>
           Código de tu operación
         </h2>

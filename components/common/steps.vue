@@ -30,6 +30,7 @@ export default class steps extends Vue {
   display: flex
   align-items: center
   justify-content: center
+  user-select: none
   .step
     width: 16px
     height: 16px
@@ -55,7 +56,6 @@ export default class steps extends Vue {
         background: #000 !important
         width: 38px !important
         height: 32px !important
-        box-shadow: 0px 4px 20px 0px rgba(0,0,0,.2) !important
         border-radius: 15px !important
     &.check
       background: -color('color', .4)
@@ -86,7 +86,7 @@ export default class steps extends Vue {
       opacity: 0
       transition: all .25s ease
       transform: scale(.2)
-      box-shadow: 0px 4px 15px 0px rgba(0,0,0,.4)
+      // box-shadow: 0px 4px 15px 0px rgba(0,0,0,.4)
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

@@ -37,6 +37,7 @@ export default class btn extends Vue {
   justify-content: center
   cursor: pointer
   position: relative
+  transition: all .25s ease
   &.loading
     pointer-events: none
     .load
@@ -74,11 +75,14 @@ export default class btn extends Vue {
   &.yellow
     background: -color('color')
     color: #000
-    box-shadow: 0px 7px 20px 0px -color('color', .3)
+    &:hover
+      box-shadow: 0px 7px 20px 0px -color('color', .3)
+      transform: translate(0, -5px)
   &.block
     width: 100%
   &:disabled
     opacity: .5
+    pointer-events: none
 // responsive
 
 @keyframes load1

@@ -7,7 +7,8 @@ export const state = () => ({
   guide: false,
   coins: [],
   sale_price: null,
-  purchase_price: null
+  purchase_price: null,
+  status_user_id: null
 })
 
 export type RootState = ReturnType<typeof state>
@@ -21,7 +22,8 @@ export const mutations: MutationTree<RootState> = {
   SET_GUIDE: (state, newVal: boolean) => (state.guide = newVal),
   SET_COINS: (state, newVal: any) => (state.coins = newVal),
   SET_SALE: (state, newVal: any) => (state.sale_price = newVal),
-  SET_PURCHASE: (state, newVal: any) => (state.purchase_price = newVal)
+  SET_PURCHASE: (state, newVal: any) => (state.purchase_price = newVal),
+  SET_STATUS_USER_ID: (state, newVal: any) => (state.status_user_id = newVal)
 }
 
 export const actions: ActionTree<RootState, RootState> = {

@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="con-logo">
-      <img src="logo2.png" alt="">
+      <img src="/ekambia_logo.svg" alt="">
     </div>
     <ul>
       <nuxt-link tag="li" to="/">
@@ -77,11 +77,16 @@ export default class sidebar extends Vue {}
       opacity: .6
       cursor: pointer
       transition: all .25s ease
+      &:hover
+        opacity: 1
+        svg
+          margin-right: 20px !important
       svg
         max-width: 22px
         max-height: 22px
         width: 22px
         margin-right: 10px
+        transition: all .25s ease
         &#iuser
           width: 18px
           margin-right: 14px
@@ -112,7 +117,7 @@ export default class sidebar extends Vue {}
     justify-content: center
     margin-top: 40px
     img
-      max-width: 100px
+      max-width: 140px
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

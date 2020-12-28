@@ -6,7 +6,7 @@
       notPadding
     }"
     class="navbar-mobile">
-    <button v-if="back" class="back-btn" @click="$emit('click')">
+    <button v-if="back" class="back-btn" :class="{ isDesktop: $device.isDesktop }" @click="$emit('click')">
       <!-- <i class='bx bx-arrow-back'></i> -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
         <g id="Grupo_2221" data-name="Grupo 2221" transform="translate(-68 -85.773)">
@@ -14,9 +14,13 @@
           <path id="Path-94" d="M2.195.377A1.286,1.286,0,0,0,.377,2.195L8.091,9.909a1.286,1.286,0,0,0,1.778.039l7.714-7.071a1.286,1.286,0,1,0-1.738-1.9L9.039,7.22Z" transform="translate(78.286 85.773) rotate(90)"/>
         </g>
       </svg>
+
+      <span>
+        Volver
+      </span>
     </button>
     <div class="right">
-      <img v-if="!steps" src="/ekambia_logo.svg" alt="">
+      <img v-if="$device.isDesktop ? true : !steps " src="/ekambia_logo.svg" alt="">
       <steps numbers v-else :value="step" :items="3" />
     </div>
   </div>
@@ -61,6 +65,21 @@ export default class NavbarMobile extends Vue {
     align-items: center
     justify-content: center
     cursor: pointer
+    margin-top: 10px
+    &.isDesktop
+      width: auto !important
+      height: auto !important
+      background: -color(gray)
+      padding: 14px 20px
+      border-radius: 20px
+      transition: all .25s ease
+      &:hover
+        background: -color(color)
+      svg
+        width: 20px
+      span
+        font-weight: bold
+        padding-left: 10px
     i
       font-size: 1.8rem
     svg

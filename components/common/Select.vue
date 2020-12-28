@@ -12,7 +12,7 @@
         @enter="enter"
         @leave="leave"
       >
-        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop, itemsCenter }" class="con-items">
+        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop, itemsCenter, esquina }" class="con-items">
           <div class="shadow" @click="handleClickShadow"></div>
           <div class="items">
             <header>
@@ -48,6 +48,7 @@ export default class Select extends Vue {
   @Prop({ type: String }) placeholder: string
   @Prop({ type: String, default: 'alias' }) child: string
   @Prop({ type: String, default: 'id' }) uid: string
+  @Prop({ type: Boolean }) esquina: boolean
   @Prop({ }) data: any
   @Prop({}) value: any
   inputValue: any = ''
@@ -178,6 +179,9 @@ export default class Select extends Vue {
     height: 100%
     top: 0px
     left: 0px
+    &.esquina
+      .items
+        border-radius: 0px 20px 20px 20px !important
     header
       display: none
     .shadow
@@ -252,6 +256,9 @@ export default class Select extends Vue {
   justify-content: center
   position: relative
   transition: all .25s ease
+  &:hover
+    input
+      background: -color(gray)
   &.active
     input
       border: 2px solid -color(black, 0)
@@ -284,7 +291,7 @@ export default class Select extends Vue {
     position: absolute
     right: 20px
     pointer-events: none
-    width: 16px
+    width: 15px
     transition: all .25s ease
   input
     border: 2px solid -color('black', .1)

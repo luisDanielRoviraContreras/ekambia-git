@@ -67,6 +67,9 @@ export default class invert extends Vue {
     box-shadow: 0px 12px 15px -4px -color('black', .2)
     transition: all .25s ease
     z-index: 59
+    &:hover
+      transform: scale(1.05)
+      box-shadow: 0px 15px 15px -4px -color('black', .4)
     &:active
       transform: scale(1.1)
       box-shadow: 0px 15px 15px -4px -color('black', .4)

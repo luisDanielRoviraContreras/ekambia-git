@@ -1,12 +1,14 @@
 <template>
   <div class="error">
-    <h3>
-      Oops! Algo salio mal
-    </h3>
-    <img src="/404.png" alt="">
-    <Button class="mt-6" yellow block @click="$router.push('/')">
-      Volver
-    </Button>
+    <div class="con-error">
+      <h3>
+        Oops! Algo salio mal
+      </h3>
+      <img src="/404.png" alt="">
+      <Button class="mt-6" yellow block @click="$router.push('/')">
+        Volver
+      </Button>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -26,6 +28,16 @@ export default class errorPage extends Vue {}
   z-index: 200000
   flex-direction: column
   padding: 25px
+  width: 100%
+  left: 0px
+  top: 0px
+  .con-error
+    max-width: 400px
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
   img
     width: 100%
     max-width: 280px

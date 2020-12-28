@@ -3,6 +3,7 @@
     class="transfer">
     <nav-bar step="2" steps not-padding back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div v-if="!transferred" class="con-data">
+      <steps v-if="$device.isDesktop" class="mb-6" numbers :value="2" :items="3" />
       <div class="card-texts">
         <div v-if="data" class="texts">
           <div class="text">

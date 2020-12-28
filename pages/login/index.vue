@@ -143,6 +143,8 @@ export default class login extends Vue {
 
   @State(state => state.bounce) bounce
 
+  @Mutation('SET_STATUS_USER_ID') setStatusUserId
+
   handleClick(n) {
     this.active = n
     clearInterval(this.interval)
@@ -183,6 +185,8 @@ export default class login extends Vue {
           })
         }, 300)
       } else {
+        console.log(data.info.status_user_id)
+        this.setStatusUserId(data.info.status_user_id)
         this.$cookies.set('authenticated', true)
         setTimeout(() => {
           this.$nextTick(() => {
@@ -352,7 +356,7 @@ export default class login extends Vue {
       display: flex
       align-items: center
       justify-content: center
-      min-width: 600px
+      min-width: 700px
       .con-login
         flex: none
       .btn-create

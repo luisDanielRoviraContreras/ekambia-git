@@ -3,6 +3,7 @@
     <nav-bar step="1" steps :absolute="$device.isDesktop" back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
 
     <div class="content-step">
+      <steps v-if="$device.isDesktop" class="mb-6" numbers :value="1" :items="3" />
       <div class="card-texts">
         <div v-if="data" class="texts">
           <div class="text">
@@ -495,6 +496,10 @@ export default class transferStep1 extends Vue {
     font-size: 1rem
     text-align: center
 // responsive
-
+// @media (min-width: 812px)
+//   .transfer-step1
+//     display: flex
+//     align-items: center
+//     justify-content: center
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)
 </style>
