@@ -261,6 +261,8 @@ export default class createAccount extends Vue {
     display: flex
     align-items: center
     justify-content: center
+    .button
+      margin-top: 1.5rem
   .con-form
     flex: none
     margin-bottom: 30px

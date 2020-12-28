@@ -1,8 +1,11 @@
 <template>
   <div class="verified ">
-    <nav-bar :absolute="$device.isDesktop" back @click="$router.push('/')" />
+    <nav-bar back @click="$router.push('/')" />
 
     <div class="con-form">
+      <h2>
+        Verificación
+      </h2>
       <c-input
         v-model="form.lastName"
         class="mt-6"
@@ -16,7 +19,7 @@
       <div
         class="con-select-input mt-6"
       >
-        <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.dniType" :danger="!form.dni && send">
+        <Select :data="typeDocuments" placeholder="Tipo" sticky v-model="form.document_type_id" :danger="!form.dni && send">
           <Option :key="i" v-for="(item, i) in typeDocuments" :value="item.id" :text="item.alias" :sub-text="item.sub" />
         </Select>
         <c-input
@@ -25,7 +28,7 @@
           class="ml-3"
           :danger="!form.dni && send"
         >
-          {{ form.dniType == 1 ? 'Nro. Cédula de Identidad' : 'Nro. Pasaporte' }}
+          {{ form.document_type_id == 1 ? 'Nro. Cédula de Identidad' : 'Nro. Pasaporte' }}
         </c-input>
       </div>
       <Alert :open="!form.dni && send">
@@ -34,32 +37,43 @@
 
       <input-file
         ref="front"
-        v-model="form.cedulaFile"
-        :danger="!form.cedulaFile && send"
+        v-model="form.cedulaFront"
+        :danger="!form.cedulaFront && send"
         :disabled="loading"
       >
         Fotografía de su CI de identidad o Pasaporte
       </input-file>
-      <Alert :open="!form.cedulaFile && send">
+      <Alert :open="!form.cedulaFront && send">
         Este campo es requerido
       </Alert>
+      <!-- <template v-if="country_list">
+        <Select alias="name" uid="id" class="mt-6" block :data="country_list" placeholder="Nacionalidad" v-model="form.nacionality_id" :danger="!form.nacionality_id && send">
+          <Option :key="i" v-for="(item, i) in country_list" :value="item.id" :text="item.name" />
+        </Select>
+      </template> -->
 
-      <Select class="mt-6" block :data="country_list" placeholder="Nacionalidad" v-model="form.country" :danger="!form.country && send">
-        <Option :key="i" v-for="(item, i) in country_list" :value="item" :text="item" />
-      </Select>
+      <template v-if="country_list">
+        <Select child="name" class="mt-6" :data="country_list" placeholder="Cómo quiero recibirlo" v-model="form.nacionality_id" block>
+          <Option :key="i" v-for="(option, i) in country_list" :value="option.id" :text="option.name" />
+        </Select>
+      </template>
 
-      <Alert :open="!form.country && send">
+      <load v-else block height="60px" class="mt-6" />
+
+
+
+      <Alert :open="!form.nacionality_id && send">
         Este campo es requerido
       </Alert>
 
       <c-input
-        v-model="form.direction"
+        v-model="form.domicilie"
         class="mt-6"
-        :danger="!form.direction && send"
+        :danger="!form.domicilie && send"
       >
         Domicilio
       </c-input>
-      <Alert :open="!form.direction && send">
+      <Alert :open="!form.domicilie && send">
         Este campo es requerido
       </Alert>
 
@@ -75,24 +89,24 @@
       </Alert>
 
       <c-input
-        v-model="form.purposeOperation"
+        v-model="form.obj_operation"
         class="mt-6"
-        :danger="!form.purposeOperation && send"
+        :danger="!form.obj_operation && send"
       >
         Objeto de la operación
       </c-input>
-      <Alert :open="!form.purposeOperation && send">
+      <Alert :open="!form.obj_operation && send">
         Este campo es requerido
       </Alert>
 
       <c-input
-        v-model="form.sourceFunds"
+        v-model="form.source_founds"
         class="mt-6"
-        :danger="!form.sourceFunds && send"
+        :danger="!form.source_founds && send"
       >
         Origen de los fondos
       </c-input>
-      <Alert :open="!form.sourceFunds && send">
+      <Alert :open="!form.source_founds && send">
         Este campo es requerido
       </Alert>
 
@@ -116,16 +130,15 @@ export default class verified extends Vue {
     lastName: '',
     document_type_id: 1,
     dni: '',
+    cedulaFront: '',
     nacionality_id: '',
     domicilie: '',
     occupation: '',
-    cedulaFront: '',
-    cedulaPost: '',
-    purposeOperation: '',
-    sourceFunds: '',
+    obj_operation: '',
+    source_founds: '',
   }
 
-  country_list: any = ["Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda","Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán","Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután","Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Etiopía","Filipinas","Finlandia","Fiyi","Francia","Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea ecuatorial","Guinea-Bisáu","Haití","Honduras","Hungría","India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Islas Salomón","Israel","Italia","Jamaica","Japón","Jordania","Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait","Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo","Madagascar","Malasia","Malaui","Maldivas","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique","Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda","Omán","Países Bajos","Pakistán","Palaos","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal","Reino Unido","República Centroafricana","República Checa","República de Macedonia","República del Congo","República Democrática del Congo","República Dominicana","República Sudafricana","Ruanda","Rumanía","Rusia","Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia","Sudán","Sudán del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistán","Vanuatu","Venezuela","Vietnam","Yemen","Yibuti","Zambia","Zimbabue"];
+  country_list: any = null
 
   typeDocuments: any = [
     {
@@ -141,17 +154,41 @@ export default class verified extends Vue {
   ]
 
   handleSend() {
-    axios.post('/verificate1-user', {
-      ...this.form
-    }).then(({ data }) => {
+    this.send = true
+
+    if (!this.form.lastName || !this.form.document_type_id || !this.form.dni || !this.form.cedulaFront || !this.form.nacionality_id || !this.form.domicilie || !this.form.occupation || !this.form.obj_operation || !this.form.source_founds) {
+      return
+    }
+
+    this.loading = true
+
+    var formData = new FormData()
+    formData.append("lastName", this.form.lastName)
+    formData.append("document_type_id", this.form.document_type_id)
+    formData.append("dni", this.form.dni)
+    formData.append("cedulaFront", this.form.cedulaFront)
+    formData.append("nacionality_id", this.form.nacionality_id)
+    formData.append("domicilie", this.form.domicilie)
+    formData.append("occupation", this.form.occupation)
+    formData.append("obj_operation", this.form.obj_operation)
+    formData.append("source_founds", this.form.source_founds)
+
+    axios.post('/verificate1-user', formData).then(({ data }) => {
       console.log('se verifico')
+      this.loading = false
+      this.$router.push({
+        path: '/step1/step1',
+        query: {
+          ...this.$route.query
+        }
+      })
     })
-    console.log('click')
   }
 
   mounted() {
     axios.get('/nationalities').then(({ data }) => {
       console.log(data)
+      this.country_list = data.info
     })
   }
 }
@@ -183,7 +220,7 @@ export default class verified extends Vue {
   background: -color('bg')
   top: 0px
   left: 0px
-  z-index: 5000
+  z-index: 4000
   display: flex
   align-items: flex-start
   justify-content: flex-start
@@ -208,7 +245,16 @@ export default class verified extends Vue {
       z-index: 1200
       padding: 15px
       box-shadow: 0px 0px 20px 0px rgba(0,0,0,.04)
+      max-width: 450px
 // responsive
 
-// @media (max-width: 812px), (pointer:none), (pointer:coarse)
+@media (min-width: 812px)
+  .verified
+    align-items: center
+    .con-form
+      .footer
+        position: relative
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,.04)
+        padding: 0px
+        margin-top: 1.5rem
 </style>

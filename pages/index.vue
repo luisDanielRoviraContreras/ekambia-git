@@ -51,6 +51,7 @@
             identificador="receive"
             @focus="inputFocus"
             disabled
+            money
           >
             Yo recibo
           </c-input>
@@ -156,30 +157,33 @@ export default class name extends Vue {
 
   handleInitOperation() {
     console.log(this.status_user_id)
-    if (this.status_user_id == 1) {
-      this.$router.push({
-        path: '/verified', query: {
-          send: btoa(this.form.send),
-          receive: btoa(this.form.receive),
-          coinSend: this.form.coinSend,
-          coinReceive: this.form.coinReceive,
-          cp: btoa(this.sale_price),
-        }
-      })
-    } else {
-      this.$router.push({
-        path: '/step1/step1', query: {
-          send: btoa(this.form.send),
-          receive: btoa(this.form.receive),
-          coinSend: this.form.coinSend,
-          coinReceive: this.form.coinReceive,
-          cp: btoa(this.sale_price),
-        }
-      })
+    axios.get('/limites-user').then(({data}: any) => {
+      console.log(data)
+      if (data.info.status_user_id[0] == 1) {
+        this.$router.push({
+          path: '/verified', query: {
+            send: btoa(this.form.send),
+            receive: btoa(this.form.receive),
+            coinSend: this.form.coinSend,
+            coinReceive: this.form.coinReceive,
+            cp: btoa(this.sale_price),
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/step1/step1', query: {
+            send: btoa(this.form.send),
+            receive: btoa(this.form.receive),
+            coinSend: this.form.coinSend,
+            coinReceive: this.form.coinReceive,
+            cp: btoa(this.sale_price),
+          }
+        })
 
-      this.form.send = ''
-      this.form.receive = ''
-    }
+        this.form.send = ''
+        this.form.receive = ''
+      }
+    })
   }
 
   @Watch('$route.query.operations')
@@ -215,7 +219,7 @@ export default class name extends Vue {
     // this.getFirstOperation()
     this.handleOperations()
     this.$bounceClose()
-    this.handleScroll()
+    this.handleScroll();
     if (this.$device.isDesktop) {
       (this.$refs.send as any).$el.focus()
     }

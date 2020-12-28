@@ -15,7 +15,7 @@
         </g>
       </svg>
 
-      <span>
+      <span v-if="$device.isDesktop">
         Volver
       </span>
     </button>

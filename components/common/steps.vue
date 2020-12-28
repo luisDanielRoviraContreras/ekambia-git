@@ -57,8 +57,6 @@ export default class steps extends Vue {
         width: 38px !important
         height: 32px !important
         border-radius: 15px !important
-    &.check
-      background: -color('color', .4)
     &.active
       span
         color: #fff

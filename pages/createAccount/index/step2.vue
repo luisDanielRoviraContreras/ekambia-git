@@ -190,6 +190,7 @@ export default class createAccount extends Vue {
   justify-content: center
   flex-direction: column
   height: 100vh
+  max-width: 500px
   h2
     font-weight: 500
   .con-get-number
@@ -247,10 +248,14 @@ export default class createAccount extends Vue {
         border: 0px
         background: -color('gray-2')
         border-radius: 15px
+
+// @media (max-width: 812px), (pointer:pointer)
+
 @media (min-width: 812px), (pointer:pointer)
   .con-create
+    margin: auto
     .con-code
-      max-width: 400px
+      max-width: 500px
       flex: none
       margin-bottom: 30px
       p
@@ -260,5 +265,5 @@ export default class createAccount extends Vue {
       flex: none
       margin-bottom: 30px
     .button
-      max-width: 400px
+      max-width: 500px
 </style>
