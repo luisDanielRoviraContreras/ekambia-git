@@ -53,7 +53,7 @@
       </template> -->
 
       <template v-if="country_list">
-        <Select child="name" class="mt-6" :data="country_list" placeholder="Cómo quiero recibirlo" v-model="form.nacionality_id" block>
+        <Select child="name" class="mt-6" :data="country_list" placeholder="Nacionalidad" v-model="form.nacionality_id" block>
           <Option :key="i" v-for="(option, i) in country_list" :value="option.id" :text="option.name" />
         </Select>
       </template>

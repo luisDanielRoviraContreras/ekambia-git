@@ -1,57 +1,383 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información de tus Operaciones</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header>
-      <h2>Gracias por cambiar con nosotros {{ $name }}</h2>
-    </header>
-    <div class="content">
-      <p>
-          Esta es una información relativa a tu Operación realizada en nuestro Sistema
-          el día {{ $datex }}, donde recibes {{ $received }} {{ $coin_received }} y envias {{ $send }}  {{ $coin_send }}.
-           Te mantendremos informado.
-      </p>
-    </div>
-    <footer>
-      <h3>Contactados</h3>
-      <a href="">+595 1222 34253</a>
-      <a href="">cantact@ekambia.com</a>
-    </footer>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0070)https://viewstripo.email/template/24f1019e-36a3-42f2-8c58-7b7cca11128f -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="width:100%;font-family:tahoma, verdana, segoe, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="script-src &#39;none&#39;; connect-src &#39;none&#39;; object-src &#39;none&#39;; form-action &#39;none&#39;;">
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
-  }
-  header {
-    padding: 30px 10px;
-    width: 100%;
-    background: rgb(255 218 26);
-    text-align: center;
-  }
-  .content {
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    text-align: center;
-    padding: 50px 20px;
-  }
-  footer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  a {
-    padding: 20px;
-  }
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="telephone=no" name="format-detection">
+  <title>Ekambia</title>
+  <!--[if (mso 16)]>
+    <style type="text/css">
+    a {text-decoration: none;}
+    </style>
+    <![endif]-->
+  <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
+  <!--[if !mso]><!-- -->
+  <!-- <link href="./Christmas Presents_files/css" rel="stylesheet">
+  <link href="./Christmas Presents_files/css(1)" rel="stylesheet"> -->
+  <!--<![endif]-->
+  <!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+  <link rel="shortcut icon" type="image/png" href="https://ekambia.herokuapp.com/favicon.png">
+  <style type="text/css">
+#outlook a {
+	padding:0;
+}
+.ExternalClass {
+	width:100%;
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+	line-height:100%;
+}
+.es-button {
+	mso-style-priority:100!important;
+	text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+	color:inherit!important;
+	text-decoration:none!important;
+	font-size:inherit!important;
+	font-family:inherit!important;
+	font-weight:inherit!important;
+	line-height:inherit!important;
+}
+.es-desk-hidden {
+	display:none;
+	float:left;
+	overflow:hidden;
+	width:0;
+	max-height:0;
+	line-height:0;
+	mso-hide:all;
+}
+.es-button-border:hover a.es-button {
+	background:#000000!important;
+	border-color:#000000!important;
+  color: #ffffff!important;
+}
+.es-button-border:hover {
+	border-color:#00f5f9 #00f5f9 #00f5f9 #00f5f9!important;
+	background:#065C66!important;
+}
+@media only screen and (max-width:600px) {p, ul li, ol li, a { font-size:14px!important; line-height:150%!important } h1 { font-size:28px!important; text-align:center; line-height:120%!important } h2 { font-size:24px!important; text-align:center; line-height:120%!important } h3 { font-size:18px!important; text-align:center; line-height:120%!important } h1 a { font-size:28px!important } h2 a { font-size:24px!important } h3 a { font-size:18px!important } .es-menu td a { font-size:12px!important } .es-header-body p, .es-header-body ul li, .es-header-body ol li, .es-header-body a { font-size:13px!important } .es-footer-body p, .es-footer-body ul li, .es-footer-body ol li, .es-footer-body a { font-size:11px!important } .es-infoblock p, .es-infoblock ul li, .es-infoblock ol li, .es-infoblock a { font-size:11px!important } *[class="gmail-fix"] { display:none!important } .es-m-txt-c, .es-m-txt-c h1, .es-m-txt-c h2, .es-m-txt-c h3 { text-align:center!important } .es-m-txt-r, .es-m-txt-r h1, .es-m-txt-r h2, .es-m-txt-r h3 { text-align:right!important } .es-m-txt-l, .es-m-txt-l h1, .es-m-txt-l h2, .es-m-txt-l h3 { text-align:left!important } .es-m-txt-r img, .es-m-txt-c img, .es-m-txt-l img { display:inline!important } .es-button-border { display:inline-block!important } a.es-button { font-size:16px!important; display:inline-block!important } .es-btn-fw { border-width:10px 0px!important; text-align:center!important } .es-adaptive table, .es-btn-fw, .es-btn-fw-brdr, .es-left, .es-right { width:100%!important } .es-content table, .es-header table, .es-footer table, .es-content, .es-footer, .es-header { width:100%!important; max-width:600px!important } .es-adapt-td { display:block!important; width:100%!important } .adapt-img { width:100%!important; height:auto!important } .es-m-p0 { padding:0px!important } .es-m-p0r { padding-right:0px!important } .es-m-p0l { padding-left:0px!important } .es-m-p0t { padding-top:0px!important } .es-m-p0b { padding-bottom:0!important } .es-m-p20b { padding-bottom:20px!important } .es-mobile-hidden, .es-hidden { display:none!important } tr.es-desk-hidden, td.es-desk-hidden, table.es-desk-hidden { width:auto!important; overflow:visible!important; float:none!important; max-height:inherit!important; line-height:inherit!important } tr.es-desk-hidden { display:table-row!important } table.es-desk-hidden { display:table!important } td.es-desk-menu-hidden { display:table-cell!important } table.es-table-not-adapt, .esd-block-html table { width:auto!important } table.es-social { display:inline-block!important } table.es-social td { display:inline-block!important } }
 </style>
-</html>
+ <meta property="og:title" content="Christmas Presents"><meta property="og:description" content="Nueva Operacion ekambia"><meta property="og:image" content="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/58991575445981042.png"><meta property="og:url" content="https://viewstripo.email/template/24f1019e-36a3-42f2-8c58-7b7cca11128f"><meta property="og:type" content="article"></head>
+ <body style="width:100%;font-family:tahoma, verdana, segoe, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+  <div class="es-wrapper-color" style="background-color:#F6F6F6">
+   <!--[if gte mso 9]>
+			<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+				<v:fill type="tile" color="#f6f6f6"></v:fill>
+			</v:background>
+		<![endif]-->
+   <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top">
+    <tbody>
+     <tr style="border-collapse:collapse">
+      <td valign="top" style="padding:0;Margin:0">
+       <table cellpadding="0" cellspacing="0" class="es-content" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+        <tbody>
+         <tr style="border-collapse:collapse">
+          <td class="es-adaptive" align="center" bgcolor="#f5f7f8" style="padding:0;Margin:0;background-color:#f5f7f8">
+           <table class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px" cellspacing="0" cellpadding="0" align="center">
+            <tbody>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="padding:10px;Margin:0">
+               <!--[if mso]><table style="width:580px"><tr><td style="width:280px" valign="top"><![endif]-->
+               <!-- <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td align="left" style="padding:0;Margin:0;width:280px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td class="es-infoblock es-m-txt-c" align="left" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:tahoma, verdana, segoe, sans-serif;line-height:14px;color:#CCCCCC">Nueva operación ekambia</p></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table> -->
+               <!--[if mso]></td><td style="width:20px"></td><td style="width:280px" valign="top"><![endif]-->
+               <!-- <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td align="left" style="padding:0;Margin:0;width:280px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="right" class="es-infoblock es-m-txt-c" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:tahoma, verdana, segoe, sans-serif;line-height:14px;color:#CCCCCC"><a href="https://viewstripo.email/" target="_blank" class="view" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:12px;text-decoration:underline;color:#CCCCCC">View in browser</a></p></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table> -->
+               <!--[if mso]></td></tr></table><![endif]--></td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table>
+       <table cellpadding="0" cellspacing="0" class="es-content" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+        <tbody>
+         <tr style="border-collapse:collapse">
+          <td align="center" bgcolor="#f5f7f8" style="padding:0;Margin:0;background-color:#f5f7f8">
+           <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0" cellspacing="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+            <tbody>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="padding:0;Margin:0">
+               <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td valign="top" align="center" style="padding:0;Margin:0;width:600px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;font-size:0"><a target="_blank" href="https://viewstripo.email/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:15px;text-decoration:underline;color:#2CB543"><img class="adapt-img" src="./Christmas Presents_files/58991575445981042.png" alt="" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="405"></a></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+             </tr>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="padding:0;Margin:0">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:600px">
+                   <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;font-size:0"><img class="adapt-img" src="./Christmas Presents_files/59311575451089515.png" alt="" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="600"></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+             </tr>
+             <tr style="border-collapse:collapse">
+              <td align="left" bgcolor="#ffffff" style="Margin:0;padding-top:5px;padding-left:20px;padding-right:20px;padding-bottom:30px;background-color:#FFFFFF">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <!-- <tr style="border-collapse:collapse">
+                  <td align="left" style="padding:0;Margin:0;width:560px">
+                   <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-top:20px;font-size:0"><img class="adapt-img" src="./Christmas Presents_files/42891575466907646.gif" alt="" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;width:300px" width="300"></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr> -->
+                 <tr style="border-collapse:collapse">
+                  <td align="left" class="es-m-p20b" style="padding:0;Margin:0;width:560px">
+                   <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px">
+                        <!-- <h2 style="Margin:0;line-height:30px;mso-line-height-rule:exactly;font-family:Poppins, sans-serif;font-size:25px;font-style:normal;font-weight:bold;color:#00413F">Ekambia</h2> -->
+                        <img style="width: 140px;" src="../static/ekambia_logo.svg" alt="">
+                      </td>
+                     </tr>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:0px"><p style="max-width: 400px;Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:15px;font-family:tahoma, verdana, segoe, sans-serif;line-height:23px;color:#333333;padding-top: 0px;padding-bottom: 0px;">
+                        <h3>
+                          Nueva Operación
+                        </h3>
+                      </td>
+                     </tr>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-top:0px;padding-bottom:10px"><p style="max-width: 400px;Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:15px;font-family:tahoma, verdana, segoe, sans-serif;line-height:23px;color:#333333;padding-top: 0px;padding-bottom: 20px;">Esta es una información relativa a tu Operación realizada en nuestro Sistema
+                        el día {{ $datex }}, donde recibes {{ $received }} {{ $coin_received }} y envias {{ $send }}  {{ $coin_send }}.
+                         Te mantendremos informado</p></td>
+                     </tr>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                       <!--[if mso]><a href="https://ekambia.herokuapp.com/login/" target="_blank">
+	<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" stripoVmlButton href="https://ekambia.herokuapp.com/login/"
+                style="height:49px;v-text-anchor:middle;width:132px;" arcsize="10%" stroke="f" fillcolor="#fd0">
+		<w:anchorlock></w:anchorlock>
+		<center style='color:#FFFFFF;font-family:arial, "helvetica neue", helvetica, sans-serif;font-size:18px;font-weight:400;'>Ver operación</center>
+	</v:roundrect></a>
+<![endif]-->
+                       <!--[if !mso]>--><span class="msohide es-button-border" style="border-style:solid;border-color:#fd0;background:#fd0;border-width:0px;display:inline-block;border-radius:5px;width:auto;mso-hide:all"><a href="https://ekambia.herokuapp.com/login/" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, &#39;helvetica neue&#39;, helvetica, sans-serif;font-size:20px;color:#000000;border-style:solid;border-color:#fd0;border-width:10px 20px 10px 20px;display:inline-block;background:#fd0;border-radius:5px;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center">Ver operación</a></span>
+                       <!--<![endif]--></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+
+             </tr>
+             <tr>
+              <td>
+                <img style="width: 100%;" src="../static/correoekambia.jpg" alt="">
+              </td>
+            </tr>
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table>
+       <table cellpadding="0" cellspacing="0" class="es-footer" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
+        <tbody>
+         <tr style="border-collapse:collapse">
+          <td align="center" bgcolor="#f5f7f8" style="padding:0;Margin:0;background-color:#f5f7f8">
+           <table bgcolor="#ffffff" class="es-footer-body" align="center" cellpadding="0" cellspacing="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#000000;width:600px">
+            <tbody>
+             <tr style="border-collapse:collapse">
+              <td align="left" bgcolor="#ffffff" style="padding:0;Margin:0;background-color:#FFFFFF">
+               <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td align="center" valign="top" style="padding:0;Margin:0;width:600px">
+                   <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;font-size:0"><img class="adapt-img" src="./Christmas Presents_files/60441575463377280.png" alt="" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="600"></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+             </tr>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-left:20px;padding-right:20px">
+               <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td valign="top" align="center" style="padding:0;Margin:0;width:560px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:15px;font-size:0">
+                       <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                        <tbody>
+                         <tr style="border-collapse:collapse">
+                          <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px">
+                            <a target="_blank" style="border: 2px solid rgba(255,255,255,.1);border-radius: 15px;display: block;width: 35px;height: 35px;display: flex;align-items: center;justify-content: center;" href="https://www.facebook.com/ekambiapy">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);"><path d="M13.397,20.997v-8.196h2.765l0.411-3.209h-3.176V7.548c0-0.926,0.258-1.56,1.587-1.56h1.684V3.127 C15.849,3.039,15.025,2.997,14.201,3c-2.444,0-4.122,1.492-4.122,4.231v2.355H7.332v3.209h2.753v8.202H13.397z"></path></svg>
+                            </a>
+                          </td>
+                          <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px">
+                            <a target="_blank" style="border: 2px solid rgba(255,255,255,.1);border-radius: 15px;display: block;width: 35px;height: 35px;display: flex;align-items: center;justify-content: center;" href="https://twitter.com/ekambiapy">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);"><path d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z"></path></svg>
+                            </a>
+                          </td>
+                          <td valign="top" align="center" style="padding:0;Margin:0;padding-right:10px">
+                            <a target="_blank" style="border: 2px solid rgba(255,255,255,.1);border-radius: 15px;display: block;width: 35px;height: 35px;display: flex;align-items: center;justify-content: center;" href="https://www.instagram.com/ekambiapy/">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);"><path d="M11.999,7.377c-2.554,0-4.623,2.07-4.623,4.623c0,2.554,2.069,4.624,4.623,4.624c2.552,0,4.623-2.07,4.623-4.624 C16.622,9.447,14.551,7.377,11.999,7.377L11.999,7.377z M11.999,15.004c-1.659,0-3.004-1.345-3.004-3.003 c0-1.659,1.345-3.003,3.004-3.003s3.002,1.344,3.002,3.003C15.001,13.659,13.658,15.004,11.999,15.004L11.999,15.004z"></path><circle cx="16.806" cy="7.207" r="1.078"></circle><path d="M20.533,6.111c-0.469-1.209-1.424-2.165-2.633-2.632c-0.699-0.263-1.438-0.404-2.186-0.42 c-0.963-0.042-1.268-0.054-3.71-0.054s-2.755,0-3.71,0.054C7.548,3.074,6.809,3.215,6.11,3.479C4.9,3.946,3.945,4.902,3.477,6.111 c-0.263,0.7-0.404,1.438-0.419,2.186c-0.043,0.962-0.056,1.267-0.056,3.71c0,2.442,0,2.753,0.056,3.71 c0.015,0.748,0.156,1.486,0.419,2.187c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45 c0.963,0.042,1.268,0.055,3.71,0.055s2.755,0,3.71-0.055c0.747-0.015,1.486-0.157,2.186-0.419c1.209-0.469,2.164-1.424,2.633-2.633 c0.263-0.7,0.404-1.438,0.419-2.186c0.043-0.962,0.056-1.267,0.056-3.71s0-2.753-0.056-3.71C20.941,7.57,20.801,6.819,20.533,6.111z M19.315,15.643c-0.007,0.576-0.111,1.147-0.311,1.688c-0.305,0.787-0.926,1.409-1.712,1.711c-0.535,0.199-1.099,0.303-1.67,0.311 c-0.95,0.044-1.218,0.055-3.654,0.055c-2.438,0-2.687,0-3.655-0.055c-0.569-0.007-1.135-0.112-1.669-0.311 c-0.789-0.301-1.414-0.923-1.719-1.711c-0.196-0.534-0.302-1.099-0.311-1.669c-0.043-0.95-0.053-1.218-0.053-3.654 c0-2.437,0-2.686,0.053-3.655c0.007-0.576,0.111-1.146,0.311-1.687c0.305-0.789,0.93-1.41,1.719-1.712 c0.534-0.198,1.1-0.303,1.669-0.311c0.951-0.043,1.218-0.055,3.655-0.055c2.437,0,2.687,0,3.654,0.055 c0.571,0.007,1.135,0.112,1.67,0.311c0.786,0.303,1.407,0.925,1.712,1.712c0.196,0.534,0.302,1.099,0.311,1.669 c0.043,0.951,0.054,1.218,0.054,3.655c0,2.436,0,2.698-0.043,3.654H19.315z"></path></svg>
+                            </a>
+                          </td>
+                          <td valign="top" align="center" style="padding:0;Margin:0;">
+                            <a target="_blank" style="border: 2px solid rgba(255,255,255,.1);border-radius: 15px;display: block;width: 35px;height: 35px;display: flex;align-items: center;justify-content: center;" href="https://www.linkedin.com/in/ekambi%C3%A1-casa-de-cambios-global-s-a-b86a1a1b7/">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);"><circle cx="4.983" cy="5.009" r="2.188"></circle><path d="M9.237 8.855v12.139h3.769v-6.003c0-1.584.298-3.118 2.262-3.118 1.937 0 1.961 1.811 1.961 3.218v5.904H21v-6.657c0-3.27-.704-5.783-4.526-5.783-1.835 0-3.065 1.007-3.568 1.96h-.051v-1.66H9.237zM3.095 8.855H6.87V20.994H3.095z"></path></svg>
+                            </a>
+                          </td>
+                         </tr>
+                        </tbody>
+                       </table></td>
+                     </tr>
+                     <!-- <tr style="border-collapse:collapse">
+                      <td align="center" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:tahoma, verdana, segoe, sans-serif;line-height:18px;color:#FFFFFF">You are receiving this email because you have visited our site or asked us about regular newsletter. Make sure our messages get to your Inbox (and not your bulk or junk folders).</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:tahoma, verdana, segoe, sans-serif;line-height:21px;color:#FFFFFF">Vector graphics designed by <a target="_blank" href="http://www.freepik.com/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:14px;text-decoration:underline;color:#FFFFFF">Freepik</a>.</p></td>
+                     </tr> -->
+                     <!-- <tr style="border-collapse:collapse">
+                      <td style="Margin:0;padding-bottom:10px;padding-top:20px;padding-left:20px;padding-right:20px">redes</td>
+                    </tr> -->
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+             </tr>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="Margin:0;padding-bottom:10px;padding-top:20px;padding-left:20px;padding-right:20px">
+               <!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:270px" valign="top"><![endif]-->
+               <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:270px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="left" class="es-m-txt-c" style="padding:0;Margin:0"><a class="unsubscribe" target="_blank" href="#" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:14px;text-decoration:underline;color:#ffffff">Unsubscribe</a></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table>
+               <!--[if mso]></td><td style="width:20px"></td><td style="width:270px" valign="top"><![endif]-->
+               <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td align="left" style="padding:0;Margin:0;width:270px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td align="right" class="es-m-txt-c" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:tahoma, verdana, segoe, sans-serif;line-height:21px;color:#ffffff">© All Rights Reserved, 2020</p></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table>
+               <!--[if mso]></td></tr></table><![endif]--></td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table>
+       <table cellpadding="0" cellspacing="0" class="es-content" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+        <tbody>
+         <tr style="border-collapse:collapse">
+          <td align="center" bgcolor="#f5f7f8" style="padding:0;Margin:0;background-color:#f5f7f8">
+           <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0" cellspacing="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px">
+            <tbody>
+             <tr style="border-collapse:collapse">
+              <td align="left" style="Margin:0;padding-left:20px;padding-right:20px;padding-top:30px;padding-bottom:30px">
+               <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                <tbody>
+                 <tr style="border-collapse:collapse">
+                  <td valign="top" align="center" style="padding:0;Margin:0;width:560px">
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                    <tbody>
+                     <tr style="border-collapse:collapse">
+                      <td class="es-infoblock made_with" align="center" style="padding:0;Margin:0;line-height:120%;font-size:0;color:#CCCCCC"><a target="_blank" href="https://viewstripo.email/?utm_source=templates&amp;utm_medium=email&amp;utm_campaign=gifts_&amp;_flowershand-made&amp;utm_content=christmas_presents" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:tahoma, verdana, segoe, sans-serif;font-size:12px;text-decoration:underline;color:#CCCCCC"><img src="./Christmas Presents_files/64951510234941531.png" alt="" width="125" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td>
+                     </tr>
+                    </tbody>
+                   </table></td>
+                 </tr>
+                </tbody>
+               </table></td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+
+        </tbody>
+       </table></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+</body></html>
