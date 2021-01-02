@@ -4,25 +4,16 @@
 
     <div class="con-form">
       <c-input
-        v-model="form.denomination"
+        v-model="form.representative_name"
         class="mt-6"
-        :danger="!form.denomination && send"
-      >
-        Denominación o razón social
-      </c-input>
-      <Alert :open="!form.denomination && send">
-        Este campo es requerido
-      </Alert>
-      <c-input
-        v-model="form.representative"
-        class="mt-6"
-        :danger="!form.representative && send"
+        :danger="!form.representative_name && send"
       >
         Representante legal
       </c-input>
-      <Alert :open="!form.representative && send">
+      <Alert :open="!form.representative_name && send">
         Este campo es requerido
       </Alert>
+
       <c-input
         v-model="form.ruc"
         class="mt-6"
@@ -34,62 +25,62 @@
         Este campo es requerido
       </Alert>
 
-      <c-input
-        v-model="form.deedIncorporation"
+      <input-file
+        v-model="form.constitution"
         class="mt-6"
-        :danger="!form.deedIncorporation && send"
+        :danger="!form.constitution && send"
       >
         Escritura de Constitución
-      </c-input>
-      <Alert :open="!form.deedIncorporation && send">
+      </input-file>
+      <Alert :open="!form.constitution && send">
         Este campo es requerido
       </Alert>
 
       <c-input
-        v-model="form.purposeOperation"
+        v-model="form.object_of_the_operation"
         class="mt-6"
-        :danger="!form.purposeOperation && send"
+        :danger="!form.object_of_the_operation && send"
       >
         Objeto de la operación
       </c-input>
-      <Alert :open="!form.purposeOperation && send">
+      <Alert :open="!form.object_of_the_operation && send">
         Este campo es requerido
       </Alert>
 
       <c-input
-        v-model="form.sourceFunds"
+        v-model="form.funds_source"
         class="mt-6"
-        :danger="!form.sourceFunds && send"
+        :danger="!form.funds_source && send"
       >
         Origen de los fondos
       </c-input>
-      <Alert :open="!form.sourceFunds && send">
+      <Alert :open="!form.funds_source && send">
         Este campo es requerido
       </Alert>
 
-      <Button :loading="loading" @click="handleSend" class="mt-6 btn" block yellow>
-        Enviar
-      </Button>
+      <footer class="footer">
+        <Button :loading="loading" @click="handleSend" class="btn" block yellow>
+          Enviar
+        </Button>
+      </footer>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import axios from '~/plugins/axios'
 @Component
 export default class verified extends Vue {
   send: boolean = false
   loading: boolean = false
 
   form: any = {
-    denomination: '',
-    representative: '',
-    legalRepresentative: '',
     ruc: '',
-    deedIncorporation: '',
-    purposeOperation: ''
+    representative_name: '',
+    constitution: '',
+    object_of_the_operation: '',
+    funds_source: ''
   }
-
-  country_list: any = ["Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda","Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán","Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután","Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Etiopía","Filipinas","Finlandia","Fiyi","Francia","Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea ecuatorial","Guinea-Bisáu","Haití","Honduras","Hungría","India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Islas Salomón","Israel","Italia","Jamaica","Japón","Jordania","Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait","Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo","Madagascar","Malasia","Malaui","Maldivas","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique","Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda","Omán","Países Bajos","Pakistán","Palaos","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal","Reino Unido","República Centroafricana","República Checa","República de Macedonia","República del Congo","República Democrática del Congo","República Dominicana","República Sudafricana","Ruanda","Rumanía","Rusia","Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia","Sudán","Sudán del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistán","Vanuatu","Venezuela","Vietnam","Yemen","Yibuti","Zambia","Zimbabue"];
 
   typeDocuments: any = [
     {
@@ -105,11 +96,47 @@ export default class verified extends Vue {
   ]
 
   handleSend() {
-    console.log('click')
+    this.send = true
+
+    console.log(this.form)
+
+    if (!this.form.ruc || !this.form.representative_name || !this.form.constitution || !this.form.object_of_the_operation || !this.form.funds_source) {
+      return
+    }
+
+    this.loading = true
+
+    var formData = new FormData()
+    formData.append("ruc", this.form.ruc)
+    formData.append("representative_name", this.form.representative_name)
+    formData.append("constitution", this.form.constitution)
+    formData.append("object_of_the_operation", this.form.object_of_the_operation)
+    formData.append("funds_source", this.form.funds_source)
+
+    axios.post('/verificate1-company', formData).then(({ data }) => {
+      console.log('se verifico')
+      this.loading = false
+      this.$router.push({
+        path: '/step1/step1',
+        query: {
+          ...this.$route.query
+        }
+      })
+    })
   }
 }
 </script>
 <style lang="sass" scoped>
+.footer
+  position: fixed
+  bottom: 0px
+  width: 100%
+  background: #fff
+  z-index: 1200
+  padding: 15px
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,.04)
+  max-width: 450px
+
 .page-enter-active, .page-leave-active
   transition: all .2s ease
 .verified.page-enter
@@ -151,6 +178,7 @@ export default class verified extends Vue {
     max-width: 450px
     padding: 0px 15px
     padding-bottom: 15px
+    padding-bottom: 120px
 // responsive
 
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)

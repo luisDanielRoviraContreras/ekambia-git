@@ -6,6 +6,17 @@
       </h2>
 
       <c-input
+        v-model="form.firstName"
+        class="mt-6"
+        :danger="!form.firstName && send"
+      >
+        Nombre de la empresa
+      </c-input>
+      <Alert :open="!form.firstName && send">
+        Este campo es requerido
+      </Alert>
+
+      <c-input
         v-model="form.email"
         class="mt-6"
         inputmode="email"
@@ -20,62 +31,6 @@
       <Alert :open="!form.email && send">
         Este campo es requerido
       </Alert>
-      <c-input
-        v-model="form.dni"
-        class="mt-6"
-        :danger="!form.dni && send"
-      >
-        RUC
-      </c-input>
-      <Alert :open="!form.dni && send">
-        Este campo es requerido
-      </Alert>
-      <c-input
-        v-model="form.firstName"
-        class="mt-6"
-        :danger="!form.firstName && send"
-      >
-        Nombre o Razón Social
-      </c-input>
-      <Alert :open="!form.firstName && send">
-        Este campo es requerido
-      </Alert>
-      <c-input
-        v-model="form.lastName"
-        class="mt-6"
-        :danger="!form.lastName && send"
-      >
-        Nombre del representante
-      </c-input>
-      <Alert :open="!form.lastName && send">
-        Este campo es requerido
-      </Alert>
-      <c-input
-        v-model="form.lastName"
-        class="mt-6"
-        :danger="!form.lastName && send"
-      >
-        Apellido del representante
-      </c-input>
-      <Alert :open="!form.lastName && send">
-        Este campo es requerido
-      </Alert>
-      <InputDate
-        v-model="form.date"
-        class="mt-3"
-        :danger="(form.date.split('-').includes('') || form.date.split('-')[0] > 2002) && send"
-        label-center
-      >
-        Ingrese su fecha de nacimiento
-      </InputDate>
-      <Alert :open="form.date.split('-').includes('') && send">
-        Este campo es requerido
-      </Alert>
-      <Alert :open="form.date.split('-')[0] > 2002 && send">
-        La fecha de nacimiento es invalida (tienes que ser mayor de 18 años)
-      </Alert>
-
-      <!-- (!form.password && send) || form.password && passwordConfirm ? (passwordConfirm !== form.password) || !validatePassword : false -->
 
       <c-input
         v-model="form.password"
@@ -111,7 +66,12 @@
       <Alert :open="passwordConfirm && send ? passwordConfirm !== form.password : false">
         Las contraseñas no coinciden
       </Alert>
-      <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
+
+      <checkbox :danger="!accept && send" class="mt-3" v-model="accept">
+        Acepto los términos y condiciones
+      </checkbox>
+
+      <Button :disabled="!accept" :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
         Siguiente
       </Button>
     </div>
@@ -122,30 +82,23 @@ import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
+  accept: boolean = false
   send: boolean = false
   loading: boolean = false
   passwordConfirm: any = null
   form: any = {
     email: '',
     password: '',
-    dni: '',
-    date: '',
-    dniType: 1,
+    tel: '',
     profileId: 1,
     firstName: '',
-    lastName: ''
   }
 
-  typeDocuments: any = [
-    {
-      id: 1,
-      alias: 'C. I.'
-    },
-    {
-      id: 2,
-      alias: 'PAS'
-    }
-  ]
+  get validateNumber() {
+    // eslint-disable-next-line no-useless-escape
+    const regex = /^\+(?:[0-9] ?){6,14}[0-9]$/i
+    return regex.test(this.form.tel.trim())
+  }
 
   get validatePassword() {
     var regularExpression = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -163,13 +116,13 @@ export default class createAccount extends Vue {
       return
     }
 
-    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.dni || !this.form.firstName || !this.form.lastName) {
+    if (!this.form.email || !this.emailValid || !this.form.password || !this.form.firstName) {
       return
     }
 
-    if (this.form.date.split('-')[0] > 2002) {
-      return
-    }
+    // if (this.form.date.split('-')[0] > 2002) {
+    //   return
+    // }
 
 
 
@@ -179,15 +132,11 @@ export default class createAccount extends Vue {
   }
 
   serverSend() {
-    axios.post('/register', {
+    axios.post('/register-simple', {
       email: this.form.email.toLowerCase(),
       password: this.form.password,
-      profile_id: this.form.profileId,
+      profile_id: 2,
       firstName: this.form.firstName,
-      lastName: this.form.lastName,
-      document_type_id: this.form.dniType,
-      dni: this.form.dni,
-      date_of_birth: this.form.date,
       referred: this.$cookies.get('ref')
     }).then(({data}) => {
       const token = data.info.token
@@ -196,7 +145,12 @@ export default class createAccount extends Vue {
         title: 'Usuario registrado',
         text: 'Complete los siguientes pasos para poder hacer operaciones en Ekambia'
       })
-      this.$router.push('/createAccount/step2')
+      this.$router.push({
+        path: '/createAccount/step2',
+        query: {
+          t: this.form.tel
+        }
+      })
       this.loading = false
     }).catch((err) => {
       this.loading = false
@@ -228,24 +182,21 @@ export default class createAccount extends Vue {
 .con-create
   display: flex
   flex-direction: column
+  .con-form
+    display: flex
+    flex-direction: column
   .button
     max-width: 450px
+    align-self: flex-end
+    margin-top: auto
   h2
     font-weight: 500
     text-align: center
     width: 100%
 .con-form
-  // display: flex
-  // align-items: center
-  // justify-content: center
-  // flex-direction: column
   flex: 1
   width: 100%
   max-width: 450px
-  // max-height: calc(100vh - 110px)
-  // overflow: auto
-  // padding-bottom: 50px
-
 @media (min-width: 812px), (pointer:cursor)
   .con-select-input
     .select
@@ -256,6 +207,8 @@ export default class createAccount extends Vue {
     display: flex
     align-items: center
     justify-content: center
+    .button
+      margin-top: 1.5rem
   .con-form
     flex: none
     margin-bottom: 30px

@@ -118,7 +118,12 @@
       <Alert :open="passwordConfirm && send ? passwordConfirm !== form.password : false">
         Las contraseñas no coinciden
       </Alert>
-      <Button :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
+
+      <checkbox :danger="!accept && send" class="mt-3" v-model="accept">
+        Acepto los términos y condiciones
+      </checkbox>
+
+      <Button :disabled="!accept" :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
         Siguiente
       </Button>
     </div>
@@ -129,6 +134,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
+  accept: boolean = false
   send: boolean = false
   loading: boolean = false
   passwordConfirm: any = null

@@ -65,7 +65,7 @@
       </div>
 
 
-      <Button :disabled="form.send <= 0" @click="handleInitOperation" class="mt-6" yellow block>
+      <Button :loading="loading" :disabled="form.send <= 0" @click="handleInitOperation" class="mt-6" yellow block>
         Iniciar Operación
       </Button>
 
@@ -101,6 +101,7 @@ export default class name extends Vue {
   reverse: boolean = false
   focus: any = null
   data: any = null
+  loading: boolean = false
   // sale_price: any = null
   // purchase_price: any = null
   form: any = {
@@ -156,19 +157,34 @@ export default class name extends Vue {
   }
 
   handleInitOperation() {
-    console.log(this.status_user_id)
+    // console.log(this.status_user_id)
+    console.log(this.$cookies.get('profile_id'))
+    this.loading = true
     axios.get('/limites-user').then(({data}: any) => {
       console.log(data)
+      this.loading = false
       if (data.info.status_user_id[0] == 1) {
-        this.$router.push({
-          path: '/verified', query: {
-            send: btoa(this.form.send),
-            receive: btoa(this.form.receive),
-            coinSend: this.form.coinSend,
-            coinReceive: this.form.coinReceive,
-            cp: btoa(this.sale_price),
-          }
-        })
+        if (this.$cookies.get('profile_id') == 2) {
+          this.$router.push({
+            path: '/verified/business', query: {
+              send: btoa(this.form.send),
+              receive: btoa(this.form.receive),
+              coinSend: this.form.coinSend,
+              coinReceive: this.form.coinReceive,
+              cp: btoa(this.sale_price),
+            }
+          })
+        } else {
+          this.$router.push({
+            path: '/verified', query: {
+              send: btoa(this.form.send),
+              receive: btoa(this.form.receive),
+              coinSend: this.form.coinSend,
+              coinReceive: this.form.coinReceive,
+              cp: btoa(this.sale_price),
+            }
+          })
+        }
       } else {
         this.$router.push({
           path: '/step1/step1', query: {

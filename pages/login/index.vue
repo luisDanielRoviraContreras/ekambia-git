@@ -172,6 +172,7 @@ export default class login extends Vue {
 
       const token = data.info.token
       this.$cookies.set('token', token)
+      this.$cookies.set('profile_id', data.info.profile_id)
 
       if (data.info.verified_tel == 0) {
         setTimeout(() => {
