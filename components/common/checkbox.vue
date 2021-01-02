@@ -28,7 +28,7 @@ export default class Checkbox extends Vue {
   }
 
   mounted() {
-    this.uid = this._uid
+    this.uid = (this as any)._uid
   }
 }
 </script>
