@@ -30,6 +30,7 @@ export default {
     {src: '@/plugins/bounce.client.ts', ssr: false},
     {src: '@/plugins/guide.client.ts', ssr: false},
     {src: '@/plugins/maps.client.js', ssr: false},
+    { src: '@/plugins/vue-confetti.js', ssr: false}
   ],
   buildModules: [
     '@nuxt/typescript-build',
@@ -72,6 +73,7 @@ export default {
   transpile: [/^vue2-google-maps($|\/)/, /^gmap-vue($|\/)/],
   env: {
     // API: 'http://3.16.43.49/api/'
+    //
     API: 'https://ekambia.lusaxweb.pro/api/'
   }
 }

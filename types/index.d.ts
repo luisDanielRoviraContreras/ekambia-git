@@ -12,6 +12,7 @@ declare module 'vue/types/vue' {
   interface Vue {
     $gmapApiPromiseLazy: any
     $device: any
+    $confetti: any
     $bounceClose: Function
     $bounce: Function
     $notification: Function

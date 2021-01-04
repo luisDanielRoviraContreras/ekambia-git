@@ -27,13 +27,17 @@ export default class createAccount extends Vue {
   fromRoute: any = null
 
   handleClickBack() {
-    this.$dialog({
-      title: '¿Estas seguro de volver al login?',
-      text: 'Si vuelves al login no se guardaran tus datos.',
-      success: () => {
-        this.$router.push('/login/')
-      }
-    })
+    if (this.$route.name == 'createAccount-index') {
+      this.$router.push('/login/')
+    } else {
+      this.$dialog({
+        title: '¿Estas seguro de volver al login?',
+        text: 'Si vuelves al login no se guardaran tus datos.',
+        success: () => {
+          this.$router.push('/login/')
+        }
+      })
+    }
   }
 
   beforeRouteEnter (to, from, next) {

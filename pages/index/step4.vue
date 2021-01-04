@@ -1,5 +1,6 @@
 <template>
   <div class="success">
+    <canvas id="my-custom-canvas" />
     <h3>
       Operación finalizada!
     </h3>
@@ -96,10 +97,38 @@ export default class success extends Vue {
 
   mounted() {
     this.getOperation()
+
+    var ctx = (document.querySelector('#my-custom-canvas') as any).getContext('2d')
+    ctx.canvas.width  = window.innerWidth
+    ctx.canvas.height = window.innerHeight
+
+    this.$confetti.start({
+      canvasElement: document.querySelector('#my-custom-canvas'),
+      particles: [
+        {
+          type: 'rect',
+          size: 4,
+          dropRate: 3,
+        }
+      ],
+      particlesPerFrame: 0.5,
+      defaultColors: [
+        'black',
+        '#ffda1a',
+        '#f5f7f8',
+      ],
+    });
   }
 }
 </script>
 <style lang="sass" scoped>
+#my-custom-canvas
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+
 .page-enter-active, .page-leave-active
   transition: all .2s ease
 
@@ -114,6 +143,7 @@ export default class success extends Vue {
 .con-infos
   width: 100%
   padding: 20px 0px
+  max-width: 500px
   .info
     display: flex
     align-items: center
@@ -132,7 +162,7 @@ export default class success extends Vue {
   position: fixed
   width: 100vw
   height: 100vh
-  background: -color('gray')
+  background: #fff
   display: flex
   align-items: center
   justify-content: center
@@ -142,6 +172,9 @@ export default class success extends Vue {
   top: 0px
   left: 0px
   overflow: auto
+  /deep/
+    .load
+      max-width: 500px
   img
     width: 100%
     max-width: 240px

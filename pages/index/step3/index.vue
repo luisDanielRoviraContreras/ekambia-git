@@ -6,6 +6,7 @@
       verified: this.$route.query.verified && !this.$route.query.animate,
     }"
   >
+    <canvas id="my-custom-canvas" />
     <nav-bar step="3" steps back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
     <div ref="con" class="con">
       <steps v-if="$device.isDesktop" class="mb-6" numbers :value="3" :items="3" />
@@ -103,6 +104,36 @@ export default class vefificated extends Vue {
     this.animate = true
   }
 
+  @Watch('$route.query')
+  handleQuery() {
+    if (this.$route.query.animate) {
+      this.createCanvas()
+    }
+  }
+
+  createCanvas() {
+    var ctx = (document.querySelector('#my-custom-canvas') as any).getContext('2d')
+    ctx.canvas.width  = window.innerWidth
+    ctx.canvas.height = window.innerHeight
+
+    this.$confetti.start({
+      canvasElement: document.querySelector('#my-custom-canvas'),
+      particles: [
+        {
+          type: 'rect',
+          size: 4,
+          dropRate: 3,
+        }
+      ],
+      particlesPerFrame: 0.5,
+      defaultColors: [
+        'black',
+        '#ffda1a',
+        '#f5f7f8',
+      ],
+    });
+  }
+
   mounted() {
     this.getOperation()
   }
@@ -122,18 +153,24 @@ export default class vefificated extends Vue {
 
 </style>
 <style lang="sass" scoped>
+#my-custom-canvas
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
 .con-btn-success
   position: absolute
   bottom: 0px
   width: 100%
   padding: 20px
-  margin-bottom: 120px
+  margin-bottom: 80px
   z-index: 200
   transform: translate(0,100%)
   opacity: 0
   transition: all .5s ease
   visibility: hidden
-  max-width: 500px
+  max-width: 400px
   &.active
     visibility: visible
     opacity: 1
@@ -169,6 +206,12 @@ export default class vefificated extends Vue {
   justify-content: center
   flex-direction: column
   flex: 1
+  position: relative
+  /deep/
+    .con
+      .steps
+        position: absolute
+        top: 70px
   &.verified
     .con-send
       .icon
@@ -179,12 +222,16 @@ export default class vefificated extends Vue {
         transform: scale(.2)
         opacity: 0
       .circle
-        width: 550px
-        height: 550px
+        width: 600px
+        height: 600px
+        opacity: 0
         .circle-border
           animation: none
-          background: -color(color)
+          background: transparent
+          border: 3px solid -color('color')
           box-shadow: 0px 10px 40px 0px -color('color', .25)
+        .circle-core
+          background: transparent
     .con-circle
       width: 60px
       height: 60px

@@ -151,17 +151,26 @@ export default class name extends Vue {
           }
           if (this.$route.name == 'index-step3-delivery') {
             this.$router.push({
-              path: '/step4'
+              path: '/step4',
+              query: {
+                id: response.id,
+              }
             })
           }
           if (this.$route.name == 'index-step2-office' && data.info.type_operation_ekambia_id == 2) {
             this.$router.push({
-              path: '/step4'
+              path: '/step4',
+              query: {
+                id: response.id,
+              }
             })
           }
           if (this.$route.name == 'index-step3-office' && data.info.type_operation_ekambia_id == 2) {
             this.$router.push({
-              path: '/step4'
+              path: '/step4',
+              query: {
+                id: response.id,
+              }
             })
           }
         }

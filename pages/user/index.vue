@@ -181,6 +181,11 @@ export default class name extends Vue {
             this.$router.push('/login')
           })
         }).catch((err) => {
+          this.$cookies.set('token', '')
+          this.$cookies.set('authenticated', false)
+          this.$nextTick(() => {
+            this.$router.push('/login')
+          })
           this.$notification({
             title: 'Oops! Algo salió mal',
             text: err.response.data.message.toString()
