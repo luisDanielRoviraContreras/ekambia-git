@@ -128,11 +128,16 @@ export default class name extends Vue {
   @Mutation('SET_SALE') setSale
 
   handleFormSend(val) {
-    if (this.form.coinReceive !== 1) {
-      this.form.receive = (val / this.sale_price).toFixed(3)
+    // if (this.form.coinReceive !== 1) {
+    //   this.form.receive = (val / this.sale_price)
+    // }
+    // else {
+    if (this.form.coinReceive === 1) {
+      this.form.receive = (val * this.sale_price)
     } else {
-      this.form.receive = (val * this.sale_price).toFixed(3)
+      this.form.receive = (val / this.sale_price)
     }
+    // }
   }
 
   getCoins() {
@@ -260,8 +265,10 @@ export default class name extends Vue {
 
   handleChange () {
     const oldForm = JSON.parse(JSON.stringify(this.form))
-    this.form.send = `${oldForm.receive}`
-    this.form.receive = `${oldForm.send}`
+    console.log(`${oldForm.receive}`)
+    console.log(`${oldForm.send}`)
+    this.form.send = Number(`${oldForm.receive}`)
+    this.form.receive = Number(`${oldForm.send}`)
     this.form.coinSend = Number(`${oldForm.coinReceive}`)
     this.form.coinReceive = Number(`${oldForm.coinSend}`)
   }

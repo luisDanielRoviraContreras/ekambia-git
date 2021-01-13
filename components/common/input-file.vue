@@ -25,6 +25,7 @@
         :id="_uid"
         :class="{ hasValue: value }"
         type="file"
+        accept="image/x-png,image/jpeg"
         @change="processFile($event)"
       >
 

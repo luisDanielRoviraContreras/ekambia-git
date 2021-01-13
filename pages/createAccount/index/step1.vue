@@ -1,5 +1,6 @@
 <template>
   <div class="con-create con-create-scroll">
+    <terms v-model="activeTerms" @click="activeTerms = false, accept = true" />
     <div class="con-form">
       <h2>
         Crear cuenta personal
@@ -96,7 +97,7 @@
       <Alert :open="!form.password && send">
         Este campo es requerido
       </Alert>
-      <Alert :open="passwordConfirm !== form.password && validatePassword">
+      <Alert :open="passwordConfirm !== form.password && validatePassword && send">
         Las contraseñas no coinciden
       </Alert>
       <Alert :open="form.password && send ? !validatePassword : false ">
@@ -119,9 +120,11 @@
         Las contraseñas no coinciden
       </Alert>
 
-      <checkbox :danger="!accept && send" class="mt-3" v-model="accept">
-        Acepto los términos y condiciones
-      </checkbox>
+      <div @click="activeTerms = true, accept = false" class="con-check">
+        <checkbox :danger="!accept && send" class="mt-3" v-model="accept">
+          Acepto los términos y condiciones
+        </checkbox>
+      </div>
 
       <Button :disabled="!accept" :loading="loading" @click="handleSend" class="mb-6 mt-6" block yellow>
         Siguiente
@@ -134,6 +137,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import axios from '~/plugins/axios'
 @Component
 export default class createAccount extends Vue {
+  activeTerms: boolean = false
   accept: boolean = false
   send: boolean = false
   loading: boolean = false

@@ -12,7 +12,7 @@
         </p>
       </header>
 
-      <c-input :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
+      <c-input tel :danger="!validateNumber && send" inputmode="tel" v-model="form.tel" class="mt-6" block>
         Número de teléfono
       </c-input>
       <Alert :open="!validateNumber && send">
@@ -46,6 +46,12 @@
         </div>
       </div>
 
+      <div @click="step = 1" class="re-send">
+        Cambiar número
+      </div>
+      <divider>
+        O
+      </divider>
       <div @click="serverSendSMS" class="re-send">
         Volver a enviar el código
       </div>
@@ -76,8 +82,8 @@ export default class createAccount extends Vue {
 
   get validateNumber() {
     // eslint-disable-next-line no-useless-escape
-    const regex = /^\+(?:[0-9] ?){6,14}[0-9]$/i
-    return regex.test(this.form.tel.trim())
+    const regex = /^\+(?:[0-9]){10,14}$/i
+    return regex.test(this.form.tel.replace(' ', '').trim())
   }
 
   get hasNumber() {

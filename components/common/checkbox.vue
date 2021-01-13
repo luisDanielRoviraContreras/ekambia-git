@@ -1,11 +1,10 @@
 <template>
   <label
-    :class="{ danger }"
+    :class="{ danger, disabled }"
     class="checkbox"
-    :for="uid"
   >
     <div class="check">
-      <input :id="uid" :checked="value" type="checkbox" @change="handleChange">
+      <input ref="input" :id="uid" :checked="value" type="checkbox" @change="handleChange">
       <i class="bx bx-check" />
       <div class="bg" />
     </div>
@@ -15,11 +14,13 @@
   </label>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 @Component
 export default class Checkbox extends Vue {
   @Prop({ default: '' }) value: any
   @Prop({ default: false }) danger!: boolean
+  @Prop({ default: false }) disabled: boolean
+  @Prop({ default: false }) notuid: boolean
   uid: any = 0
 
   handleChange () {
@@ -28,7 +29,9 @@ export default class Checkbox extends Vue {
   }
 
   mounted() {
-    this.uid = (this as any)._uid
+    if (!this.notuid) {
+      this.uid = (this as any)._uid
+    }
   }
 }
 </script>
@@ -39,6 +42,10 @@ export default class Checkbox extends Vue {
   align-items: center
   justify-content: flex-start
   padding: 10px 0px
+  &.disabled
+    pointer-events: none
+    input,label
+      pointer-events: none
   &.danger
     color: #ff365f
     p

@@ -40,12 +40,6 @@ export default class createAccount extends Vue {
     }
   }
 
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.fromRoute = from;
-    })
-  }
-
   get getNumberValue () {
     if (this.$route.name === 'createAccount-index-step1') {
       return 1

@@ -2,7 +2,10 @@
   <div class="verified">
     <nav-bar :absolute="$device.isDesktop" back @click="$router.push('/')" />
 
-    <div class="con-form">
+    <div :class="{ desktop: $device.isDesktop }" class="con-form">
+      <h2>
+        Verificación
+      </h2>
       <c-input
         v-model="form.representative_name"
         class="mt-6"
@@ -169,6 +172,7 @@ export default class verified extends Vue {
   flex-direction: column
   overflow: auto
   height: calc(var(--vh, 1vh) * 100)
+
   .con-form
     width: 100%
     display: flex
@@ -179,7 +183,19 @@ export default class verified extends Vue {
     padding: 0px 15px
     padding-bottom: 15px
     padding-bottom: 120px
+    margin: 0px auto
+    &.desktop
+      padding-top: 60px
 // responsive
 
+@media (min-width: 812px)
+  .verified
+    align-items: center
+    .con-form
+      .footer
+        position: relative
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,.04)
+        padding: 0px
+        margin-top: 1.5rem
 // @media (max-width: 812px), (pointer:none), (pointer:coarse)
 </style>

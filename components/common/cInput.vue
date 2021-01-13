@@ -13,7 +13,7 @@
     class="con-input"
   >
     <input
-      v-if="!money"
+      v-if="!money && !tel"
       v-bind="attrs"
       :class="[identificador]"
       :value="value"
@@ -21,16 +21,8 @@
       @blur="focus = false"
       v-on="listeners"
     >
-    <money v-else v-model="val" v-bind="moneyData"></money>
-    <!-- <input
-      v-else
-      v-bind="attrs"
-      :class="[identificador]"
-      @focus="focus = true, $emit('focus', $event)"
-      @blur="focus = false"
-      v-money="moneyData"
-      v-model.lazy="val"
-    > -->
+    <money v-if="money" v-model="val" v-bind="moneyData"></money>
+    <the-mask placeholder="+59 123456789" :masked="true" v-if="tel" v-model="val" :mask="['+## #########']"/>
     <span ref="placeholder" class="placeholder">
       <slot />
     </span>
@@ -48,9 +40,10 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import {Money} from 'v-money'
+import {TheMask} from 'vue-the-mask'
 @Component({
   inheritAttrs: false,
-  components: {Money},
+  components: {Money, TheMask},
 })
 export default class InputComponent extends Vue {
   @Prop({}) identificador: any
@@ -63,6 +56,7 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean }) lowercase: boolean
   @Prop({ type: Boolean }) yellow: boolean
   @Prop({ type: Boolean }) money: boolean
+  @Prop({ type: Boolean }) tel: boolean
 
   val: any = ''
 

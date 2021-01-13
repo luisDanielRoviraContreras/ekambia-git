@@ -41,6 +41,12 @@ export default class step0 extends Vue {}
     align-items: center
     justify-content: center
     flex-direction: column
+    cursor: pointer
+    &:hover
+      img
+        transform: scale(1.05)
+      .button
+        transform: translate(0, -5px)
     &.empresa
       margin-bottom: 50px
       img
@@ -51,6 +57,7 @@ export default class step0 extends Vue {}
       width: 100%
       max-width: 180px
       min-height: 227px
+      transition: all .25s ease
   h3
     text-align: center
     img

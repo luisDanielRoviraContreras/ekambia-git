@@ -72,15 +72,18 @@
         <c-input
           v-model="form.numberEmail"
           class="mt-6"
-          :danger="!form.numberEmail && send"
+          :danger="validateNumberCorreo"
           @keypress.enter="handleSend"
           type="email"
           lowercase
         >
           Número de teléfono o correo
         </c-input>
-        <Alert :open="!form.numberEmail && send">
+        <Alert :open="validateNumberCorreo && !mascaraNumber">
           Este campo es requerido
+        </Alert>
+        <Alert :open="mascaraNumber">
+          El número de teléfono es invalido
         </Alert>
         <c-input
           v-model="form.password"
@@ -145,6 +148,33 @@ export default class login extends Vue {
 
   @Mutation('SET_STATUS_USER_ID') setStatusUserId
 
+  get mascaraNumber() {
+    if (!this.send) {
+      return false
+    }
+    if (this.form.numberEmail.indexOf('+') !== -1) {
+      return !this.validateNumber
+    }
+  }
+
+  get validateNumberCorreo() {
+    if (!this.send) {
+      return false
+    }
+
+    if (this.form.numberEmail.indexOf('+') !== -1) {
+      return !this.validateNumber
+    }
+
+    return !this.form.numberEmail
+  }
+
+  get validateNumber() {
+    // eslint-disable-next-line no-useless-escape
+    const regex = /^\+(?:[0-9]){10,14}$/i
+    return regex.test(this.form.numberEmail.replace(' ', '').trim())
+  }
+
   handleClick(n) {
     this.active = n
     clearInterval(this.interval)
@@ -156,6 +186,11 @@ export default class login extends Vue {
     this.send = true
     if (!this.form.numberEmail || !this.form.password) {
       return
+    }
+    if (this.form.numberEmail.indexOf('+') !== -1) {
+      if (!this.validateNumber) {
+        return
+      }
     }
     this.loading = true
 
