@@ -1,13 +1,9 @@
 <template>
   <div class="app">
+    <timer />
     <websocket />
-    <!-- <button @click="handleClick">
-      click
-    </button> -->
     <reload />
-    <!-- <guide v-model="guide" /> -->
     <OffLine v-if="$nuxt.isOffline" />
-    <!-- <Nuxt keep-alive /> -->
     <Nuxt />
     <footerBar />
   </div>

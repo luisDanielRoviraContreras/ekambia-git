@@ -214,7 +214,8 @@
             @click="handleClickOperationFinish(li)"
             class="info">
             <div class="data icons">
-              <i class='bx bx-check' ></i>
+              <i title="Exitosa" v-if="li.status_operation_id == 4" class='bx bx-check' ></i>
+              <i title="Rechazada" v-if="li.status_operation_id == 5" class='bx bx-message-square-error'></i>
             </div>
             <div class="data">
               <span>
@@ -430,9 +431,15 @@ export default class OperationsClass extends Vue {
 
   filterOperations(id) {
     const operations = this.operations || []
-    return operations.filter((item) => {
-      return item.status_operation_id == id
-    })
+    if (id == 4) {
+      return operations.filter((item) => {
+        return item.status_operation_id == 4 || item.status_operation_id == 5
+      })
+    } else {
+      return operations.filter((item) => {
+        return item.status_operation_id == id
+      })
+    }
   }
 
   handleSeg () {

@@ -1,5 +1,6 @@
 <template>
   <div class="default-app">
+    <timer />
     <websocket />
     <desktop-nav />
     <sidebar />

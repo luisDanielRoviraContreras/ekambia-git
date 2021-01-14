@@ -1,11 +1,14 @@
 <template>
   <div class="success">
-    <canvas id="my-custom-canvas" />
-    <h3>
-      Operación finalizada!
-    </h3>
-    <img src="/success.png" alt="">
+    <canvas v-if="data" v-show="data.status_operation_id == 4" id="my-custom-canvas" />
     <div v-if="data" class="con-infos">
+      <h3 v-if="data.status_operation_id == 4">
+        Operación finalizada!
+      </h3>
+      <h3 class="mb-6" v-else>
+        Operación rechazada!
+      </h3>
+      <img v-if="data.status_operation_id == 4" src="/success.png" alt="">
       <div class="info">
         <p>
           Fecha:
@@ -63,7 +66,7 @@
       <load block height="25px" />
       <load block height="44px" class="mt-3" />
     </template>
-    <p class="p">
+    <p v-if="data" v-show="data.status_operation_id == 4" class="p">
       Su operación se efectuó exitosamente, ya puede disfrutar de su cambio
     </p>
     <Button @click="$router.push('/')" class="mt-6" block yellow>
@@ -79,25 +82,15 @@ export default class success extends Vue {
   data: any = null
   getOperation() {
     axios.get(`/operation-show/${this.$route.query.id}`).then(({data}: any) => {
-      console.log(data.info)
       this.data = data.info
+      this.generateCanvas()
     })
   }
 
-  getTypeOperation(id) {
-    let type = 'Transferencia'
-    if (id == 2) {
-      type = 'Oficina'
-    } else if (id == 3) {
-      type = 'Delivery'
+  generateCanvas() {
+    if (this.data.status_operation_id == 5) {
+      return
     }
-
-    return type
-  }
-
-  mounted() {
-    this.getOperation()
-
     var ctx = (document.querySelector('#my-custom-canvas') as any).getContext('2d')
     ctx.canvas.width  = window.innerWidth
     ctx.canvas.height = window.innerHeight
@@ -118,6 +111,21 @@ export default class success extends Vue {
         '#f5f7f8',
       ],
     });
+  }
+
+  getTypeOperation(id) {
+    let type = 'Transferencia'
+    if (id == 2) {
+      type = 'Oficina'
+    } else if (id == 3) {
+      type = 'Delivery'
+    }
+
+    return type
+  }
+
+  mounted() {
+    this.getOperation()
   }
 }
 </script>
@@ -144,6 +152,9 @@ export default class success extends Vue {
   width: 100%
   padding: 20px 0px
   max-width: 500px
+  display: flex
+  align-items: center
+  flex-direction: column
   .info
     display: flex
     align-items: center

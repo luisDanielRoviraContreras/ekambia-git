@@ -8,7 +8,7 @@
       </h2>
       <header>
         <p>
-          Agrega tu número de teléfono con el prefijo de tu país  <b>Ejemplo: (+59512345678)</b>. Le enviaremos un código de verificación de 4 dígitos.
+          Agrega tu número de teléfono celular con el prefijo de tu país  <b>Ejemplo: (+59512345678)</b>. Le enviaremos un código de verificación de 4 dígitos.
         </p>
       </header>
 

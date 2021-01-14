@@ -22,7 +22,7 @@
       v-on="listeners"
     >
     <money v-if="money" v-model="val" v-bind="moneyData"></money>
-    <the-mask placeholder="+59 123456789" :masked="true" v-if="tel" v-model="val" :mask="['+## #########']"/>
+    <the-mask placeholder="+59 123456789" :masked="true" v-if="tel" v-model="val" :mask="['+## ############']"/>
     <span ref="placeholder" class="placeholder">
       <slot />
     </span>
