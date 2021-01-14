@@ -3,6 +3,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import axios from '~/plugins/axios'
 @Component
 export default class timer extends Vue {
   time: any = 0
@@ -38,8 +39,8 @@ export default class timer extends Vue {
         this.$cookies.set('token', '')
         this.$cookies.set('authenticated', false)
         this.$nextTick(() => {
-          this.$router.push('/login')
-          this.$router.go()
+          this.$router.push('/login');
+          (this.$router as any).go()
         })
       }
     }, 60000)
