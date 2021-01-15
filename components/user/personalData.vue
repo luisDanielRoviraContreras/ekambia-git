@@ -25,62 +25,89 @@
     <Alert :open="!form.tel && send">
       Este campo es requerido
     </Alert>
+    <template v-if="!form.company">
+      <c-input
+        :value="form.firstName"
+        @input="handleUpdateValue('firstName', $event)"
+        class="mt-6"
+        :readonly="!edit"
+        :danger="!form.firstName && send"
+      >
+        Nombres
+      </c-input>
+      <Alert :open="!form.firstName && send">
+        Este campo es requerido
+      </Alert>
+      <c-input
+        :value="form.lastName"
+        @input="handleUpdateValue('lastName', $event)"
+        class="mt-6"
+        :readonly="!edit"
+        :danger="!form.lastName && send"
+      >
+        Apellidos
+      </c-input>
+      <Alert :open="!form.lastName && send">
+        Este campo es requerido
+      </Alert>
+      <c-input
+        :value="form.date_of_birth"
+        @input="handleUpdateValue('date_of_birth', $event)"
+        class="mt-6"
+        :readonly="!edit"
+        :danger="!form.date_of_birth && send"
+      >
+        Fecha de nacimiento
+      </c-input>
+      <Alert :open="!form.date_of_birth && send">
+        Este campo es requerido
+      </Alert>
+      <c-input
+        :value="form.dni"
+        @input="handleUpdateValue('dni', $event)"
+        class="mt-6 mb-6"
+        :readonly="!edit"
+        :danger="!form.dni && send"
+      >
+        DNI
+      </c-input>
+      <Alert :open="!form.dni && send">
+        Este campo es requerido
+      </Alert>
 
-    <c-input
-      :value="form.firstName"
-      @input="handleUpdateValue('firstName', $event)"
+      <!-- <Button v-if="!edit" @click="edit = true" class="mb-6 mt-6" block yellow>
+        Editar usuario
+      </Button> -->
+    </template>
+
+    <template v-else>
+      <c-input
+      :value="form.company.business_name"
       class="mt-6"
       :readonly="!edit"
-      :danger="!form.firstName && send"
-    >
-      Nombres
-    </c-input>
-    <Alert :open="!form.firstName && send">
-      Este campo es requerido
-    </Alert>
-
-    <c-input
-      :value="form.lastName"
-      @input="handleUpdateValue('lastName', $event)"
+      >
+        Nombre de la empresa
+      </c-input>
+      <c-input
+      :value="form.company.representative_name"
       class="mt-6"
       :readonly="!edit"
-      :danger="!form.lastName && send"
-    >
-      Apellidos
-    </c-input>
-    <Alert :open="!form.lastName && send">
-      Este campo es requerido
-    </Alert>
-
-    <c-input
-      :value="form.date_of_birth"
-      @input="handleUpdateValue('date_of_birth', $event)"
-      class="mt-6"
+      >
+        Representante legal
+      </c-input>
+      <c-input
+      :value="form.company.ruc"
+      class="mt-6 mb-6"
       :readonly="!edit"
-      :danger="!form.date_of_birth && send"
-    >
-      Fecha de nacimiento
-    </c-input>
-    <Alert :open="!form.date_of_birth && send">
-      Este campo es requerido
-    </Alert>
+      >
+        RUC
+      </c-input>
+    </template>
 
-    <c-input
-      :value="form.dni"
-      @input="handleUpdateValue('dni', $event)"
-      class="mt-6"
-      :readonly="!edit"
-      :danger="!form.dni && send"
-    >
-      DNI
-    </c-input>
-    <Alert :open="!form.dni && send">
-      Este campo es requerido
-    </Alert>
 
-    <Button v-if="!edit" @click="edit = true" class="mb-6 mt-6" block yellow>
-      Editar usuario
-    </Button>
+
+
+
     <footer class="con-btns" v-else>
       <Button @click="edit = false, send = false, handleCancel()" class="mr-3">
         Cancelar

@@ -1,6 +1,7 @@
 
 export default {
   components: true,
+
   mode: 'universal',
   router: {
     middleware: ['mobile']

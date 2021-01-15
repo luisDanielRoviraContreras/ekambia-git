@@ -96,7 +96,7 @@ export default class createAccount extends Vue {
 
   handleSaveTel() {
     axios.post('/useraddtel', {
-      tel: this.form.tel
+      tel: this.form.tel.replace(' ', '')
     }).then((res) => {
       this.$notification({
         title: 'Número celular verificado',
