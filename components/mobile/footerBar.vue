@@ -82,7 +82,7 @@ export default class footerBar extends Vue {
     //     page.scrollTo(0, 0)
     //   }, 300)
     // }
-
+    // window.navigator.vibrate([1000])
     this.$router.push('/')
   }
 

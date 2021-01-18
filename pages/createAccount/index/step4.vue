@@ -7,7 +7,7 @@
     <p>
       Ya puedes disfrutar de las mejores tasas de cambio y de una experiencia innovadora para cambiar divisas.
     </p>
-    <Button class="mt-6 btn" yellow block @click="$router.push('/')">
+    <Button class="mt-6 btn" yellow block @click="$router.push('/login/')">
       Aceptar
     </Button>
   </div>
@@ -57,7 +57,6 @@ export default class step4 extends Vue {}
 @media (max-width: 812px)
   .step4
     padding-bottom: 100px
-    justify-content: flex-start
     .btn
       z-index: 500
       position: fixed
