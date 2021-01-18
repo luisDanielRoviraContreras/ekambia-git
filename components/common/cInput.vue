@@ -21,7 +21,14 @@
       @blur="focus = false"
       v-on="listeners"
     >
-    <money v-if="money" v-model="val" v-bind="moneyData"></money>
+    <money v-if="money" v-model="val" v-bind="{
+      decimal: guaranies ? '.' : ',',
+      thousands: '.',
+      prefix: '',
+      suffix: '',
+      precision: 2,
+      masked: false /* doesn't work with directive */
+    }"></money>
     <the-mask placeholder="+59 123456789" :masked="true" v-if="tel" v-model="val" :mask="['+## ############']"/>
     <span ref="placeholder" class="placeholder">
       <slot />
@@ -57,20 +64,12 @@ export default class InputComponent extends Vue {
   @Prop({ type: Boolean }) yellow: boolean
   @Prop({ type: Boolean }) money: boolean
   @Prop({ type: Boolean }) tel: boolean
+  @Prop({ type: Boolean }) guaranies: boolean
 
   val: any = ''
 
   focus: boolean = false
   forceInputText: boolean = false
-
-  moneyData: any = {
-    decimal: ',',
-    thousands: '.',
-    prefix: '',
-    suffix: '',
-    precision: 2,
-    masked: false /* doesn't work with directive */
-  }
 
   @Watch('value')
   handleValue() {

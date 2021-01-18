@@ -125,7 +125,7 @@ export default class create extends Vue {
           textCancel: 'Crear cuenta',
           textSuccess: 'Volver',
           success: () => {
-            this.$router.push({
+            this.$router.replace({
               path: `/step1/step${(this.$route.query.step as any) == 2 ? 2 : 1}`,
               query: {
                 ...this.$route.query,

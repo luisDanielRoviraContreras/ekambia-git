@@ -111,7 +111,7 @@ export default class recover extends Vue {
   position: fixed
   left: 0px
   bottom: 0px
-  z-index: 200
+  z-index: 2000
   display: flex
   align-items: center
   justify-content: center

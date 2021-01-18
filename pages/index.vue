@@ -31,6 +31,7 @@
             @focus="inputFocus"
             @change-value="handleFormSend"
             money
+            :guaranies="form.coinSend == 1"
           >
             Yo tengo
           </c-input>
@@ -50,8 +51,9 @@
             class="receive"
             identificador="receive"
             @focus="inputFocus"
-            disabled
             money
+            disabled
+            :guaranies="form.coinReceive == 1"
           >
             Yo recibo
           </c-input>
@@ -85,6 +87,7 @@ import { State, Mutation, Action } from 'vuex-class'
 import operations from '@/components/index/operations.vue'
 import invert from '@/components/index/invert.vue'
 import teclado from '@/components/common/teclado.vue'
+import accounting from 'accounting/accounting'
 import axios from '~/plugins/axios'
 @Component({
   name: 'index',
@@ -102,8 +105,8 @@ export default class name extends Vue {
   focus: any = null
   data: any = null
   loading: boolean = false
-  // sale_price: any = null
-  // purchase_price: any = null
+  sale_price: any = null
+  purchase_price: any = null
   form: any = {
     send: 0,
     receive: 0,
@@ -113,9 +116,9 @@ export default class name extends Vue {
   // coins: any = []
   @State('status_user_id') status_user_id
 
-  @State('sale_price') sale_price
+  // @State('sale_price') sale_price
 
-  @State('purchase_price') purchase_price
+  // @State('purchase_price') purchase_price
 
   @State('coins') coins
 
@@ -128,32 +131,39 @@ export default class name extends Vue {
   @Mutation('SET_SALE') setSale
 
   handleFormSend(val) {
-    // if (this.form.coinReceive !== 1) {
-    //   this.form.receive = (val / this.sale_price)
-    // }
-    // else {
-    if (this.form.coinReceive === 1) {
-      this.form.receive = (val * this.sale_price)
-    } else {
-      this.form.receive = (val / this.sale_price)
-    }
-    // }
+    this.handleChangeCoin()
   }
 
   getCoins() {
     axios.get('/coins').then(({ data }) => {
       this.setCoins(data.info)
-      this.handleChangeCoin(2)
+      axios.get(`/coins-show/${2}`).then(({ data }) => {
+        // this.setPurchase(data.info.purchase_price)
+        // this.setSale(data.info.sale_price)
+        this.purchase_price = data.info.purchase_price
+        this.sale_price = data.info.sale_price
+        if(this.form.send) {
+          this.handleFormSend(this.form.send)
+        }
+      })
     })
   }
 
-  handleChangeCoin(id) {
-    axios.get(`/coins-show/${id}`).then(({ data }) => {
-      this.setPurchase(data.info.purchase_price)
-      this.setSale(data.info.sale_price)
-      if(this.form.send) {
-        this.handleFormSend(this.form.send)
-      }
+  handleChangeCoin() {
+    console.log(this.form.send)
+    if (!this.form.send) {
+      return
+    }
+    axios.post('/converter', {
+      amount: this.form.send,
+      coin_id_origin: this.form.coinSend,
+      coin_id_destination: this.form.coinReceive,
+      action: 1
+    }).then(({data}) => {
+      console.log(data.info)
+      this.form.receive = data.info.result
+      this.purchase_price = data.info.purchase_price
+      this.sale_price = data.info.sale_price
     })
   }
 
@@ -162,18 +172,40 @@ export default class name extends Vue {
   }
 
   handleInitOperation() {
-    // console.log(this.status_user_id)
-    console.log(this.$cookies.get('profile_id'))
+    const optionsSend = {
+      symbol : "",
+      decimal : this.form.coinSend == 1 ? '.' : ',',
+      thousand: ".",
+      precision : 2,
+    }
+    const optionsReceive = {
+      symbol : "",
+      decimal : this.form.coinReceive == 1 ? '.' : ',',
+      thousand: ".",
+      precision : 2,
+    }
+    // {
+    //   decimal: guaranies ? '.' : ',',
+    //   thousands: '.',
+    //   prefix: '',
+    //   suffix: '',
+    //   precision: 2,
+    //   masked: false /* doesn't work with directive */
+    // }
+    console.log('send old === ', this.form.send)
+    console.log('send new === ',accounting.formatMoney(this.form.send, optionsSend))
+    console.log('receive old === ', this.form.receive)
+    console.log('receive new === ',accounting.formatMoney(this.form.receive, optionsReceive))
+
     this.loading = true
     axios.get('/limites-user').then(({data}: any) => {
-      console.log(data)
       this.loading = false
       if (data.info.status_user_id[0] == 1) {
         if (this.$cookies.get('profile_id') == 2) {
           this.$router.push({
             path: '/verified/business', query: {
-              send: btoa(this.form.send),
-              receive: btoa(this.form.receive),
+              send: btoa(accounting.formatMoney(this.form.send, optionsSend)),
+              receive: btoa(accounting.formatMoney(this.form.receive, optionsReceive)),
               coinSend: this.form.coinSend,
               coinReceive: this.form.coinReceive,
               cp: btoa(this.sale_price),
@@ -182,8 +214,8 @@ export default class name extends Vue {
         } else {
           this.$router.push({
             path: '/verified', query: {
-              send: btoa(this.form.send),
-              receive: btoa(this.form.receive),
+              send: btoa(accounting.formatMoney(this.form.send, optionsSend)),
+              receive: btoa(accounting.formatMoney(this.form.receive, optionsReceive)),
               coinSend: this.form.coinSend,
               coinReceive: this.form.coinReceive,
               cp: btoa(this.sale_price),
@@ -193,8 +225,8 @@ export default class name extends Vue {
       } else {
         this.$router.push({
           path: '/step1/step1', query: {
-            send: btoa(this.form.send),
-            receive: btoa(this.form.receive),
+            send: btoa(accounting.formatMoney(this.form.send, optionsSend)),
+            receive: btoa(accounting.formatMoney(this.form.receive, optionsReceive)),
             coinSend: this.form.coinSend,
             coinReceive: this.form.coinReceive,
             cp: btoa(this.sale_price),
@@ -222,22 +254,8 @@ export default class name extends Vue {
     }
   }
 
-  getFirstOperation() {
-    axios.get('/firstoperation').then(({ data }) => {
-      this.setGuide(true)
-      // (this.$parent as any).handleActiveGuide()
-      // this.$guide({
-      //   this: this
-      // })
-      // if (data.accounts.length == 0) {
-      //   this.$router.push('/accounts')
-      // }
-    })
-  }
-
   mounted () {
     this.getData()
-    // this.getFirstOperation()
     this.handleOperations()
     this.$bounceClose()
     this.handleScroll();
@@ -367,7 +385,7 @@ export default class name extends Vue {
       transform: translate(-30px)
   .con-change
     width: 100%
-    padding: 20px 20px
+    padding: 15px
     position: relative
     height: calc(100vh - 175px)
     height: calc(var(--vh, 1vh) * 100 - 175px)

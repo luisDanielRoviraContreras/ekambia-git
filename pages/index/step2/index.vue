@@ -178,7 +178,7 @@ export default class transfer extends Vue {
         console.log(data)
         this.loading = false
         if (data.info.type_operation_ekambia_id == 3) {
-          this.$router.push({
+          this.$router.replace({
             path: '/step3/delivery',
             query: {
               ...this.$route.query,
@@ -186,7 +186,7 @@ export default class transfer extends Vue {
             }
           })
         } else if (data.info.type_operation_ekambia_id == 2) {
-          this.$router.push({
+          this.$router.replace({
             path: '/step3/office',
             query: {
               ...this.$route.query,
@@ -194,7 +194,7 @@ export default class transfer extends Vue {
             }
           })
         } else {
-          this.$router.push({
+          this.$router.replace({
             path: '/step3/',
             query: {
               ...this.$route.query

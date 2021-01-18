@@ -38,10 +38,11 @@
         <load class="mt-6" height="118px" />
         <load class="mt-6" height="118px" />
       </template>
-
-      <Button v-if="!$device.isMobile" class="mt-6" @click="handleOpenAdd" yellow block>
-        Agregar Cuenta
-      </Button>
+      <template v-if="accounts">
+        <Button v-if="!$device.isMobile && accounts.length !== 0" class="mt-6" @click="handleOpenAdd" yellow block>
+          Agregar Cuenta
+        </Button>
+      </template>
 
     </div>
 
@@ -101,6 +102,7 @@ export default class accountsBank extends Vue {
 .not-found
   padding: 20px 0px
   text-align: center
+  margin: auto
   p
     font-size: .9rem
     opacity: .6

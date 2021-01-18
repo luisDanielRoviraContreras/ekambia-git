@@ -1,6 +1,6 @@
 <template>
   <div class="con-create con-create-scroll">
-    <terms v-model="activeTerms" @click="activeTerms = false, accept = true" />
+    <c-terms v-model="activeTerms" @click="activeTerms = false, accept = true" />
     <div class="con-form">
       <h2>
         Crear cuenta empresarial
@@ -45,7 +45,7 @@
       <Alert :open="!form.password && send">
         Este campo es requerido
       </Alert>
-      <Alert :open="passwordConfirm !== form.password && validatePassword">
+      <Alert :open="passwordConfirm !== form.password && validatePassword && send">
         Las contraseñas no coinciden
       </Alert>
       <Alert :open="form.password && send ? !validatePassword : false ">

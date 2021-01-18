@@ -1,6 +1,6 @@
 <template>
   <div class="con-create con-create-scroll">
-    <terms v-model="activeTerms" @click="activeTerms = false, accept = true" />
+    <c-terms v-model="activeTerms" @click="activeTerms = false, accept = true" />
     <div class="con-form">
       <h2>
         Crear cuenta personal

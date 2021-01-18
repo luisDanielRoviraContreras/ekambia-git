@@ -31,7 +31,7 @@ export default class name extends Vue {
         console.log(data)
         console.log(status)
         if (status == 3 && this.$route.name == 'index-step3') {
-          this.$router.push({
+          this.$router.replace({
             path: '/step3/',
             query: {
               id: response.id,
@@ -41,7 +41,7 @@ export default class name extends Vue {
         }
         if (status == 3 && this.$route.name == 'index-step3-delivery') {
           if (data.info.type_operation_user_id == 1) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
@@ -52,7 +52,7 @@ export default class name extends Vue {
 
         if (status == 3 && this.$route.name == 'index-step3-office') {
           if (data.info.type_operation_user_id == 1) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/office/',
               query: {
                 id: response.id,
@@ -63,14 +63,14 @@ export default class name extends Vue {
 
         if (status == 3 && this.$route.name == 'index-step2-office') {
           if (data.info.type_operation_ekambia_id == 3) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
               }
             })
           } else if (data.info.type_operation_ekambia_id == 1) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/',
               query: {
                 id: response.id,
@@ -81,7 +81,7 @@ export default class name extends Vue {
 
         if (status == 3 && this.$route.name == 'index-step2-delivery') {
           if (data.info.direction_in === data.info.direction_out) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
@@ -90,7 +90,7 @@ export default class name extends Vue {
               }
             })
           } else if (data.info.type_operation_ekambia_id == 1) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/',
               query: {
                 id: response.id,
@@ -98,21 +98,21 @@ export default class name extends Vue {
               }
             })
           } else if (data.info.type_operation_ekambia_id == 2) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/office/',
               query: {
                 id: response.id,
               }
             })
           } else if (data.info.type_operation_ekambia_id == 1) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/',
               query: {
                 id: response.id,
               }
             })
           } else if (data.info.type_operation_ekambia_id == 3) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery',
               query: {
                 id: response.id,
@@ -124,7 +124,7 @@ export default class name extends Vue {
 
         if (status == 4) {
           if (this.$route.name == 'index-step3') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/',
               query: {
                 id: response.id,
@@ -138,7 +138,7 @@ export default class name extends Vue {
               text: `Operación Finalizada. Su operación de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ha sido verificada y se le ha efectuado la transferencia a la cuenta receptora.`,
               time: 7000,
               click: () => {
-                this.$router.push({
+                this.$router.replace({
                   path: '/step3/',
                   query: {
                     id: response.id,
@@ -150,7 +150,7 @@ export default class name extends Vue {
             })
           }
           if (this.$route.name == 'index-step3-delivery') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step4',
               query: {
                 id: response.id,
@@ -158,7 +158,7 @@ export default class name extends Vue {
             })
           }
           if (this.$route.name == 'index-step2-office' && data.info.type_operation_ekambia_id == 2) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step4',
               query: {
                 id: response.id,
@@ -166,7 +166,7 @@ export default class name extends Vue {
             })
           }
           if (this.$route.name == 'index-step3-office' && data.info.type_operation_ekambia_id == 2) {
-            this.$router.push({
+            this.$router.replace({
               path: '/step4',
               query: {
                 id: response.id,
@@ -187,7 +187,7 @@ export default class name extends Vue {
         console.log(data)
         if (statusOperation == 1 && statusDeliveryIn == 2) {
           if (this.$route.name == 'index-step2-delivery') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step2/delivery/',
               query: {
                 id: response.id,
@@ -200,7 +200,7 @@ export default class name extends Vue {
               text: `El delivery de la operacion de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ya se encuentra en ruta para la entrega en (${data.info.direction_in})`,
               time: 8000,
               click: () => {
-                this.$router.push({
+                this.$router.replace({
                   path: '/step2/delivery/',
                   query: {
                     id: response.id,
@@ -212,7 +212,7 @@ export default class name extends Vue {
           }
         } else if (statusOperation == 1 && statusDeliveryIn == 3) {
           if (this.$route.name == 'index-step2-delivery') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step2/delivery/',
               query: {
                 id: response.id,
@@ -225,7 +225,7 @@ export default class name extends Vue {
               text: `El delivery de la operación de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ya se encuentra en la dirección (${data.info.direction_in})`,
               time: 8000,
               click: () => {
-                this.$router.push({
+                this.$router.replace({
                   path: '/step2/delivery/',
                   query: {
                     id: response.id,
@@ -237,7 +237,7 @@ export default class name extends Vue {
           }
         } else if (statusOperation == 3 && statusDeliveryOut == 2) {
           if (this.$route.name == 'index-step3-delivery') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
@@ -250,7 +250,7 @@ export default class name extends Vue {
               text: `El delivery de la operacion de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ya se encuentra en ruta para la entrega en (${data.info.direction_in})`,
               time: 8000,
               click: () => {
-                this.$router.push({
+                this.$router.replace({
                   path: '/step3/delivery/',
                   query: {
                     id: response.id,
@@ -262,7 +262,7 @@ export default class name extends Vue {
           }
         } else if (statusOperation == 3 && statusDeliveryOut == 3) {
           if (this.$route.name == 'index-step3-delivery') {
-            this.$router.push({
+            this.$router.replace({
               path: '/step3/delivery/',
               query: {
                 id: response.id,
@@ -276,7 +276,7 @@ export default class name extends Vue {
               text: `El delivery de la operación de cambio <b>(${data.info.send} ${data.info.coin_send.coin} = ${data.info.received} ${data.info.coin_received.coin})</b> ya se encuentra en la dirección (${data.info.direction_in})`,
               time: 8000,
               click: () => {
-                this.$router.push({
+                this.$router.replace({
                   path: '/step3/delivery/',
                   query: {
                     id: response.id,

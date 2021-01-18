@@ -49,10 +49,10 @@
       <load v-else block height="60px" class="mt-6" />
 
       <template v-if="data && transferVisible">
-        <template v-if="data.accounts.length > 0">
-          <Select @change="handleChangeTransfer" :data="data.accounts" placeholder="Cuenta de destino" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
+        <template v-if="getAccountsFilter(data.accounts, $route.query.coinReceive).length > 0">
+          <Select @change="handleChangeTransfer" :data="getAccountsFilter(data.accounts, $route.query.coinReceive)" placeholder="Cuenta de destino" :danger="!form.destination_account_id && send" class="mt-6" v-model="form.destination_account_id" block>
             <template v-if="data">
-              <Option :key="i" v-for="(option, i) in data.accounts" :value="option.id" :text="option.alias" />
+              <Option :key="i" v-for="(option, i) in getAccountsFilter(data.accounts, $route.query.coinReceive)" :value="option.id" :text="option.alias" />
             </template>
           </Select>
           <Alert :open="!form.destination_account_id && send">
@@ -99,6 +99,15 @@
           Este campo es requerido
         </Alert>
       </template>
+
+      <template v-if="data">
+        <c-input class="mt-6" v-model="source_funds">Origen de los fondos</c-input>
+        <Alert :open="!source_funds && send">
+          Este campo es requerido
+        </Alert>
+      </template>
+
+      <load v-else block height="60px" class="mt-6" />
     </div>
 
 
@@ -124,6 +133,7 @@ export default class transferStep1 extends Vue {
   getReceive: any = null
   getChangePrice: any = null
   coins: any = []
+  source_funds: any = null
 
   loading: boolean = false
 
@@ -165,8 +175,17 @@ export default class transferStep1 extends Vue {
 
   @Action('operations/getOperations') getOperations
 
+  getAccountsFilter(accounts, id) {
+    return accounts.filter(item => item.coin_id == id)
+  }
+
   handleInitOperation() {
     this.send = true
+
+    if (this.formSend.office) {
+
+    }
+
     this.loading = true
 
     const obj = {
@@ -175,7 +194,7 @@ export default class transferStep1 extends Vue {
       coin_send_id: this.coinSend[0].id,
       coin_received_id: this.coinReceive[0].id,
       exchange_type: this.getChangePrice,
-      source_funds: 0,
+      source_funds: this.source_funds,
       source_account_id: 0,
       destination_account_id: this.form.destination_account_id,
       type_operation_user_id: this.formSend.typeReceive,
@@ -197,21 +216,21 @@ export default class transferStep1 extends Vue {
 
       axios.get(`/operation-show/${res.data.info.operation_id}`).then(({data}: any) => {
         if (data.info.type_operation_user_id == 1) {
-        this.$router.push({
+        this.$router.replace({
           path: '/step2/',
           query: {
             id: data.info.id
           }
         })
         } else if (data.info.type_operation_user_id == 2) {
-          this.$router.push({
+          this.$router.replace({
             path: '/step2/office/',
             query: {
               id: data.info.id
             }
           })
         } else if (data.info.type_operation_user_id == 3) {
-          this.$router.push({
+          this.$router.replace({
             path: '/step2/delivery/',
             query: {
               id: data.info.id
@@ -242,11 +261,22 @@ export default class transferStep1 extends Vue {
   get isDisabled() {
     let disabled: boolean = true
 
-    if (this.form.typeReceive && this.form.office) {
+    if (this.form.typeReceive == 1 && !this.form.destination_account_id) {
+      return true
+    }
+    if (this.form.typeReceive == 2 && !this.form.office) {
+      return true
+    }
+
+    if (!this.source_funds) {
+      return true
+    }
+
+    if (this.formSend.typeReceive == 2 && this.formSend.office) {
       disabled = false
     }
 
-    if (this.form.typeReceive && this.form.destination_account_id) {
+    if (this.formSend.typeReceive == 1) {
       disabled = false
     }
 
@@ -254,7 +284,7 @@ export default class transferStep1 extends Vue {
   }
 
   handleCreateAccount() {
-    this.$router.push({
+    this.$router.replace({
       path: '/accounts/create',
       query: {
         ...this.$route.query,
@@ -266,20 +296,6 @@ export default class transferStep1 extends Vue {
   handleNextStep() {
     this.mapVisible = false
     this.mapVisible2 = false
-    // this.$router.push({
-    //   path: '/step1/step3',
-    //   query: {
-    //     ...this.$route.query,
-    //     step1: btoa(JSON.stringify(this.form)),
-    //     step2: btoa(JSON.stringify(this.formSend)),
-    //     mapVisible: `${this.mapVisible}`,
-    //     transferVisible: `${this.transferVisible}`,
-    //     sucursalVisible: `${this.sucursalVisible}`,
-    //     mapVisible2: `${this.mapVisible2}`,
-    //     transferVisible2: `${this.transferVisible2}`,
-    //     sucursalVisible2: `${this.sucursalVisible2}`
-    //   }
-    // })
   }
 
   handleClickMap(direction, direction2, isNew) {

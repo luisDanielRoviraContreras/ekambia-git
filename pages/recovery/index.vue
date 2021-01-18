@@ -1,6 +1,6 @@
 <template>
   <div class="recovery">
-    <nav-bar v-if="$device.isMobile" absolute />
+    <nav-bar />
     <div class="con-recovery">
       <h2>
         Cambiar contraseña
@@ -8,21 +8,32 @@
       <c-input
         type="password"
         v-model="form.password"
-        :danger="!form.password && send"
+        :danger="(!validatePassword && send) || send && (form.passwordConfirm !== form.password)"
         >
         Nueva contraseña
       </c-input>
+
       <Alert :open="!form.password && send">
         Este campo es requerido
       </Alert>
+      <Alert :open="form.passwordConfirm !== form.password && validatePassword && send">
+        Las contraseñas no coinciden
+      </Alert>
+      <Alert :open="form.password && send ? !validatePassword : false ">
+        La contraseña debe contener al menos: <br>
+        • 1 Mayúscula <br> • 1 Minúscula <br> • 1 Símbolo especial <br> • 1 Número
+      </Alert>
       <c-input
         type="password"
-        :danger="!form.confirmPassword && send"
-        v-model="form.confirmPassword" class="mt-6">
-        Repetir contraseña
+        :danger="(!form.passwordConfirm && send) || send && form.passwordConfirm !== form.password"
+        v-model="form.passwordConfirm" class="mt-6">
+        Confirmación de Contraseña
       </c-input>
-      <Alert :open="!form.confirmPassword && send">
+      <Alert :open="!form.passwordConfirm && send">
         Este campo es requerido
+      </Alert>
+      <Alert :open="form.passwordConfirm && send ? form.passwordConfirm !== form.password : false">
+        Las contraseñas no coinciden
       </Alert>
       <Button class="mt-6" yellow block @click="handleClickSend">
         Actualizar
@@ -41,14 +52,18 @@ export default class recovery extends Vue {
   send: boolean = false
   form: any = {
     password: '',
-    confirmPassword: ''
+    passwordConfirm: ''
+  }
+
+  get validatePassword() {
+    var regularExpression = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    return regularExpression.test(this.form.password.trim())
   }
 
   handleClickSend() {
     this.send = true
 
-
-    if (this.form.confirmPassword !== this.form.password) {
+    if (this.form.passwordConfirm !== this.form.password) {
       this.$notification({
         title: 'Las contraseñas no coinciden',
         text: 'Revisa los campos y vuelve a intentarlo'
@@ -56,7 +71,7 @@ export default class recovery extends Vue {
       return
     }
 
-    if (!this.form.password || !this.form.confirmPassword) {
+    if (!this.form.password || !this.form.passwordConfirm) {
       return
     }
 
@@ -98,6 +113,7 @@ export default class recovery extends Vue {
   align-items: center
   justify-content: center
   padding: 20px
+  flex-direction: column
   .con-recovery
     width: 100%
     max-width: 400px

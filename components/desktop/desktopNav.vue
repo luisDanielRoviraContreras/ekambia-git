@@ -29,7 +29,7 @@ export default class desktopNav extends Vue {
   openDrop: boolean = false
   handleClickLogOut () {
     this.$dialog({
-      title: 'Estas seguro de cerrar la sesión?',
+      title: '¿Quieres cerrar la sesión?',
       bounce: true,
       success: () => {
         axios.post('/logout').then(() => {
@@ -38,10 +38,15 @@ export default class desktopNav extends Vue {
           this.$nextTick(() => {
             this.$router.push('/login')
           })
-        }).catch(() => {
+        }).catch((err) => {
+          this.$cookies.set('token', '')
+          this.$cookies.set('authenticated', false)
+          this.$nextTick(() => {
+            this.$router.push('/login')
+          })
           this.$notification({
             title: 'Oops! Algo salió mal',
-            text: 'No se pudo cerrar la sesión por favor intentar de nuevo.'
+            text: err.response.data.message.toString()
           })
         })
       }

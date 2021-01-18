@@ -1,5 +1,5 @@
 <template>
-  <div class="timer">{{ time }}</div>
+  <div class="timer"></div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
@@ -31,11 +31,14 @@ export default class timer extends Vue {
             text: err.response.data.message.toString()
           })
         })
+      },
+      cancel:() => {
+        this.time = 0
       }
     })
 
     setInterval(() => {
-      if (this.time > 239) {
+      if (this.time > 236) {
         this.$cookies.set('token', '')
         this.$cookies.set('authenticated', false)
         this.$nextTick(() => {
@@ -51,7 +54,7 @@ export default class timer extends Vue {
       this.time = 0
       clearInterval(this.interval)
       this.interval = setInterval(() => {
-        if (this.time > 179) {
+        if (this.time > 178) {
           this.handleClickLogOut()
         }
       }, 180000)
@@ -62,10 +65,11 @@ export default class timer extends Vue {
     }, 1000)
 
     this.interval = setInterval(() => {
-      if (this.time > 179) {
+      if (this.time > 178) {
         this.handleClickLogOut()
       }
     }, 180000)
+    // }, 180000)
   }
 }
 </script>

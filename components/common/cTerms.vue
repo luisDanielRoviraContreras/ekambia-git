@@ -1,6 +1,6 @@
 <template>
 <transition name="fade">
-  <div v-if="value" class="terms">
+  <div v-if="visible ? true : value" :class="{ visible }" class="terms">
     <div class="con-terms">
 
 
@@ -451,6 +451,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class terms extends Vue {
   @Prop() value: any
+  @Prop({type: Boolean }) visible: any
 }
 </script>
 <style scoped>
@@ -502,6 +503,9 @@ span.CommentTextChar
   overflow: auto
   padding: 50px 20px
   padding-bottom: 30px
+  &.visible
+    position: relative
+    padding: 10px
   .button
     margin: 0px !important
     max-width: none !important

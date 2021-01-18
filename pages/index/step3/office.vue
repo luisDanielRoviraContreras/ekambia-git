@@ -8,7 +8,7 @@
     </div>
     <div v-show="stepx == 1" class="content-delivery con-map">
       <nav-bar step="3" steps absolute back @click="$route.query.source == 'operations' ? $router.push('/?operations=true') : $router.push('/')" />
-      <tracking from="honorio lozano 8, collado villalba, españa" to="rafael alberti 13, collado villalba, españa">
+      <tracking office to="eKambiá Avda. Aviadores del Chaco.">
         <steps v-if="$device.isDesktop" class="mb-6" numbers :value="3" :items="3" />
         <h3>Ruta para ir a la oficina</h3>
         <Button @click="changeState" class="mt-3" block yellow>
