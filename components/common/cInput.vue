@@ -187,6 +187,7 @@ input[type=number]
     background: transparent
     color: -color('black', 1)
     z-index: 10
+    min-height: 60px
     &:read-only
       opacity: .5
       ~ .placeholder

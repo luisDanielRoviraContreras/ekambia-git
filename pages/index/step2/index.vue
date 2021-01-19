@@ -23,8 +23,8 @@
             </p>
           </div>
         </div>
-        <load v-else block height="67px" />
-        <div class="textw">
+        <load v-else block height="71px" />
+        <!-- <div class="textw">
           <span>
             Tipo de cambio utilizado
           </span>
@@ -32,7 +32,7 @@
             {{ data.exchange_type }}
           </p>
           <load v-else width="60px" height="20px" />
-        </div>
+        </div> -->
       </div>
 
       <Select child="name" :data="ekambiaAccounts" @change="handleChange" placeholder="Selecciona la cuenta" class="mt-6" block>

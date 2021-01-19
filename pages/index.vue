@@ -1,5 +1,6 @@
 <template>
   <div ref="page" :class="{ slide: $route.name !== 'index' }" class="index page">
+    <!-- <Button @click="prueba">Click me</Button> -->
     <nav-bar v-if="$device.isMobile" />
     <div ref="change" id="change" class="con-change">
 
@@ -130,6 +131,15 @@ export default class name extends Vue {
 
   @Mutation('SET_SALE') setSale
 
+  prueba() {
+    axios.get('/test').then(({ data }) => {
+      console.log(data)
+    })
+    // axios.get('/endpool').then(({ data }) => {
+    //   console.log(data)
+    // })
+  }
+
   handleFormSend(val) {
     this.handleChangeCoin()
   }
@@ -138,10 +148,16 @@ export default class name extends Vue {
     axios.get('/coins').then(({ data }) => {
       this.setCoins(data.info)
       axios.get(`/coins-show/${2}`).then(({ data }) => {
+        const options = {
+          symbol : "",
+          decimal : this.form.coinSend !== 1 ? '.' : ',',
+          thousand: ".",
+          precision : 2,
+        }
         // this.setPurchase(data.info.purchase_price)
         // this.setSale(data.info.sale_price)
-        this.purchase_price = data.info.purchase_price
-        this.sale_price = data.info.sale_price
+        this.purchase_price = accounting.formatMoney(data.info.purchase_price, options)
+        this.sale_price = accounting.formatMoney(data.info.sale_price, options)
         if(this.form.send) {
           this.handleFormSend(this.form.send)
         }
@@ -151,19 +167,23 @@ export default class name extends Vue {
 
   handleChangeCoin() {
     console.log(this.form.send)
-    if (!this.form.send) {
-      return
-    }
     axios.post('/converter', {
       amount: this.form.send,
       coin_id_origin: this.form.coinSend,
       coin_id_destination: this.form.coinReceive,
-      action: 1
+      action: 2
     }).then(({data}) => {
       console.log(data.info)
+      const options = {
+        symbol : "",
+        decimal : this.form.coinSend !== 1 ? '.' : ',',
+        thousand: ".",
+        precision : 2,
+      }
+
       this.form.receive = data.info.result
-      this.purchase_price = data.info.purchase_price
-      this.sale_price = data.info.sale_price
+      this.purchase_price = accounting.formatMoney(data.info.purchase_price, options)
+      this.sale_price = accounting.formatMoney(data.info.sale_price, options)
     })
   }
 
@@ -270,7 +290,7 @@ export default class name extends Vue {
     el.addEventListener('scroll', () => {
       if (el.scrollTop === 0 && this.$route.name == 'index') {
         this.$router.push('/')
-      } else if (el.scrollTop + window.innerHeight >= el.scrollHeight && this.$route.name == 'index') {
+      } else if (el.scrollTop + window.innerHeight > el.scrollHeight && this.$route.name == 'index' && !this.$route.query.operations) {
         this.$router.push({
           path: '/',
           query: {

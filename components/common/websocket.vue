@@ -16,15 +16,36 @@ export default class name extends Vue {
   mounted() {
     (window as any).Pusher = require('pusher-js');
 
+    (window as any).Pusher.logToConsole = true;
+
     (window as any).Echo =  new Echo({
         broadcaster: 'pusher',
         key: 'a5e37d3bc65fe2addfe4',
         cluster: 'us2',
-        forceTLS: false,
+        forceTLS: true,
+        // cluster: 'ap4',
+        authEndpoint: `https://ekambia.lusaxweb.pro/public/broadcasting/auth`,
+        auth: {
+            headers: {
+                Authorization: `Bearer ${this.$cookies.get('token')}`,
+            },
+        },
     });
 
-    (window as any).Echo.channel('channel-ekambia').listen('UpdatedStatusOperation', (response) => {
+    // (window as any).Echo.channel('pool.3').listen('EndPool', (response) => {
+    //   console.log(response)
+    //   console.log('EndPool<<<<<<<<<<<<<<<<<<<<<<<')
+    // });
+
+    // (window as any).Echo.channel(`test.${this.$cookies.get('profile_id')}`).listen('Test', (response) => {
+    //   console.log(response)
+    //   console.log('Test<<<<<<<<<<<<<<<<<<<<<<<')
+    // });
+
+    // (window as any).Echo.channel(`channel-ekambia.${this.$cookies.get('profile_id')}`).listen('UpdatedStatusOperation', (response) => {
+    (window as any).Echo.channel(`channel-ekambia.${this.$cookies.get('user_id')}`).listen('UpdatedStatusOperation', (response) => {
       this.getOperations()
+      console.log(response)
       axios.get(`/operation-show/${response.id}`).then(({data}: any) => {
         const status = data.info.status_operation_id
         console.log('data desde socket')

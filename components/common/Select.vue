@@ -12,7 +12,7 @@
         @enter="enter"
         @leave="leave"
       >
-        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop, itemsCenter, esquina }" class="con-items">
+        <div v-if="active" :class="{ isMobile: $device.isMobile, isDesktop: $device.isDesktop, itemsCenter, esquina, search }" class="con-items">
           <div class="shadow" @click="handleClickShadow"></div>
           <div class="items">
             <header>
@@ -20,6 +20,9 @@
                 {{ placeholder }}
               </h5>
             </header>
+            <div v-if="search" class="con-search">
+              <input v-model="searchValue" placeholder="Buscar" type="text">
+            </div>
             <ul ref="ul">
               <slot></slot>
             </ul>
@@ -49,9 +52,11 @@ export default class Select extends Vue {
   @Prop({ type: String, default: 'alias' }) child: string
   @Prop({ type: String, default: 'id' }) uid: string
   @Prop({ type: Boolean }) esquina: boolean
+  @Prop({ type: Boolean }) search: boolean
   @Prop({ }) data: any
   @Prop({}) value: any
   inputValue: any = ''
+  searchValue: any = ''
   active: boolean = false
   click: boolean = false
 
@@ -73,7 +78,7 @@ export default class Select extends Vue {
       }
     }
 
-    document.body.appendChild(el)
+    document.body.prepend(el)
     // const h = el.scrollHeight
     // el.style.height = h - 1 + 'px'
     done()
@@ -81,9 +86,15 @@ export default class Select extends Vue {
 
   leave (el: any, done: any) {
     setTimeout(() => {
+      this.searchValue = ''
       document.body.removeChild(el)
       done()
     }, 250);
+  }
+
+  handleSearch() {
+    // this.searchValue
+
   }
 
   handleFocus() {
@@ -148,6 +159,32 @@ export default class Select extends Vue {
 }
 </script>
 <style lang="sass">
+#__nuxt .app
+  transition: all .25s ease !important
+  box-shadow: 0px 0px 30px 0px rgba(0,0,0,.1)
+  border-radius: 20px
+.con-items.search:not(.select-leave-active)
+  ~
+    #__nuxt
+      background: -color(gray)
+    #__nuxt .app
+      transform: scale(.9) !important
+
+.con-search
+  width: 100%
+  input
+    width: calc(100% - 30px)
+    padding: 14px
+    border: 0px
+    background: -color(gray)
+    margin: 15px
+    margin-bottom: 5px
+    border-radius: 10px
+    transition: all .25s ease
+    font-size: .9rem
+    &:focus
+      padding-left: 20px
+
 .select-enter-active, .select-leave-active
   transition: all .2s ease-in
 
@@ -167,6 +204,11 @@ export default class Select extends Vue {
       opacity: 0
 
 .con-items
+  &.search:not(.isDesktop)
+    .items
+      height: calc(var(--vh, 1vh) * 90)
+      max-height: calc(var(--vh, 1vh) * 90)
+      min-height: calc(var(--vh, 1vh) * 90)
   &.itemsCenter
     .items
       .option
@@ -212,7 +254,7 @@ export default class Select extends Vue {
   &.isMobile
     bottom: 0px
     width: 100%
-    z-index: 10000
+    z-index: 20000
     height: 100vh
     position: fixed
     .items

@@ -53,7 +53,7 @@
       </template> -->
 
       <template v-if="country_list">
-        <Select child="name" class="mt-6" :data="country_list" placeholder="Nacionalidad" v-model="form.nacionality_id" block>
+        <Select search child="name" class="mt-6" :data="country_list" placeholder="Nacionalidad" v-model="form.nacionality_id" block>
           <Option :key="i" v-for="(option, i) in country_list" :value="option.id" :text="option.name" />
         </Select>
       </template>
@@ -221,13 +221,14 @@ export default class verified extends Vue {
   top: 0px
   left: 0px
   z-index: 4000
-  display: flex
-  align-items: flex-start
-  justify-content: flex-start
-  flex-direction: column
+  // display: flex
+  // align-items: flex-start
+  // justify-content: flex-start
+  // flex-direction: column
   overflow: auto
   height: calc(var(--vh, 1vh) * 100)
   .con-form
+    margin: auto
     width: 100%
     display: flex
     align-items: center

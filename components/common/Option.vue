@@ -1,5 +1,5 @@
 <template>
-  <li :class="{ active: valueParent == value, disabled }" @click="handleClick" class="option">
+  <li v-show="isVisible" :class="{ active: valueParent == value, disabled }" @click="handleClick" class="option">
     <i class='bx bx-check'></i>
     <div :class="{ subText }" class="text">
       <span>
@@ -21,6 +21,10 @@ export default class optionItem extends Vue {
   @Prop({}) obj: any
   @Prop({}) disabled: any
 
+  get isVisible() {
+    return this.text.toLowerCase().indexOf((this.$parent as any).searchValue.toLowerCase()) !== -1
+  }
+
   get valueParent() {
     return (this.$parent as any).value
   }
@@ -31,6 +35,9 @@ export default class optionItem extends Vue {
       text: this.text,
       obj: this.obj
     })
+  }
+  mounted() {
+    console.log(this.$parent)
   }
 }
 </script>

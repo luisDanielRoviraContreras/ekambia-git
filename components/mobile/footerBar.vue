@@ -41,6 +41,7 @@
       </p>
     </a>
     <nuxt-link
+      @click.native="vibrate"
       to="/accounts"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 25">
@@ -53,7 +54,7 @@
         Cuentas
       </p>
     </nuxt-link>
-    <nuxt-link to="/user">
+    <nuxt-link @click.native="vibrate" to="/user">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.998 23">
         <g id="Grupo_2255" data-name="Grupo 2255" transform="translate(-326.001 -821)">
           <path id="Path" d="M0,5.75A5.88,5.88,0,0,1,6,0a5.88,5.88,0,0,1,6,5.75A5.88,5.88,0,0,1,6,11.5,5.88,5.88,0,0,1,0,5.75Z" transform="translate(331.999 821)" opacity="0.3"/>
@@ -70,6 +71,12 @@
 import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class footerBar extends Vue {
+  vibrate() {
+    if (navigator.vibrate) {
+      navigator.vibrate([7])
+    }
+  }
+
   handleClickHome () {
     // if (this.$route.name === 'index') {
     //   this.$nextTick(() => {
@@ -82,7 +89,7 @@ export default class footerBar extends Vue {
     //     page.scrollTo(0, 0)
     //   }, 300)
     // }
-    // window.navigator.vibrate([1000])
+    this.vibrate()
     this.$router.push('/')
   }
 
@@ -98,7 +105,7 @@ export default class footerBar extends Vue {
     //     page.scrollTo(0, operations.scrollHeight)
     //   }, 300)
     // }
-
+    this.vibrate()
     this.$router.push({
       path: '/',
       query: {
