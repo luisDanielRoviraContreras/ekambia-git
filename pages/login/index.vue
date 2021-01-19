@@ -130,7 +130,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { State, Mutation } from 'vuex-class'
 import axios from '~/plugins/axios'
 @Component({
-  middleware: ['new', 'hasAuthenticated'],
+  middleware: ['hasAuthenticated'],
   layout: 'clean'
 })
 export default class login extends Vue {
@@ -254,6 +254,12 @@ export default class login extends Vue {
         this.active += 1
       }
     }, 5000)
+  }
+
+  created() {
+    if (!this.$cookies.get('old')) {
+      this.$router.push('/login/new')
+    }
   }
 
   mounted () {

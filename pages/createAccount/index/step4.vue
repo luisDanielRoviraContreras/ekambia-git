@@ -7,6 +7,7 @@
     <p>
       Ya puedes disfrutar de las mejores tasas de cambio y de una experiencia innovadora para cambiar divisas.
     </p>
+    <!-- <nuxt-link tag="button" to="/login">Aceptar</nuxt-link> -->
     <Button class="mt-6 btn" yellow block @click="$router.push('/login/')">
       Aceptar
     </Button>
