@@ -5,7 +5,7 @@
         ¡Gana con Ekambia!
       </h3>
       <p>
-        Recibe 10.0 Guaranies por cada amigo que haga su primer cambio con tu código
+        Recibe {{ refData.amount }} {{ refData.coin_name }} por cada amigo que haga su primer cambio con tu código
       </p>
     </header>
 
@@ -27,8 +27,8 @@
           <p>
             Créditos
           </p>
-          <span>
-            10 Guaranies
+          <span v-if="refData">
+            {{ refData.amount }} {{ refData.coin_name }}
           </span>
         </div>
       </div>
@@ -75,6 +75,13 @@ import axios from '~/plugins/axios'
 export default class win extends Vue {
   @State(state => state.user.data) data
   sending: any = false
+  refData: any = null
+
+  getRef() {
+    axios.get('/config-recommend').then(({data}) => {
+      this.refData = data.info
+    })
+  }
 
   send() {
     axios.post('/charge-recommended', {
@@ -118,6 +125,10 @@ export default class win extends Vue {
       title: 'Link Copiado',
       text: 'Comparte este link con tus amigos y gana'
     })
+  }
+
+  mounted() {
+    this.getRef()
   }
 }
 </script>
