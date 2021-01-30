@@ -31,7 +31,7 @@ export default {
     {src: '@/plugins/bounce.client.ts', ssr: false},
     {src: '@/plugins/guide.client.ts', ssr: false},
     {src: '@/plugins/maps.client.js', ssr: false},
-    { src: '@/plugins/vue-confetti.js', ssr: false}
+    {src: '@/plugins/vue-confetti.js', ssr: false}
   ],
   buildModules: [
     '@nuxt/typescript-build',
@@ -42,7 +42,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
-    '@nuxtjs/device'
+    '@nuxtjs/device',
+    '@nuxtjs/auth-next'
   ],
   styleResources: {
     sass: ['~/style/mixins.sass']

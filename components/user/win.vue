@@ -55,11 +55,14 @@
 
     <div class="footer">
       <h4>Créditos</h4>
-      <span>
+      <span v-if="!sending">
+        {{ data.balance }} {{ data.coin_balance }}
+      </span>
+      <span v-else>
         0 Guaranies
       </span>
-      <Button @click="share" class="mt-6 mb-6" block yellow>
-        Compartir
+      <Button v-if="data.balance > 0" @click="send" class="mt-6 mb-6" block yellow>
+        Enviar a mi cuenta bancaria
       </Button>
     </div>
   </div>
@@ -67,9 +70,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
+import axios from '~/plugins/axios'
 @Component
 export default class win extends Vue {
   @State(state => state.user.data) data
+  sending: any = false
+
+  send() {
+    axios.post('/charge-recommended', {
+      destination_account_id: 1,
+      type_operation_ekambia_id: 1
+    }).then(({ data }: any) => {
+      this.sending = true
+    }).catch((err) => {
+
+    })
+  }
 
   get urlRef() {
     return `https://ekambia.herokuapp.com/login/?ref=${this.data && this.data.recommendation_code}`
