@@ -1,5 +1,6 @@
 <template>
   <div class="login scroll">
+    <beta />
     <div v-if="$device.isDesktop" class="con-slide">
       <div class="con-images">
         <transition name="fade">
@@ -131,7 +132,7 @@ import { State, Mutation } from 'vuex-class'
 import axios from '~/plugins/axios'
 @Component({
   middleware: ['hasAuthenticated'],
-  layout: 'clean'
+  layout: 'clean',
 })
 export default class login extends Vue {
   // navigator.credentials
